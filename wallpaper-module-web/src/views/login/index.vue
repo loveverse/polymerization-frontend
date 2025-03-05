@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<div>登录页面</div>
+  <div>登录页面</div>
 </template>
 
 <style scoped lang="scss">

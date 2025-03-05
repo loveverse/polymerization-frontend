@@ -3,19 +3,19 @@ import {asyncRoutes, loginRoute, staticRoutes} from "@/router/routes.ts";
 
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
-        loginRoute,
-        {
-            path: '/',
-            redirect: "/home",
-            component: () => import("@/views/layout/index.vue"),
-            children: [
-                ...asyncRoutes,
-            ]
-        },
-        ...staticRoutes,
-    ],
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    loginRoute,
+    {
+      path: '/',
+      redirect: "/home",
+      component: () => import("@/views/layout/index.vue"),
+      children: [
+        ...asyncRoutes,
+      ]
+    },
+    ...staticRoutes,
+  ],
 })
 // router.beforeEach((to, from, next) => {
 // const token = localStorage.getItem("");
