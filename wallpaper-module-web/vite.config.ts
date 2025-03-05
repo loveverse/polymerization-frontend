@@ -12,7 +12,7 @@ export default defineConfig(({mode, command}) => {
     base: command === "serve" ? "/" : JSON.stringify(env.VITE_PUBLIC_PATH),
     plugins: [
       vue(),
-      vueDevTools(),
+      // vueDevTools(),
     ],
     server: {
       port: 40200,
@@ -28,7 +28,7 @@ export default defineConfig(({mode, command}) => {
         scss: {
           //   "@use '@/assets/css/variables.scss' as *; @import '@/assets/css/base.scss';",
           // 全局引入后，不需要在其他文件引入
-          additionalData: `@use '@/assets/css/base.scss' as *;`
+          additionalData: `@use '@/assets/css/global.scss' as *;`
         }
       }
     }
