@@ -1,6 +1,6 @@
 <template>
-  <el-upload  v-bind="$attrs">
-    <template v-for="(item, index) in slots" #[index]="scope">
+  <el-upload v-bind="$attrs" :file-list="innerFileList">
+    <template v-for="(item) in Object.keys($slots)" #[item]="scope">
       <slot :name="item" v-bind="scope || {}"></slot>
     </template>
   </el-upload>
@@ -8,16 +8,25 @@
 
 <script setup lang="ts">
 import {UploadProps} from "element-plus";
-import {useSlots} from "vue";
+import {computed, useAttrs, useSlots} from "vue";
 
-type ComUploadProps = UploadProps
-const props = defineProps<ComUploadProps>()
+type ComUploadProps = Partial<UploadProps>
+const {fileList} = defineProps<ComUploadProps>()
 
 defineOptions({
   inheritAttrs: false, // 解决自定义封装事件多次执行
 })
-const slots = useSlots()
-console.log(slots)
+const emit = defineEmits(["setFileList"])
+const innerFileList = computed({
+  get: () => {
+    return fileList;
+  },
+  set: (values) => {
+    emit("setFileList", values)
+  }
+})
+
+// 一般来说使用 slots 和 attrs 的情况应该是相对来说较为罕见的，因为可以在模板中直接通过 $slots 和 $attrs 来访问它们
 </script>
 
 

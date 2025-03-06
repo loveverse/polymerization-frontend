@@ -10,8 +10,7 @@ const PROXY = 'http://127.0.0.1:10809';  // 这里是你的代理地址，端口
 // axios 请求配置
 const axiosInstance = axios.create({
     proxy: false, // 先关闭默认代理模式
-    httpsAgent: new HttpsProxyAgent(PROXY),
-    headers: {
+    httpsAgent: new HttpsProxyAgent(PROXY), headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
     }
 });
@@ -78,10 +77,7 @@ async function fetchHDImage(detailPage) {
 async function downloadImage(url, filepath) {
     try {
         const response = await axiosInstance({
-            url,
-            method: 'GET',
-            responseType: 'stream',
-            headers: HEADERS
+            url, method: 'GET', responseType: 'stream', headers: HEADERS
         });
 
         const writer = fs.createWriteStream(filepath);
@@ -117,7 +113,6 @@ async function main() {
                 await downloadImage(wallpaper.hdImage, filepath);
                 console.log(`下载完成: ${filename}`);
             }
-
             await sleep(REQUEST_DELAY); // 避免频繁请求
         }
 

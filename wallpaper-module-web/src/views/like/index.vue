@@ -11,10 +11,9 @@
 </template>
 <script setup lang="ts">
 import {ref} from 'vue'
-import {ElMessage, ElMessageBox} from 'element-plus'
 import type {UploadProps, UploadUserFile} from 'element-plus'
 import {reqUploadFile} from "@/api/base";
-import ComUpload from "@/components/ComUpload/index.vue";
+
 
 
 const fileList = ref<UploadUserFile[]>([])

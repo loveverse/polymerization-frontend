@@ -3,6 +3,9 @@ import {fileURLToPath, URL} from 'node:url'
 import {defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 
 console.log("[ 打包] >", process.env);
 // https://vite.dev/config/
@@ -13,6 +16,14 @@ export default defineConfig(({mode, command}) => {
     plugins: [
       vue(),
       // vueDevTools(),
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+        // imports: ["vue"],
+      }),
+      Components({
+        // 必须加上importStyle，不然样式覆盖失效
+        resolvers: [ElementPlusResolver({importStyle: "sass"})],
+      })
     ],
     server: {
       port: 40200,

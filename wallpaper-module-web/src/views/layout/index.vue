@@ -40,6 +40,7 @@ import ComFooter from "./components/ComFooter.vue";
     // 需要包含默认边距
     padding-bottom: 60px;
   }
+
   .interval {
     padding: 0;
   }
