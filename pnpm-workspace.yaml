@@ -1,0 +1,8 @@
+packages:
+  - 'main'
+  - 'apps/**'
+  - 'shared'
+#catalog:
+#  vue: ^3.5.13
+#  axios: ^1.8.1
+
