@@ -7,7 +7,8 @@ if (import.meta.env.DEV) {
     password = "";
     publicPath = "/"
     domain = "http://localhost:30000";
-    uploadUrl = "http://localhost:30100/oss-third-party"
+    domain = "http://localhost:30200";
+    uploadUrl = "http://localhost:30100/oss-file-api"
     previewUrl = "";
 } else {
     // 线上环境（打包后的请求地址和部署的服务器一致，可以省略配置）

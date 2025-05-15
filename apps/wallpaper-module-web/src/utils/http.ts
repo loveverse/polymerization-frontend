@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 import {ElMessage} from "element-plus";
 
-import {domain, publicPath} from "@/config";
+import {domain, publicPath} from "../../config";
 import {SERVER_STATUS} from "@/utils/constant";
 
 interface ApiResponse<T> {
@@ -28,7 +28,6 @@ class RequestHttp {
     this.service.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         const token = localStorage.getItem("token");
-        // token && (config.headers["ZRT-ADMIN-TOKEN"] = token);
         token && (config.headers["zrt-embodied-token"] = token);
         return config;
       },
@@ -44,15 +43,14 @@ class RequestHttp {
         if (error && error.response) {
           const errorData = {
             code: error.response.status,
-            message: SERVER_STATUS[error.response.status] ?? "系统繁忙，请刷新后重试！",
+            msg: SERVER_STATUS[error.response.status] ?? "系统繁忙，请刷新后重试！",
           };
-
-          ElMessage.error(errorData.message);
+          ElMessage.error(errorData.msg);
           return Promise.reject(errorData);
         }
         return Promise.reject({
           code: 10000,
-          message: "系统繁忙，请刷新后重试！",
+          msg: "系统繁忙，请刷新后重试！",
         });
       }
     );
