@@ -1,0 +1,61 @@
+.root {
+  padding: 40px;
+  :global {
+    .steps-header {
+      .ant-steps-item-content {
+        margin-top: 0px;
+      }
+      .ant-steps-item {
+        .ant-steps-item-icon {
+          background-color: transparent;
+          border: 2px solid #ccc;
+          line-height: 28px;
+          .ant-steps-icon {
+            color: #aaa;
+          }
+        }
+        .ant-steps-item-content {
+          .ant-steps-item-title {
+            font-size: 14px;
+            color: #aaa;
+          }
+        }
+      }
+
+      .ant-steps-item-active,
+      .ant-steps-item-finish {
+        .ant-steps-item-icon {
+          background-color: transparent;
+          border: 2px solid $color-primary;
+          line-height: 28px;
+          .ant-steps-icon {
+            color: $color-primary;
+          }
+        }
+        .ant-steps-item-content {
+          .ant-steps-item-title {
+            font-size: 14px;
+            color: $color-primary;
+          }
+        }
+      }
+    }
+    .step-content {
+      margin-top: 20px;
+      .import-file {
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        text-align: center;
+        li {
+          &:nth-child(1) {
+            margin-bottom: 10px;
+          }
+          label {
+            color: #999;
+          }
+        }
+      }
+    }
+  }
+}

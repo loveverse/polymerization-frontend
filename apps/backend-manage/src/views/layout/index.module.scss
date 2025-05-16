@@ -1,0 +1,104 @@
+:where(.root) {
+  height: 100%;
+  min-width: 1300px;
+  :global {
+    .sider-menu {
+      width: 240px;
+      .signboard-box {
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        box-shadow: inset -1px -1px 0px 0px #f2f3f5;
+        overflow: hidden;
+        .logo {
+          vertical-align: middle;
+          width: 32px;
+          height: 32px;
+          transform: translateY(-3px);
+        }
+        .title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #121212;
+          margin-left: 4px;
+        }
+      }
+      .sider-menus {
+        height: calc(100% - 60px);
+        overflow-y: auto;
+        font-size: 16px;
+        color: #666;
+        @include scroll-default;
+        :where(li) {
+          .anticon.comicon {
+            font-size: 22px;
+          }
+        }
+        .ant-menu-item-selected,
+        .ant-menu-submenu-selected,
+        .ant-menu-submenu-disabled {
+          .anticon.comicon {
+            color: inherit;
+          }
+        }
+      }
+    }
+
+    :where(.layout-main-box) {
+      .layout-header-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0 30px 0 20px;
+        line-height: 60px;
+        background-color: #fff;
+        box-shadow: inset -1px -1px 0px 0px #f2f3f5;
+        .breadcrumb-box {
+          display: flex;
+          align-items: center;
+          .fold-box {
+            margin-right: 10px;
+          }
+        }
+        .user-info {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .username {
+            margin-left: 5px;
+          }
+        }
+      }
+      :where(.layout-content-box) {
+        padding: 10px;
+        overflow-x: hidden;
+        :where(.node-animate) {
+          height: 100%;
+          & > div {
+            height: 100%;
+            background-color: #fff;
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include scroll-default;
+          }
+        }
+      }
+      // 页面切换过渡动画
+      .fade-enter {
+        opacity: 0;
+      }
+      .fade-enter-active {
+        opacity: 1;
+        transition: opacity 300ms;
+      }
+      .fade-exit {
+        opacity: 1;
+      }
+      .fade-exit-active {
+        opacity: 0;
+        transition: opacity 300ms;
+      }
+    }
+  }
+}

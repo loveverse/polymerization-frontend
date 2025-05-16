@@ -1,0 +1,164 @@
+.root {
+  padding: 0;
+  background-color: transparent;
+  :global {
+    :where(.ant-radio-button-wrapper) {
+      color: #666;
+      background-color: #f7f7f7;
+      &:first-child {
+        border-start-start-radius: 2px;
+        border-end-start-radius: 2px;
+      }
+      &:last-child {
+        border-end-end-radius: 2px;
+        border-start-end-radius: 2px;
+      }
+    }
+    .header-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      h2 {
+        margin: 0;
+      }
+    }
+
+    .total-count {
+      display: flex;
+      justify-content: space-between;
+      li {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        height: 160px;
+        padding: 0 20px 0 30px;
+        border-radius: 16px;
+        background-color: #f7f7f7;
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+        img {
+          width: 72px;
+        }
+        .count-box {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-left: 30px;
+          span {
+            font-size: 18px;
+            color: #666;
+          }
+          p {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3d3d3d;
+            margin: 0;
+          }
+        }
+      }
+      .other-box {
+        justify-content: space-between;
+        .left {
+          display: flex;
+          .count-box {
+            margin: 0 20px 0 30px;
+          }
+        }
+        .line {
+          background: #ffffff;
+          width: 2px;
+          height: 128px;
+        }
+        .right {
+          display: flex;
+          margin-right: 20px;
+        }
+      }
+    }
+
+    .school-info-header {
+      padding: 16px;
+      margin-bottom: 16px;
+      background-color: #fff;
+      .company-total-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+    }
+    .course-count-main {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      :where(.course-count-box) {
+        width: 65%;
+        padding: 20px;
+        background-color: #fff;
+        .course-screen-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+          .title-box {
+            .title {
+              font-size: 20px;
+              font-weight: bold;
+              color: #3d3d3d;
+            }
+          }
+        }
+
+        .course-count {
+          color: #666;
+        }
+      }
+      .school-count-box {
+        flex: 1;
+        padding: 20px;
+        margin-left: 10px;
+        box-sizing: border-box;
+        background-color: #fff;
+        .header-text {
+          margin: 0 0 20px;
+        }
+        .regiester-school-list {
+          flex: 1;
+          padding: 4px;
+          border: 1px solid #eeeeee;
+          .school-count-header {
+            font-size: 16px;
+            line-height: 44px;
+            color: #666;
+            background-color: #f7f7f7;
+          }
+          li {
+            display: grid;
+            justify-content: space-between;
+            align-items: center;
+            grid-template-columns: 70% 30%;
+            line-height: 40px;
+            font-size: 16px;
+            color: #3d3d3d;
+            text-align: center;
+          }
+        }
+        .device-circle-box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 400px;
+        }
+      }
+    }
+    .experiment-count-footer {
+      padding: 20px;
+      background-color: #fff;
+      .total-box {
+        margin-bottom: 40px;
+      }
+    }
+  }
+}

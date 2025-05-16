@@ -1,0 +1,21 @@
+.com_title_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #3d3d3d;
+  :global {
+    .title-left {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      .line {
+        width: 6px;
+        height: 16px;
+        margin-right: 8px;
+        background: linear-gradient(0deg, #4187ff 0%, #679fff 99%);
+        border-radius: 4px;
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.root {
+  :global {
+    .dimension-body {
+      .dimension-header {
+        display: grid;
+        grid-template-columns: 30% 45% 25%;
+        height: 40px;
+        line-height: 40px;
+        margin-top: 20px;
+        background-color: #fafafa;
+        border-bottom: 1px solid #ddd;
+        li {
+          text-align: center;
+          color: #000;
+          font-weight: bold;
+        }
+      }
+      .dimension-list {
+        display: grid;
+        grid-template-columns: 30% 45% 25%;
+        &:not(:last-child) {
+          border-bottom: 1px solid #ddd;
+        }
+        li {
+          height: 40px;
+          line-height: 40px;
+          padding: 0 10px;
+          text-align: center;
+        }
+      }
+      .add-dimension-btn {
+        margin-top: 15px;
+      }
+    }
+  }
+}

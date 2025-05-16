@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  :global {
+    .experiment-box {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+      text-align: right;
+      overflow-y: auto;
+      .create-btn {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

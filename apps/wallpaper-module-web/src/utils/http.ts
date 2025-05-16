@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 import {ElMessage} from "element-plus";
 
-import {domain, publicPath} from "../../config";
+import {domain, publicPath} from "@/config";
 import {SERVER_STATUS} from "@/utils/constant";
 
 interface ApiResponse<T> {

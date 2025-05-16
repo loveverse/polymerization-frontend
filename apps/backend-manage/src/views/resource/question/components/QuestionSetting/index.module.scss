@@ -1,0 +1,35 @@
+.root {
+  height: 36px;
+  padding: 0 13px;
+
+  border-bottom: 1px solid #ddd;
+  :global {
+    .question-set-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      .chapter-and-knowledge {
+        display: flex;
+        align-items: center;
+        .chapter-box {
+          margin-right: 20px;
+        }
+      }
+      .some-target {
+        font-size: 12px;
+      }
+      .add-tag {
+        color: $color-primary;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .target-box {
+        .add-tag {
+          margin-inline-end: 0;
+        }
+      }
+    }
+  }
+}

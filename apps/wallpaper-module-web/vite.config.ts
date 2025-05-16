@@ -28,7 +28,7 @@ export default defineConfig(({mode, command}) => {
       })
     ],
     server: {
-      port: 40200,
+      port: 40300,
       proxy: {}
     },
     resolve: {

@@ -1,0 +1,10 @@
+.root {
+  display: initial;
+  height: 100%;
+
+  :global {
+    .table-list {
+      padding: 20px;
+    }
+  }
+}

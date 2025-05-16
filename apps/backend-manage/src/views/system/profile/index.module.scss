@@ -1,0 +1,17 @@
+.root {
+  :global {
+    .navbar-box {
+      flex: 1;
+      .ant-tabs-nav {
+        border: none;
+      }
+      .ant-tabs-content-holder {
+        padding: 30px;
+        .base-form,
+        .safety-form {
+          width: 400px;
+        }
+      }
+    }
+  }
+}

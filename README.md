@@ -1,7 +1,8 @@
 # 聚合多应用网站
 
 ## 网站目录
-- `wallpaper-module-web(40200)`: 壁纸网站
+- `backend-manage(40200)`: 后台管理
+- `wallpaper-module-web(40300)`: 壁纸网站
 
 ## 幽灵依赖
 npm/yarn安装依赖时，存在依赖提升，某个项目使用的依赖，并没有在其 package.json 中声明，也可以直接使用，这种现象为”幽灵依赖“。

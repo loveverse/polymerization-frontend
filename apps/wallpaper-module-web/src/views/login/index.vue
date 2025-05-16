@@ -63,7 +63,7 @@ import {Base64} from 'js-base64'
 import {ElMessage, FormInstance} from 'element-plus'
 
 import {reqLogin, reqUserInfo} from '@/api/login/index.ts'
-import {username, password, domain} from '../../../config'
+import {username, password, domain} from '../../config'
 import {User, Lock, Position} from "@element-plus/icons-vue";
 import {v4 as uuidV4} from "uuid"
 
@@ -80,7 +80,7 @@ const loginForm = reactive({
 const loginRules = reactive({
   username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
   password: [{required: true, message: '请输入密码', trigger: 'blur'}],
-  // captcha: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+  // captchaCode: [{required: true, message: '请输入验证码', trigger: 'blur'}]
 })
 
 const captchaImg = ref("")
@@ -95,7 +95,6 @@ const handleLogin = () => {
     if (!valid) return
 
     loading.value = true
-
     const res = await reqLogin({
       ...loginForm,
       loginType: "teacher",

@@ -1,0 +1,79 @@
+{
+  "name": "backend-manage",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^5.3.1",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-react": "^1.0.6",
+    "ahooks": "^3.8.1",
+    "antd": "^5.19.0",
+    "axios": "^1.6.7",
+    "dayjs": "^1.11.13",
+    "echarts": "^5.5.1",
+    "immer": "^10.1.1",
+    "js-base64": "^3.7.7",
+    "normalize.css": "^8.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1",
+    "react-transition-group": "^4.4.5",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.2"
+  },
+  "scripts": {
+    "dev": "dotenv -e .env.development craco start",
+    "build:test": "dotenv -e .env.test craco build",
+    "build": "dotenv -e .env.production craco build",
+    "clean": "rimraf node_modules",
+    "serve:old": "react-scripts start",
+    "build:old": "react-scripts build",
+    "test:old": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@svgr/webpack": "^8.1.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.60",
+    "@types/react-dom": "^18.2.19",
+    "@types/react-transition-group": "^4.4.12",
+    "@types/webpack-env": "^1.18.5",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "babel-loader": "^9.2.1",
+    "dotenv-cli": "^7.4.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "react-scripts": "5.0.1",
+    "rimraf": "^5.0.10",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.3.3",
+    "svgo-loader": "^4.0.0"
+  }
+}

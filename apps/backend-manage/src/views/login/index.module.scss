@@ -1,0 +1,93 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 550px;
+  height: 100%;
+  min-height: 500px;
+  :global {
+    .login-box {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+      .login-left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52%;
+        height: 100%;
+        padding: 0 100px;
+        box-sizing: border-box;
+        background: linear-gradient(
+          180deg,
+          rgba(14, 100, 244, 0.02) 0%,
+          rgba(14, 100, 244, 0.08) 100%
+        );
+        img {
+          width: 90%;
+        }
+      }
+      .login-form {
+        margin: auto;
+        border-radius: 10px;
+        .login-logo {
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 40px;
+          .login-icon {
+            width: 70px;
+          }
+          .logo-text {
+            font-size: 40px;
+            font-weight: bold;
+            white-space: nowrap;
+          }
+          .underline {
+            margin-top: 20px;
+            width: 100px;
+            height: 6px;
+            background-color: #4187ff;
+            border-radius: 6px;
+          }
+        }
+        .ant-form-item {
+          height: 75px;
+          margin-bottom: 0;
+          .ant-input-prefix {
+            margin-right: 10px;
+          }
+          .ant-input-affix-wrapper-lg {
+            padding: 8.3px 11px;
+          }
+          .ant-input-affix-wrapper,
+          .ant-input-lg {
+            font-size: 14px;
+          }
+          .ant-input-affix-wrapper {
+            color: #aaa;
+            background-color: #f5f5f5;
+          }
+          .ant-input {
+            background-color: transparent !important;
+          }
+        }
+        .login-btn {
+          width: 100%;
+          margin-top: 10px;
+          .ant-form-item-control-input-content {
+            .ant-btn {
+              border-radius: 143px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.root {
+  :global {
+    .step-form {
+      .question-list {
+        margin-bottom: 20px;
+        .question-list-header {
+          line-height: 54px;
+          text-align: center;
+          color: #3d3d3d;
+          background-color: #f7f7f7;
+        }
+        .question-item {
+          text-align: center;
+          border-bottom: 1px solid #eee;
+          padding: 10px 0;
+          margin-bottom: 0;
+          .ant-select {
+            text-align: left;
+          }
+          .num {
+            line-height: 32px;
+          }
+        }
+        .create-question-btn {
+          margin-bottom: 20px;
+        }
+        .error-color {
+          color: #ff4d4f;
+        }
+      }
+    }
+  }
+}
