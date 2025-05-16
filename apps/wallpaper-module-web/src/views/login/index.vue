@@ -35,7 +35,7 @@
           </el-form-item>
           <el-form-item prop="captcha">
             <el-space>
-              <el-input v-model="loginForm.captcha" placeholder="请输入验证码"
+              <el-input v-model="loginForm.captchaCode" placeholder="请输入验证码"
                         :prefix-icon="Position"/>
               <img class="hand" :src="captchaImg" @click="generateCaptchaImg" alt="验证码"/>
             </el-space>
@@ -73,13 +73,14 @@ const router = useRouter()
 const loginForm = reactive({
   username: username,
   password: password,
-  captcha: ""
+  captchaCode: "",
+  captchaKey: ""
 })
 
 const loginRules = reactive({
   username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
   password: [{required: true, message: '请输入密码', trigger: 'blur'}],
-  captcha: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+  // captcha: [{required: true, message: '请输入验证码', trigger: 'blur'}]
 })
 
 const captchaImg = ref("")
@@ -94,31 +95,28 @@ const handleLogin = () => {
     if (!valid) return
 
     loading.value = true
-    try {
-      const res = await reqLogin({
-        ...loginForm,
-        loginType: "teacher",
-        loginDevice: "pc",
-        password: Base64.encode(loginForm.password),
-      })
 
-      if (res.code === 200) {
-        const {token} = res.data
-        localStorage.setItem("token", token)
+    const res = await reqLogin({
+      ...loginForm,
+      loginType: "teacher",
+      loginDevice: "pc",
+      password: Base64.encode(loginForm.password),
+    })
 
-      } else {
-        ElMessage.error(res.msg)
-      }
-    } catch (error) {
-      console.error(error)
-      ElMessage.error('登录失败，请重试')
-    } finally {
-      loading.value = false
+    if (res.code === 200) {
+      const {token} = res.data
+      localStorage.setItem("token", token)
+      ElMessage.success("登录成功")
+    } else {
+      generateCaptchaImg()
+      ElMessage.error(res.msg)
     }
+    loading.value = false
   })
 }
 const generateCaptchaImg = () => {
-  captchaImg.value = `${domain}/auth-api/auth/v1/captcha/${uuidV4()}?w=100&h=30`
+  loginForm.captchaKey = uuidV4()
+  captchaImg.value = `${domain}/auth-api/auth/v1/captcha/${loginForm.captchaKey}?w=100&h=30`
 }
 // 如果已登录，直接跳转
 onMounted(() => {
