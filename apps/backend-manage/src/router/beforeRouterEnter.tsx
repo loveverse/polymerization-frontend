@@ -29,7 +29,7 @@ function BeforeRouterEnter() {
     } else {
       localStorage.removeItem("backend-token");
       navigate("/login");
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const getInitData = async () => {
@@ -91,13 +91,13 @@ function BeforeRouterEnter() {
           message.error("获取初始化信息失败，请刷新重试！");
         }
       } else {
-        message.error(res1.message);
+        message.error(res1.msg);
       }
     } catch (error) {
       message.error("系统繁忙，请刷新重试！");
       navigate("/500");
     }
-    
+
 
     isLoaded.current = true;
     setLoading(false);
@@ -109,12 +109,13 @@ function BeforeRouterEnter() {
       navigate("/login");
       return;
     }
-    if (!userInfo) {
-      fetchUserInfo();
-    }
-    if (!Object.keys(dicts.dict).length) {
-      getInitData();
-    }
+    // if (!userInfo) {
+    //   fetchUserInfo();
+    // }
+    // if (!Object.keys(dicts.dict).length) {
+    //   getInitData();
+    // }
+    setPermissionRoutes(layoutRoutes);
   }, [location.pathname]);
 
   if (loading) {

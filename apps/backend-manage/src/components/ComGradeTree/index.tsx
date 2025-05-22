@@ -54,7 +54,7 @@ const ComGradeTree = forwardRef<ChildTreeRef, ChildTreeProps>(function Child(pro
       knowledgeInfo.current = res.data.periods || []; // 防止返回null
       filterPeriod();
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   // 教材
@@ -191,13 +191,13 @@ const ComGradeTree = forwardRef<ChildTreeRef, ChildTreeProps>(function Child(pro
         setDefaultSelect([tempIds.node.nodeId]);
       }
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     setIds(tempIds);
     callPage?.({ ...tempIds.node });
     setLoading(false);
   };
-  
+
   const onSelect: TreeProps<ChapterTreeRes>["onSelect"] = (_, { node }) => {
     setDefaultSelect([node.nodeId]);
     setIds({

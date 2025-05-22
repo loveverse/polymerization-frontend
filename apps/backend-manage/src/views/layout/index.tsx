@@ -32,7 +32,7 @@ const LayoutMain: React.FC = () => {
       navigate("/login");
       message.success("退出登录成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const routeToMenuFn = useRouteToMenuFn();

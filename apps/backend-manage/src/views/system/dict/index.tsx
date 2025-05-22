@@ -126,7 +126,7 @@ const SystemDict: React.FC = () => {
     if (res.code === 200) {
       getDictDetailList(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     setDictListLoading(false);
   };
@@ -149,7 +149,7 @@ const SystemDict: React.FC = () => {
         }
       }
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -164,7 +164,7 @@ const SystemDict: React.FC = () => {
       getDictList();
       message.success("添加字典成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     addDictRef.current?.setConfirmLoading(false);
   };
@@ -176,7 +176,7 @@ const SystemDict: React.FC = () => {
       getDictList();
       message.success("修改字典信息成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     updateDictRef.current?.setConfirmLoading(false);
   };
@@ -186,7 +186,7 @@ const SystemDict: React.FC = () => {
       getDictList();
       message.success("删除字典成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -204,7 +204,7 @@ const SystemDict: React.FC = () => {
       getDictDetailList();
       message.success("添加字典详情成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     addDictDetailRef.current?.setConfirmLoading(false);
   };
@@ -217,7 +217,7 @@ const SystemDict: React.FC = () => {
       getDictDetailList();
       message.success("修改字典信息成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     updateDictDetailRef.current?.setConfirmLoading(false);
   };
@@ -233,7 +233,7 @@ const SystemDict: React.FC = () => {
           close();
           message.success("删除字典详情成功");
         } else {
-          message.error(res.message);
+          message.error(res.msg);
         }
       },
     });

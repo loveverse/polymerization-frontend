@@ -103,7 +103,7 @@ const SystemMenu: React.FC = () => {
     if (res.code === 200) {
       setMenuList(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     setLoading(false);
   };
@@ -117,7 +117,7 @@ const SystemMenu: React.FC = () => {
       fetchMenuTree();
       message.success("添加菜单成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     addMenuRef.current?.setConfirmLoading(false);
   };
@@ -129,7 +129,7 @@ const SystemMenu: React.FC = () => {
       fetchMenuTree();
       message.success("修改菜单信息成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const delMenu = async (values: CommonId, text: string) => {
@@ -144,7 +144,7 @@ const SystemMenu: React.FC = () => {
           close();
           message.success("删除菜单成功");
         } else {
-          message.error(res.message);
+          message.error(res.msg);
         }
       },
     });

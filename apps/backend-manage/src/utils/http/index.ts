@@ -6,13 +6,14 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { message } from "antd";
-import { domain, publicPath } from "../../config";
+import { domain } from "@/config";
 import { SERVER_STATUS } from "@/utils/constant";
 
-interface ApiResonse<T> {
+interface ApiResponse<T> {
   code: string | number;
   data: T;
-  message?: string;
+  msg: string;
+  errorInfo: null | string[]
 }
 
 const config: AxiosRequestConfig = {
@@ -55,7 +56,7 @@ class RequestHttp {
       }
     );
   }
-  private handleResponse<T>(res: AxiosResponse<ApiResonse<T>>): ApiResonse<T> {
+  private handleResponse<T>(res: AxiosResponse<ApiResponse<T>>): ApiResponse<T> {
     const data = res.data;
     // if (data.code === 401) {
     //   localStorage.removeItem("backend-token");
@@ -73,10 +74,10 @@ class RequestHttp {
     url: string,
     params: any = {},
     config?: AxiosRequestConfig | ContentType
-  ): Promise<ApiResonse<T>> {
+  ): Promise<ApiResponse<T>> {
     try {
       const axiosConfig = typeof config === "string" ? getConfig(config) : config;
-      const res = await this.service.get<ApiResonse<T>>(url, { ...axiosConfig, params });
+      const res = await this.service.get<ApiResponse<T>>(url, { ...axiosConfig, params });
       return this.handleResponse(res);
     } catch (err) {
       return this.handleError(err);
@@ -86,10 +87,36 @@ class RequestHttp {
     url: string,
     params: any = {},
     config?: AxiosRequestConfig | ContentType
-  ): Promise<ApiResonse<T>> {
+  ): Promise<ApiResponse<T>> {
     try {
       const axiosConfig = typeof config === "string" ? getConfig(config) : config;
-      const response = await this.service.post<ApiResonse<T>>(url, params, axiosConfig);
+      const response = await this.service.post<ApiResponse<T>>(url, params, axiosConfig);
+      return this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+  async put<T = any>(
+    url: string,
+    params: any = {},
+    config?: AxiosRequestConfig | ContentType
+  ): Promise<ApiResponse<T>> {
+    try {
+      const axiosConfig = typeof config === "string" ? getConfig(config) : config;
+      const response = await this.service.put<ApiResponse<T>>(url, params, axiosConfig);
+      return this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+  async delete<T = any>(
+    url: string,
+    params: any = {},
+    config?: AxiosRequestConfig | ContentType
+  ): Promise<ApiResponse<T>> {
+    try {
+      const axiosConfig = typeof config === "string" ? getConfig(config) : config;
+      const response = await this.service.delete<ApiResponse<T>>(url, { ...axiosConfig, params });
       return this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);

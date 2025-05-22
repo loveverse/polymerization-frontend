@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Modal, Space, Switch, Table, Tag, message } from "antd";
-import type { TableColumnsType } from "antd";
+import React, {useEffect, useRef, useState} from "react";
+import {Button, Modal, Space, Switch, Table, Tag, message} from "antd";
+import type {TableColumnsType} from "antd";
 
-import { reqRoleList } from "@/api/system";
+import {reqRoleList} from "@/api/system";
 import {
   reqAddUser,
   reqDelUser,
@@ -11,25 +11,30 @@ import {
   reqUpdateUserStatus,
   reqUserPage,
 } from "@/api/user";
-import { AddUserReq, UpdateUserReq, UpdateUserStatusReq, UserPageRes } from "@/api/user/types";
-import { PAGE_CURRENT, PAGE_SIZE } from "@/utils/constant";
-import UserModal, { UserModalRef } from "./UserModal";
+import {
+  AddUserReq,
+  UpdateUserReq,
+  UpdateUserStatusReq,
+  UserDataRes,
+  } from "@/api/user/types";
+import {PAGE_CURRENT, PAGE_SIZE} from "@/utils/constant";
+import UserModal, {UserModalRef} from "./UserModal";
 import styles from "./index.module.scss";
-import { useAppContext } from "@/context";
-import { RolePageRes } from "@/api/system/types";
+import {useAppContext} from "@/context";
+import {RoleDataRes, RolePageParam} from "@/api/system/types";
 
 const SystemUser: React.FC = () => {
-  const { dicts } = useAppContext();
+  const {dicts} = useAppContext();
 
-  const columns: TableColumnsType<UserPageRes> = [
+  const columns: TableColumnsType<UserDataRes> = [
     {
       title: "序号",
       align: "center",
       width: 80,
       render: (value, _, index) => (userData.page - 1) * userData.size + index + 1,
     },
-    { title: "用户名", dataIndex: "username", align: "center" },
-    { title: "昵称", dataIndex: "name", align: "center" },
+    {title: "用户名", dataIndex: "username", align: "center"},
+    {title: "昵称", dataIndex: "name", align: "center"},
     {
       title: "性别",
       dataIndex: "gender",
@@ -64,7 +69,7 @@ const SystemUser: React.FC = () => {
       dataIndex: "phoneNumber",
       align: "center",
     },
-    { title: "邮箱", dataIndex: "email", align: "center" },
+    {title: "邮箱", dataIndex: "email", align: "center"},
     {
       title: "状态",
       dataIndex: "isLock",
@@ -101,7 +106,7 @@ const SystemUser: React.FC = () => {
                   content: `是否将【${record.username}】密码重置为123456 ?`,
                   onOk: async (close) => {
                     resetUserPassword(
-                      { id: record.id, password: "123456" } as UpdateUserReq,
+                      {id: record.id, password: "123456"} as UpdateUserReq,
                       close
                     );
                   },
@@ -133,7 +138,7 @@ const SystemUser: React.FC = () => {
               }}>
               编辑
             </Button>
-            <Button type="text" danger onClick={() => delUser({ id: record.id }, record.username)}>
+            <Button type="text" danger onClick={() => delUser({id: record.id}, record.username)}>
               删除
             </Button>
           </>
@@ -142,7 +147,7 @@ const SystemUser: React.FC = () => {
     },
   ];
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState<PageRes<UserPageRes>>({
+  const [userData, setUserData] = useState<PageResult<UserDataRes>>({
     page: PAGE_CURRENT,
     size: PAGE_SIZE,
     data: [],
@@ -150,16 +155,16 @@ const SystemUser: React.FC = () => {
   });
   const getUserPage = async (page = userData.page, size = userData.size) => {
     setLoading(true);
-    const res = await reqUserPage({ current: page, size });
+    const res = await reqUserPage({page, size});
     if (res.code === 200) {
-      const { current, ...rest } = res.data;
-      setUserData({ ...rest, page: current as number });
+      const {current, ...rest} = res.data;
+      setUserData({...rest, page: current as number});
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     setLoading(false);
   };
-  const [roleList, setRoleList] = useState<RolePageRes[]>([]);
+  const [roleList, setRoleList] = useState<RoleDataRes[]>([]);
   const getRoleList = async (cb: () => void) => {
     const res = await reqRoleList();
     if (res.code === 200) {
@@ -170,7 +175,7 @@ const SystemUser: React.FC = () => {
         message.warning("请先到角色管理创建角色");
       }
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const addUserRef = useRef<UserModalRef>(null);
@@ -182,7 +187,7 @@ const SystemUser: React.FC = () => {
       getUserPage();
       message.success("添加用户成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     addUserRef.current?.setConfirmLoading(false);
   };
@@ -190,14 +195,14 @@ const SystemUser: React.FC = () => {
   const updateUserRef = useRef<UserModalRef>(null);
   const updateUser = async (values: UpdateUserReq) => {
     updateUserRef.current?.setConfirmLoading(true);
-    const { isLock, ...rest } = values;
+    const {isLock, ...rest} = values;
     const res = await reqUpdateUser(rest);
     if (res.code === 200) {
       updateUserRef.current?.setShow(false);
       getUserPage();
       message.success("修改用户信息成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
     updateUserRef.current?.setConfirmLoading(false);
   };
@@ -207,7 +212,7 @@ const SystemUser: React.FC = () => {
       message.success("修改状态成功");
       getUserPage(userData.page, userData.size);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const resetUserPassword = async (values: UpdateUserReq, close: () => void) => {
@@ -217,7 +222,7 @@ const SystemUser: React.FC = () => {
       close();
       getUserPage(userData.page, userData.size);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -233,7 +238,7 @@ const SystemUser: React.FC = () => {
           close();
           message.success("删除用户成功");
         } else {
-          message.error(res.message);
+          message.error(res.msg);
         }
       },
     });
@@ -277,7 +282,7 @@ const SystemUser: React.FC = () => {
           },
         }}
       />
-      <UserModal title="新增用户" ref={addUserRef} handleSubmit={addUser} roleOptions={roleList} />
+      <UserModal title="新增用户" ref={addUserRef} handleSubmit={addUser} roleOptions={roleList}/>
       <UserModal
         title="修改用户"
         ref={updateUserRef}

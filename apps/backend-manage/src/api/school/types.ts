@@ -2,7 +2,7 @@ import { Dayjs } from "dayjs";
 import { PeriodListRes } from "../base/common/types";
 
 /* 学校管理 */
-export interface SchoolPageReq extends PageReq {
+export interface SchoolPageParam extends PageParam {
   data: {
     dateRange?: number[];
     schoolName?: string;
@@ -26,7 +26,7 @@ export interface AddSchoolReq {
 }
 export type UpdateSchoolReq = AddSchoolReq & CommonId;
 export type UpdateSchoolStatusReq = Pick<AddSchoolReq, "isDisabled"> & CommonId;
-export interface SchoolPageRes {
+export interface SchoolDataRes {
   id: string;
   version: string;
   valid: number;

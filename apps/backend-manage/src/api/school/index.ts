@@ -1,17 +1,17 @@
 import http from "@/utils/http";
 import {
-  SchoolPageReq,
-  SchoolPageRes,
+
+  SchoolPageParam,
   AddSchoolReq,
   UpdateSchoolReq,
   SchoolRoleListRes,
   SetSchoolMenuReq,
   UpdateSchoolsValid,
-  UpdateSchoolStatusReq,
+  UpdateSchoolStatusReq, SchoolDataRes,
 } from "./types";
 
-export const reqSchoolPage = (params: SchoolPageReq) =>
-  http.post<PageRes<SchoolPageRes>>("/embodied-user-api/manager/school/v1/page", params);
+export const reqSchoolPage = (params: SchoolPageParam) =>
+  http.post<PageResult<SchoolDataRes>>("/embodied-user-api/manager/school/v1/page", params);
 export const reqAddSchool = (params: AddSchoolReq) =>
   http.post("/embodied-user-api/manager/school/v1/add", params);
 export const reqUpdateSchool = (params: UpdateSchoolReq) =>

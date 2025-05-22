@@ -1,10 +1,10 @@
 /* 用户管理 */
 
-import { RolePageRes } from "../system/types";
+import {RoleDataRes, RolePageParam} from "../system/types";
 
 /* 用户管理 */
 
-export interface UserPageRes {
+export interface UserDataRes {
   id: string;
   version: string;
   valid: number;
@@ -18,7 +18,7 @@ export interface UserPageRes {
   email?: string;
   isLock: number;
   name: string;
-  roles: RolePageRes[];
+  roles: RoleDataRes[];
   gender: string;
   headImg: string;
   [key: string]: any;

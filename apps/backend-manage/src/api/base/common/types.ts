@@ -1,4 +1,4 @@
-import { RolePageRes } from "@/api/system/types";
+import {RoleDataRes, RolePageParam} from "@/api/system/types";
 import { TreeDataNode } from "antd";
 
 /* 学校管理 */
@@ -31,7 +31,7 @@ export interface AreaTreeRes {
 export interface UserInfo {
   username: string;
   name: string;
-  roles: RolePageRes[];
+  roles: RoleDataRes[];
   title: string;
   gender: string;
   phoneNumber: string;

@@ -31,7 +31,7 @@ const ComEditor = (props: ComEditorProps) => {
     if (res.code === 200) {
       insertFn(res.data.url);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   // 编辑器配置

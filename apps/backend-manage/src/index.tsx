@@ -1,16 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "normalize.css";
 import "@/assets/css/base.scss";
+import zhCN from "antd/lib/locale/zh_CN";
+import {ConfigProvider, App as AntdApp} from "antd";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   // <React.StrictMode>
-  <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
-    <App />
+  <HashRouter future={{v7_relativeSplatPath: true, v7_startTransition: true}}>
+    <AntdApp style={{height: "inherit"}}>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          token: {
+            colorPrimary: "#3187FF",
+          },
+        }}>
+        <App/>
+      </ConfigProvider>
+    </AntdApp>
   </HashRouter>
   // </React.StrictMode>
 );

@@ -16,9 +16,9 @@ const AuthRouter = ({ isLoaded, children }: AuthRouterProps) => {
   if (!token) {
     return children;
   }
-  if (!Object.keys(dicts.dict).length || !userInfo || !isLoaded) {
-    return null;
-  }
+  // if (!Object.keys(dicts.dict).length || !userInfo || !isLoaded) {
+  //   return null;
+  // }
 
   // 路由鉴权，请求的路由 没有的跳转404
   // const routerList = flattenRoutes(props.userRoutes);

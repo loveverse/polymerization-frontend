@@ -86,6 +86,9 @@ importers:
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
       web-vitals:
         specifier: ^2.1.4
         version: 2.1.4

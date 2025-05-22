@@ -9,7 +9,7 @@ import {
   reqSetUpCourseInfo,
 } from "@/api/home";
 import { reqSchoolPage } from "@/api/school";
-import { SchoolPageRes } from "@/api/school/types";
+import {SchoolDataRes, SchoolPageParam} from "@/api/school/types";
 import {
   CountList,
   DeviceCountBySchoolRes,
@@ -74,13 +74,13 @@ const Home = () => {
   const { dicts } = useAppContext();
   const [schoolId, setSchoolId] = useState(undefined);
   const [schoolName, setSchoolName] = useState("");
-  const [schoolList, setSchoolList] = useState<SchoolPageRes[]>([]);
+  const [schoolList, setSchoolList] = useState<SchoolDataRes[]>([]);
   const getSchoolList = async () => {
-    const res = await reqSchoolPage({ current: 1, size: 10000, data: {} });
+    const res = await reqSchoolPage({ page: 1, size: 10000, data: {} });
     if (res.code === 200) {
       setSchoolList(res.data.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const [countList, setCountList] = useState<CountList[]>([]);
@@ -93,7 +93,7 @@ const Home = () => {
       });
       setCountList(list);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -103,7 +103,7 @@ const Home = () => {
     if (res.code === 200) {
       setDeviceCountInfo(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -121,7 +121,7 @@ const Home = () => {
     if (res.code === 200) {
       setCourseInfo(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
@@ -137,7 +137,7 @@ const Home = () => {
     if (res.code === 200) {
       setExperimentAndPracticeInfo(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   useEffect(() => {

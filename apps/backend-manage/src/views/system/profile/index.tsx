@@ -34,7 +34,7 @@ const Profile = () => {
       setUserInfo(values);
       message.success("修改用户信息成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const normFile = (e: any) => {
@@ -86,7 +86,7 @@ const Profile = () => {
       navigate("/login");
       message.success("修改密码成功");
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
   const navbar: TabsProps["items"] = [

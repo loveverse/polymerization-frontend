@@ -11,11 +11,11 @@ import {
   InputNumber,
 } from "antd";
 import { UpdateUserReq } from "@/api/user/types";
-import { RolePageRes } from "@/api/system/types";
+import {RoleDataRes, RolePageParam} from "@/api/system/types";
 import { useAppContext } from "@/context";
 
 interface UserModalProps extends ModalProps, ChildProps<UpdateUserReq> {
-  roleOptions: RolePageRes[];
+  roleOptions: RoleDataRes[];
 }
 export interface UserModalRef extends ChildRef {
   userForm: FormInstance<UpdateUserReq>;

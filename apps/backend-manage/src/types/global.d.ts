@@ -1,4 +1,6 @@
 // 字典
+
+
 type DictItem = {
   value: string | number;
   label: string;
@@ -48,49 +50,42 @@ interface TextBookVos {
 } // 教材的册级
 
 /* 公用接口类型 */
-interface PageRes<T = any> {
+interface PageResult<T = any> {
   current?: number;
   page: number;
   size: number;
   data: T[];
   total: number;
 }
-interface PageReq {
-  current: number;
+
+interface PageParam {
+  page: number;
   size: number;
 }
 
-interface RecordReq {
-  offset: number;
-  size: number;
-}
-interface RecordRes<T = any> {
-  current?: number;
-  page: number;
-  size: number;
-  records: T[];
-  total: number;
-}
 
 /* 子组件通用类型 */
 interface ChildRef {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setConfirmLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 interface ChildProps<T = any> {
   handleSubmit: (params: T) => void;
 }
+
 interface ChildCallback {
-  callback: () => void;
+  setShow: (value: boolean) => void;
 }
+
 interface CommonId {
   id: string;
 }
+
 /* 除某些类型外，其他类型为可选 */
 type PartialExcept<T, K extends keyof T> = {
   [P in keyof T as P extends K ? P : never]: T[P];
 } & {
   [P in keyof T as P extends K ? never : P]?: T[P];
 };
-
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { Params, RouteObject, useRoutes } from "react-router-dom";
-import { errorRoutes, loginRoute, staticRoutes } from "./routes";
+import {Params, RouteObject, useRoutes} from "react-router-dom";
+import {errorRoutes, loginRoute, staticRoutes} from "./routes";
 import Layout from "@/views/layout";
 import AuthRouter from "./AuthRouter";
 
@@ -81,6 +81,5 @@ export default function Router({
       children: [...staticRoutes, ...permissionRoutes, ...errorRoutes],
     },
   ];
-  const router = useRoutes(routes as unknown as RouteObject[]);
-  return router;
+  return useRoutes(routes as unknown as RouteObject[]);
 }

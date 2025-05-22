@@ -8,8 +8,7 @@ import {
   IAddDictDetail,
   IDelDictDetail,
   IUpdateDictDetail,
-  UpdataRoleReq,
-  RolePageRes,
+
   AddRoleReq,
   AssignRoleToUserReq,
   SetRolePermissionReq,
@@ -19,31 +18,33 @@ import {
   AddSchemeReq,
   EditSchemeReq,
   SchemeListRes,
-  EditSchemeStatusReq,
+  EditSchemeStatusReq, UpdateRoleReq, RoleDataRes, RolePageParam,
 } from "./types";
-import { UserPageRes } from "../user/types";
-import { MODULE_NAME } from "@/utils/constant";
+import {MODULE_NAME} from "@/utils/constant";
+import {UserDataRes} from "@/api/user/types";
 
 /* 角色管理 */
-export const reqRolePage = (params: PageReq) =>
-  http.post<PageRes<RolePageRes>>("/embodied-user-api/manager/role/v1/page", params);
-export const reqRoleList = () =>
-  http.post<RolePageRes[]>("/embodied-user-api/manager/role/v1/list");
 export const reqAddRole = (params: AddRoleReq) =>
-  http.post("/embodied-user-api/manager/role/v1/add", params);
-export const reqUpdateRole = (params: UpdataRoleReq) =>
-  http.post("/embodied-user-api/manager/role/v1/update", params);
+  http.post("/auth-api/v1/role/create", params);
 export const reqDelRole = (params: CommonId) =>
-  http.post("/embodied-user-api/manager/role/v1/delete", params);
+  http.delete("/auth-api/v1/role/delete", params);
+export const reqUpdateRole = (params: UpdateRoleReq) =>
+  http.put("/auth-api/v1/role/update", params);
+export const reqRoleList = () =>
+  http.get<RoleDataRes[]>("/auth-api/v1/role/list");
+export const reqRolePage = (params: RolePageParam) =>
+  http.get<PageResult<RoleDataRes>>("/auth-api/v1/role/page", params);
+
+
 export const reqRolePermission = (params: CommonId) =>
   http.post("/embodied-user-api/manager/role/v1/one_with_menu", params);
 export const reqSetRolePermission = (params: SetRolePermissionReq) =>
   http.post("/embodied-user-api/manager/role/v1/empowerment", params);
 // 用户列表
 export const reqUserByRoleList = (params: CommonId) =>
-  http.post<UserPageRes[]>("/embodied-user-api/manager/role/v1/listUserByRoleId", params);
+  http.post<UserDataRes[]>("/embodied-user-api/manager/role/v1/listUserByRoleId", params);
 export const reqNoAssignUserList = (params: CommonId) =>
-  http.post<UserPageRes[]>("/embodied-user-api/manager/role/v1/listUserExcludeRole", params);
+  http.post<UserDataRes[]>("/embodied-user-api/manager/role/v1/listUserExcludeRole", params);
 export const reqAssignRoleToUser = (params: AssignRoleToUserReq) =>
   http.post("/embodied-user-api/manager/role/v1/addUserRole", params);
 export const reqDelUserRole = (params: AssignRoleToUserReq) =>
@@ -68,7 +69,7 @@ export const reqDelDictDetail = (params: IDelDictDetail) =>
 
 /* 菜单管理 */
 export const reqMenuTree = () =>
-  http.post("/embodied-user-api/manager/menu/v1/module_tree", { moduleName: MODULE_NAME });
+  http.post("/embodied-user-api/manager/menu/v1/module_tree", {moduleName: MODULE_NAME});
 // 角色菜单
 export const reqAddMenu = (params: AddMenuReq) =>
   http.post("/embodied-user-api/manager/menu/v1/add", params);
