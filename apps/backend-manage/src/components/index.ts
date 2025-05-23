@@ -1,6 +1,5 @@
 export { BarChart, PieChart, RadarChart } from "./ComEcharts";
 export { default as ComEditor } from "./ComEditor";
-export { default as ComGradeTree } from "./ComGradeTree";
 export { default as ComRadio } from "./ComRadio";
 export { default as ComTitle } from "./ComTitle";
 export { default as NotAuth } from "./ErrorPages/403";

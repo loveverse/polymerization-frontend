@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Icon from "@ant-design/icons";
 import "./index.scss";
 
@@ -10,8 +10,7 @@ let modules: string[] = [];
 try {
   const requireContext = require.context("../../assets/svgs", true, /\.svg$/);
   modules = requireContext.keys().map((modulePath) => {
-    const moduleName = modulePath.replace(/\.\/(.*)\.\w+$/, "$1");
-    return moduleName;
+    return modulePath.replace(/\.\/(.*)\.\w+$/, "$1");
   });
 } catch (error) {
   console.error(error);

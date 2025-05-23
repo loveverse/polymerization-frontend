@@ -25,7 +25,7 @@ export interface IMenuTypeList {
 }
 
 const rootDir = [{ value: "0", label: "根目录" }];
-const SystemMenu: React.FC = () => {
+const MenuManage: React.FC = () => {
   const columns: TableColumnsType<IMenuTypeList> = [
     { title: "菜单名", dataIndex: "name" },
     { title: "菜单图标", dataIndex: "icon" },
@@ -220,4 +220,4 @@ const SystemMenu: React.FC = () => {
   );
 };
 
-export default SystemMenu;
+export default MenuManage;

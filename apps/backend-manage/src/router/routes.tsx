@@ -2,42 +2,52 @@ import Login from "@/views/login";
 
 /* 首页 */
 import Home from "@/views/home";
+import ModuleManage from "@/views/module";
 
 
-import UserManage from "@/views/user";
 /* 系统设置 */
-import Profile from "@/views/system/profile";
-import SystemDict from "@/views/system/dict";
+import UserManage from "@/views/system/user";
+import DictManage from "@/views/system/dict";
 import RoleManage from "@/views/system/role";
 import MenuManage from "@/views/system/menu";
-
-import {Result} from "antd";
+import Profile from "@/views/system/profile";
 
 import {NotAuth, NotFound, ServerError} from "@/components";
 
 
 import {Navigate, Outlet} from "react-router-dom";
 import {AppRouteObject} from ".";
+import {
+  HomeOutlined, InboxOutlined,
+  ProductOutlined,
+  RobotOutlined,
+  SettingOutlined,
+  TeamOutlined,
+  UserOutlined
+} from "@ant-design/icons";
+import React from "react";
 
-
-const Empty = <Result style={{verticalAlign: "middle"}} title="正在开发中..."/>;
 
 // 动态路由
 export const asyncRoutes: AppRouteObject[] = [
-
   {
-    path: "/user",
-    element: <UserManage/>,
-    meta: {label: "用户管理", icon: "user"},
+    path: "/module",
+    element: <ModuleManage/>,
+    meta: {label: "模块管理", icon: <InboxOutlined/>}
   },
   {
     path: "/system",
     element: <Outlet/>,
-    meta: {label: "系统设置", icon: "system"},
+    meta: {label: "系统设置", icon: <SettingOutlined/>},
     children: [
       {
         index: true,
-        element: <Navigate to="/system/role" replace/>,
+        element: <Navigate to="/system/user" replace/>,
+      },
+      {
+        path: "/system/user",
+        element: <UserManage/>,
+        meta: {label: "用户管理", icon: <UserOutlined/>},
       },
       // 不需要做权限的路由
       {
@@ -48,17 +58,17 @@ export const asyncRoutes: AppRouteObject[] = [
       {
         path: "/system/role",
         element: <RoleManage/>,
-        meta: {label: "角色管理"},
+        meta: {label: "角色管理", icon: <TeamOutlined/>},
       },
       {
         path: "/system/menu",
         element: <MenuManage/>,
-        meta: {label: "菜单管理"},
+        meta: {label: "菜单管理", icon: <ProductOutlined/>},
       },
       {
         path: "/system/dict",
-        element: <SystemDict/>,
-        meta: {label: "字典管理"},
+        element: <DictManage/>,
+        meta: {label: "字典管理", icon: <RobotOutlined/>},
       },
     ],
   },
@@ -77,7 +87,7 @@ export const staticRoutes: AppRouteObject[] = [
   {
     path: "/home",
     element: <Home/>,
-    meta: {label: "首页", permission: true, icon: "home"},
+    meta: {label: "首页", permission: true, icon: <HomeOutlined/>},
   },
 ];
 export const errorRoutes: AppRouteObject[] = [

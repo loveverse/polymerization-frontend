@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { reqUserMenu, reqUserPermission, reqUserRole } from "@/api/login";
 import Router, { AppRouteObject } from "./index";
 import AppContext, { defaultDicts } from "@/context";
-import { reqDictDetail, reqDictList } from "@/api/system";
+import { reqDictItemList, reqDictList } from "@/api/system";
 import { SpinLoading } from "@/components";
 import { reqUserInfo } from "@/api/base";
 import { UserInfo } from "@/api/base/types";
@@ -41,29 +41,29 @@ function BeforeRouterEnter() {
           reqUserMenu(res1.data),
           reqUserPermission(res1.data),
           reqDictList(),
-          reqDictDetail(),
+          reqDictItemList(),
         ]);
         if ([res2, res3, res4, res5].every((k) => k.code === 200)) {
           const detail: Dict = {};
-          res5.data.forEach((itemSub: DictItem) => {
-            const list: DictItem[] = detail[itemSub.dictId] || [];
-            list.push(itemSub);
-            detail[itemSub.dictId] = list;
-          });
+          // res5.data.forEach((itemSub: DictItem) => {
+          //   const list: DictItem[] = detail[itemSub.dictId] || [];
+          //   list.push(itemSub);
+          //   detail[itemSub.dictId] = list;
+          // });
           const label: Label = {};
           const dict: Dict = {};
-          res4.data.forEach((item: DictItem) => {
-            const details = detail[item.dictId];
-            // 字典详情
-            dict[item.name] = details;
-            // 字典对象
-            label[item.name] = {};
-            if (dict[item.name]) {
-              dict[item.name].forEach((k: DictItem) => {
-                label[item.name][k.value] = k.label;
-              });
-            }
-          });
+          // res4.data.forEach((item: DictItem) => {
+          //   const details = detail[item.dictId];
+          //   // 字典详情
+          //   dict[item.name] = details;
+          //   // 字典对象
+          //   label[item.name] = {};
+          //   if (dict[item.name]) {
+          //     dict[item.name].forEach((k: DictItem) => {
+          //       label[item.name][k.value] = k.label;
+          //     });
+          //   }
+          // });
           const dicts: Dicts = {
             dict: dict,
             label: label,

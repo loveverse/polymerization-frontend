@@ -1,11 +1,12 @@
-import { useCallback } from "react";
-import { GetProp, MenuProps } from "antd";
-import { AppRouteObject } from "@/router";
-import { UserMenuReq } from "@/api/login/types";
-import { ComSvgIcon } from "@/components";
+import {useCallback} from "react";
+import {GetProp, MenuProps} from "antd";
+import {AppRouteObject} from "@/router";
+import {UserMenuReq} from "@/api/login/types";
+import {ComSvgIcon} from "@/components";
 
 export const generateBreadcrumbNameMap = (routerList: AppRouteObject[]) => {
   const map = new Map();
+
   function traverse(nodes: AppRouteObject[]) {
     nodes.forEach((node) => {
       if (node.meta && node.meta.label) {
@@ -16,6 +17,7 @@ export const generateBreadcrumbNameMap = (routerList: AppRouteObject[]) => {
       }
     });
   }
+
   traverse(routerList);
 
   return map;
@@ -34,7 +36,7 @@ export function filterRoutesByUserRoutes(
       .map((localRoute) => {
         // 不需要做权限的路由
         if (localRoute.meta && localRoute.meta.permission) {
-          return { ...localRoute };
+          return {...localRoute};
         }
         // 寻找匹配的用户路由
         const matchedUserRoute = userRoutes.find(
@@ -45,7 +47,7 @@ export function filterRoutesByUserRoutes(
         if (matchedUserRoute) {
           // 检查是否需要排除 hideMenu 为 true 的路由
           if (localRoute.meta?.hideMenu) {
-            return { ...localRoute, order: matchedUserRoute.orderValue }; // 不返回该路由
+            return {...localRoute, order: matchedUserRoute.orderValue}; // 不返回该路由
           }
 
           // 如果有子路由，递归处理子路由
@@ -53,8 +55,8 @@ export function filterRoutesByUserRoutes(
             localRoute.children?.length && matchedUserRoute.children?.length
               ? filterMenu(localRoute.children, matchedUserRoute.children)
               : localRoute.children?.length
-              ? localRoute.children
-              : [];
+                ? localRoute.children
+                : [];
 
           return {
             ...localRoute,
@@ -73,6 +75,7 @@ export function filterRoutesByUserRoutes(
 }
 
 type MenuItem = GetProp<MenuProps, "items">[number];
+
 /**
  *
  * @returns 角色对应路由
@@ -86,13 +89,13 @@ export function useRouteToMenuFn() {
       return cur.index || (cur.meta && cur.meta.hideMenu)
         ? pre
         : pre.concat({
-            key: cur.path!,
-            label: cur.meta ? cur.meta.label : "",
-            disabled: cur.meta ? cur.meta.disabled : false,
-            icon: typeof cur.meta?.icon === "string" ? <ComSvgIcon alias={cur.meta.icon} /> : "",
-            // icon: "",
-            children: child?.length ? routeToMenuFn(child) : undefined,
-          });
+          key: cur.path!,
+          label: cur.meta ? cur.meta.label : "",
+          disabled: cur.meta ? cur.meta.disabled : false,
+          icon: typeof cur.meta?.icon === "string" ?
+            <ComSvgIcon alias={cur.meta.icon}/> : cur.meta?.icon,
+          children: child?.length ? routeToMenuFn(child) : undefined,
+        });
     }, []);
   }, []);
   return routeToMenuFn;

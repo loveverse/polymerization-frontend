@@ -1,5 +1,5 @@
 /* 模块管理 */
-export interface ModuleListRes {
+export interface ModuleDataRes {
   id: string;
   version: string;
   valid: number;

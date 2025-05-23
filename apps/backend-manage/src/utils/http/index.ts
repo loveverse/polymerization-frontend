@@ -5,9 +5,9 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { message } from "antd";
-import { domain } from "@/config";
-import { SERVER_STATUS } from "@/utils/constant";
+import {message} from "antd";
+import {domain} from "@/config";
+import {SERVER_STATUS} from "@/utils/constant";
 
 interface ApiResponse<T> {
   code: string | number;
@@ -24,6 +24,7 @@ const config: AxiosRequestConfig = {
 
 class RequestHttp {
   service: AxiosInstance;
+
   constructor(config: AxiosRequestConfig) {
     this.service = axios.create(config);
     this.service.interceptors.request.use(
@@ -56,6 +57,7 @@ class RequestHttp {
       }
     );
   }
+
   private handleResponse<T>(res: AxiosResponse<ApiResponse<T>>): ApiResponse<T> {
     const data = res.data;
     // if (data.code === 401) {
@@ -66,10 +68,12 @@ class RequestHttp {
     // }
     return data;
   }
+
   private handleError(err: any) {
     console.error(err);
     return err;
   }
+
   async get<T = any>(
     url: string,
     params: any = {},
@@ -77,12 +81,13 @@ class RequestHttp {
   ): Promise<ApiResponse<T>> {
     try {
       const axiosConfig = typeof config === "string" ? getConfig(config) : config;
-      const res = await this.service.get<ApiResponse<T>>(url, { ...axiosConfig, params });
+      const res = await this.service.get<ApiResponse<T>>(url, {...axiosConfig, params});
       return this.handleResponse(res);
     } catch (err) {
       return this.handleError(err);
     }
   }
+
   async post<T = any>(
     url: string,
     params: any = {},
@@ -96,6 +101,7 @@ class RequestHttp {
       return this.handleError(err);
     }
   }
+
   async put<T = any>(
     url: string,
     params: any = {},
@@ -109,6 +115,7 @@ class RequestHttp {
       return this.handleError(err);
     }
   }
+
   async delete<T = any>(
     url: string,
     params: any = {},
@@ -116,23 +123,24 @@ class RequestHttp {
   ): Promise<ApiResponse<T>> {
     try {
       const axiosConfig = typeof config === "string" ? getConfig(config) : config;
-      const response = await this.service.delete<ApiResponse<T>>(url, { ...axiosConfig, params });
+      const response = await this.service.delete<ApiResponse<T>>(url, {...axiosConfig, params});
       return this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);
     }
   }
 }
+
 type ContentType = "urlencoded" | "formData" | "jsonBlob" | "formBlob";
 const getConfig = (type: ContentType): AxiosRequestConfig => {
   const configMap: Record<ContentType, AxiosRequestConfig> = {
     // 当需要序列化引入qs，给getConfig添加是否序列化参数
-    urlencoded: { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
-    formData: { headers: { "Content-Type": "multipart/form-data" } },
-    jsonBlob: { responseType: "blob" },
+    urlencoded: {headers: {"Content-Type": "application/x-www-form-urlencoded"}},
+    formData: {headers: {"Content-Type": "multipart/form-data"}},
+    jsonBlob: {responseType: "blob"},
     formBlob: {
       responseType: "blob",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
     },
   };
   return configMap[type];

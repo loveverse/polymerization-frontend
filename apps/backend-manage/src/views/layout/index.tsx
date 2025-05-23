@@ -59,7 +59,7 @@ const LayoutMain: React.FC = () => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        theme="light"
+        theme="dark"
         width={220}
         className="sider-menu">
         <div className="signboard-box">
@@ -68,6 +68,7 @@ const LayoutMain: React.FC = () => {
         </div>
         <Menu
           mode="inline"
+          theme="dark"
           items={menuList}
           openKeys={openKeys}
           selectedKeys={selectedKeys}

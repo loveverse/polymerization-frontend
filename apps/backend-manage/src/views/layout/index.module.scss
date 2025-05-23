@@ -8,18 +8,19 @@
         height: 60px;
         line-height: 60px;
         text-align: center;
-        box-shadow: inset -1px -1px 0px 0px #f2f3f5;
+        //box-shadow: inset -1px -1px 0px 0px #f2f3f5;
         overflow: hidden;
         .logo {
           vertical-align: middle;
           width: 32px;
           height: 32px;
           transform: translateY(-3px);
+
         }
         .title {
           font-size: 20px;
           font-weight: bold;
-          color: #121212;
+          color: #fff;
           margin-left: 4px;
         }
       }
@@ -27,7 +28,7 @@
         height: calc(100% - 60px);
         overflow-y: auto;
         font-size: 16px;
-        color: #666;
+        //color: #666;
         @include scroll-default;
         :where(li) {
           .anticon.comicon {

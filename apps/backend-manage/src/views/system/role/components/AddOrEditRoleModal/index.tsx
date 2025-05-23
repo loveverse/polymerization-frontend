@@ -67,8 +67,8 @@ const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
         <Form.Item label="角色名称" name="roleName" rules={[{required: true, max: 255}]}>
           <Input placeholder="请输入角色名称"/>
         </Form.Item>
-        <Form.Item label={"角色标识"} name={"roleKey"} rules={[{required: true, max: 255}]}>
-          <Input placeholder={"请输入角色标识"}/>
+        <Form.Item label="角色标识" name="roleKey" rules={[{required: true, max: 255}]}>
+          <Input placeholder="请输入角色标识"/>
         </Form.Item>
       </Form>
     </Modal>

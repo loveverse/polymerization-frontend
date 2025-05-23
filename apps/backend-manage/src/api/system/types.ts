@@ -1,5 +1,3 @@
-import {PeriodListRes} from "../base/types";
-
 /* 角色管理 */
 export interface RolePageParam extends PageParam {
 
@@ -27,28 +25,43 @@ export interface SetRolePermissionReq {
 }
 
 /* 字典管理 */
-export interface IAddDict {
-  name: string;
-  description: string;
+export interface AddDictReq {
+  dictValue: string;
+  dictLabel: string;
+  dictType?: string;
 }
 
-export interface IDelDict {
+export type UpdateDictReq = AddDictReq & CommonId;
+
+export interface DictDataRes {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  dictValue: string;
+  dictLabel: string;
+  dictType: string;
+}
+
+export interface AddDictItemReq {
   dictId: string;
+  dictItemValue: string;
+  dictItemLabel: string;
+  sortOrder: number;
 }
 
-export type IUpdateDict = IAddDict & IDelDict;
-
-export interface IAddDictDetail extends IDelDict {
-  value: string;
-  label: string;
-  dictSort: number;
+export type UpdateDictItemReq = Omit<AddDictItemReq, "dictId"> & CommonId;
+export interface  DictItemListReq{
+  dictId?: string;
 }
-
-export interface IDelDictDetail {
-  detailId: string;
+export interface DictItemDataRes {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  dictId: string;
+  dictItemValue: string;
+  dictItemLabel: string;
+  sortOrder: number;
 }
-
-export type IUpdateDictDetail = Omit<IAddDictDetail, "dictId"> & IDelDictDetail;
 
 /* 菜单管理 */
 export interface AddMenuReq {
@@ -70,45 +83,8 @@ export interface AssignRoleToUserReq {
   roleId: string;
 }
 
-/* 测评 */
-export interface AddDimensionalityReq {
-  dimensionName: string;
-}
 
-export type EditDimensionalityReq = AddDimensionalityReq & CommonId;
 
-export interface DimensionalityListRes {
-  id: string;
-  updateTime: number;
-  createTime: number;
-  dimensionName: string;
-}
 
-export interface AddSchemeReq {
-  planDimensions: (Pick<PlanDimension, "dimensionId" | "leftNum" | "rightNum"> & { id?: string })[];
-  courseId: string;
-  isEnabled: boolean;
-  planName: string;
-  periodIds: string[];
-}
 
-export type EditSchemeReq = AddSchemeReq & CommonId;
-export type EditSchemeStatusReq = Pick<EditSchemeReq, "id" | "isEnabled">;
 
-interface PlanDimension extends DimensionalityListRes {
-  planId: string;
-  dimensionId: string;
-  leftNum: number;
-  rightNum: number;
-}
-
-export interface SchemeListRes {
-  planName: string;
-  courseId: string;
-  periodIds: string[];
-  isEnabled: boolean;
-  planDimensions: PlanDimension[];
-  courseName: string;
-  periods: PeriodListRes[];
-  id: string;
-}

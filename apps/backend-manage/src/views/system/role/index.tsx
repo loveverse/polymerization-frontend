@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Button, Space, Table, TableColumnsType, App} from "antd";
 import {DeleteOutlined, EditOutlined, SettingOutlined} from "@ant-design/icons";
-import {reqDelRole, reqRolePage} from "@/api/system";
+import {reqBatchDelRole, reqRolePage} from "@/api/system";
 import {RoleDataRes} from "@/api/system/types";
 import {PAGE_CURRENT, PAGE_SIZE} from "@/utils/constant";
-import {useModalControls} from "@/hooks/useModalControls";
-import RoleModal from "./components/AddOrEditRoleModal";
-import styles from "./index.module.scss";
 
-const SystemRole: React.FC = () => {
+import AddOrEditRoleModal from "./components/AddOrEditRoleModal";
+import styles from "./index.module.scss";
+import {useModalControls} from "@/hooks";
+
+const RoleManage: React.FC = () => {
   const {message, modal} = App.useApp();
 
   const columns: TableColumnsType<RoleDataRes> = [
@@ -25,7 +26,7 @@ const SystemRole: React.FC = () => {
       title: "操作",
       align: "center",
       width: 400,
-      render: (_, record) => (
+      render: (_value, record) => (
         <>
           <Button
             type="link"
@@ -84,7 +85,7 @@ const SystemRole: React.FC = () => {
       closable: true,
       content: `确定要删除【${values.roleName}】吗？`,
       onOk: async () => {
-        const res = await reqDelRole(values);
+        const res = await reqBatchDelRole([values.id]);
         if (res.code === 200) {
           void getRolePage(roleData.page, roleData.size);
           message.success("删除角色成功");
@@ -101,7 +102,7 @@ const SystemRole: React.FC = () => {
   }, []);
   return (
     <div className={styles.root}>
-      <div className={"operation-header"}>
+      <div className="operation-header">
         <Space>
           <Button
             type="primary"
@@ -109,12 +110,12 @@ const SystemRole: React.FC = () => {
           >
             新增角色
           </Button>
-          <Button type={"primary"} onClick={() => {
+          <Button type="primary" onClick={() => {
 
           }}>
             导入
           </Button>
-          <Button type={"primary"} danger={true} onClick={() => {
+          <Button type="primary" danger={true} onClick={() => {
           }}>
             删除
           </Button>
@@ -125,6 +126,7 @@ const SystemRole: React.FC = () => {
         columns={columns}
         dataSource={roleData.data}
         loading={loading}
+        rowSelection={{selections: true}}
         rowKey={(record) => record.id}
         pagination={{
           showSizeChanger: true,
@@ -135,13 +137,15 @@ const SystemRole: React.FC = () => {
           onChange: getRolePage,
         }}
       />
-      <RoleModal modalProps={{...addRoleProps, title: "新增角色"}} actions={addRoleActions}
-                 refresh={getRolePage}
+      <AddOrEditRoleModal modalProps={{...addRoleProps, title: "新增角色"}}
+                          actions={addRoleActions}
+                          refresh={getRolePage}
       />
-      <RoleModal modalProps={{...editRoleProps, title: "编辑角色"}} actions={editRoleActions}
-                 refresh={() => getRolePage(roleData.page, roleData.size)}/>
+      <AddOrEditRoleModal modalProps={{...editRoleProps, title: "编辑角色"}}
+                          actions={editRoleActions}
+                          refresh={() => getRolePage(roleData.page, roleData.size)}/>
     </div>
   );
 };
 
-export default SystemRole;
+export default RoleManage;

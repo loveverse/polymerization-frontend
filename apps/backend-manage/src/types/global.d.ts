@@ -82,6 +82,10 @@ interface CommonId {
   id: string;
 }
 
+interface BatchDeleteIds {
+  ids: string[];
+}
+
 /* 除某些类型外，其他类型为可选 */
 type PartialExcept<T, K extends keyof T> = {
   [P in keyof T as P extends K ? P : never]: T[P];

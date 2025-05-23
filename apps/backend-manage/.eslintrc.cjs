@@ -24,5 +24,12 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": ["off"], // 关闭any类型时的警告
     "@typescript-eslint/no-empty-function": ["off"], // 关闭空函数警告
     "no-empty": ["warn"],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",  // 强制字符串 props 不使用 {}
+        "children": "never"  // 强制字符串 children 不使用 {}
+      }
+    ]
   },
 };
