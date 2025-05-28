@@ -1,27 +1,5 @@
 // 字典
 
-
-type DictItem = {
-  value: string | number;
-  label: string;
-  dictId: string;
-  name: string;
-};
-type Label = {
-  [key: string]: {
-    [key: string | number]: string;
-  };
-};
-type Dict = {
-  [key: string]: DictItem[];
-};
-type Dicts = {
-  label: Label;
-  dict: Dict;
-  getDict: (type: string) => DictItem[];
-  getLabel: (type: string, value: string) => string;
-};
-
 interface PeriodVos {
   periodId: string;
   periodName: string;

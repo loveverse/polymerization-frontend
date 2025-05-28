@@ -4,11 +4,13 @@ import {Button, Form, Input, InputNumber, message, Modal} from "antd";
 import {ModalControlsProps} from "@/hooks/useModalControls";
 
 import {reqAddModule, reqUpdateModule} from "@/api/module";
+import {useEffect} from "react";
 
 const AddOrEditModuleModal = (props: ModalControlsProps) => {
   const {modalProps, actions, refresh} = props
 
   const [moduleForm] = Form.useForm<UpdateModuleReq>();
+  const editable = !!Form.useWatch("id", moduleForm);
 
   const addModule = async (values: AddModuleReq) => {
     actions.setLoading(true);
@@ -36,6 +38,14 @@ const AddOrEditModuleModal = (props: ModalControlsProps) => {
     }
     actions.setLoading(false);
   };
+  useEffect(() => {
+    if (modalProps.open) {
+      const initialValues = actions.getInitialValues();
+      if (initialValues) {
+        moduleForm.setFieldsValue(initialValues);
+      }
+    }
+  }, [modalProps.open]);
   return (
     <Modal
       {...modalProps}
@@ -69,17 +79,17 @@ const AddOrEditModuleModal = (props: ModalControlsProps) => {
           <Input placeholder="请输入模块名" maxLength={255}/>
         </Form.Item>
         <Form.Item
-          label="模块名(英文)"
+          label="模块标识(英文)"
           name="moduleValue"
           rules={[{required: true}]}
         >
-          <Input placeholder="请输入模块名称" maxLength={255}/>
+          <Input placeholder="请输入模块标识" disabled={editable} maxLength={255}/>
         </Form.Item>
         <Form.Item
           label="排序值"
           name="sortOrder"
         >
-          <InputNumber step={10} style={{width: 150}} placeholder="请输入排序值" />
+          <InputNumber step={10} style={{width: 150}} placeholder="请输入排序值"/>
         </Form.Item>
         <Form.Item hidden>
           <Button htmlType="submit"></Button>

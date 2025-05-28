@@ -4,7 +4,7 @@ import { RolePageParam } from "../system/types";
 
 
 export const reqLogin = (params: LoginInfoReq) =>
-  http.post<LoginInfoRes>("/auth-api/auth/v1/login", params);
+  http.post<LoginInfoRes>("/auth-api/v1/auth/login", params);
 
 
 // 页面初始化

@@ -12,7 +12,6 @@ import loginLeft from "@/assets/imgs/ikon.png";
 import {reqLogin} from "@/api/login";
 import {LoginInfoReq} from "@/api/login/types";
 import {domain, password, username} from "@/config";
-import {reqUserInfo} from "@/api/base";
 import {useAppContext} from "@/context";
 
 function Login() {
@@ -60,7 +59,7 @@ function Login() {
   const generateCaptchaImg = () => {
     const uuid = uuidV4()
     form.setFieldValue("captchaKey", uuid)
-    setCaptchaImg(`${domain}/auth-api/auth/v1/captcha/${uuid}?w=100&h=30`)
+    setCaptchaImg(`${domain}/auth-api/v1/auth/captcha/${uuid}?w=100&h=30`)
   }
   useEffect(() => {
     generateCaptchaImg()

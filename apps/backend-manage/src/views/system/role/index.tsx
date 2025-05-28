@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Button, Space, Table, TableColumnsType, App} from "antd";
+import {Button, Space, Table, TableColumnsType, App, Switch} from "antd";
 import {DeleteOutlined, EditOutlined, SettingOutlined} from "@ant-design/icons";
-import {reqBatchDelRole, reqRolePage} from "@/api/system";
-import {RoleDataRes} from "@/api/system/types";
+import {reqBatchDelRole, reqRolePage, reqUpdateRole} from "@/api/system";
+import {RoleDataRes, UpdateRoleReq, UpdateRoleStatusReq} from "@/api/system/types";
 import {PAGE_CURRENT, PAGE_SIZE} from "@/utils/constant";
 
 import AddOrEditRoleModal from "./components/AddOrEditRoleModal";
@@ -22,6 +22,14 @@ const RoleManage: React.FC = () => {
     },
     {title: "角色名", dataIndex: "roleName"},
     {title: "角色标识", dataIndex: "roleKey"},
+    {
+      title: "角色状态", dataIndex: "status", render: (value, record) => {
+        return <Switch value={value} checkedChildren="启用" unCheckedChildren="停用"
+                       onChange={(val) => {
+                         void updateRoleStatus({id: record.id, status: Number(val)});
+                       }}/>
+      }
+    },
     {
       title: "操作",
       align: "center",
@@ -95,6 +103,15 @@ const RoleManage: React.FC = () => {
       },
     });
   };
+  const updateRoleStatus = async (values: UpdateRoleStatusReq) => {
+    const res = await reqUpdateRole(values as UpdateRoleReq);
+    if (res.code === 200) {
+      message.success("修改状态成功")
+      void getRolePage(roleData.page, roleData.size);
+    } else {
+      message.error(res.msg);
+    }
+  }
 
 
   useEffect(() => {
@@ -137,13 +154,15 @@ const RoleManage: React.FC = () => {
           onChange: getRolePage,
         }}
       />
-      <AddOrEditRoleModal modalProps={{...addRoleProps, title: "新增角色"}}
-                          actions={addRoleActions}
-                          refresh={getRolePage}
+      <AddOrEditRoleModal
+        modalProps={{...addRoleProps, title: "新增角色"}}
+        actions={addRoleActions}
+        refresh={getRolePage}
       />
-      <AddOrEditRoleModal modalProps={{...editRoleProps, title: "编辑角色"}}
-                          actions={editRoleActions}
-                          refresh={() => getRolePage(roleData.page, roleData.size)}/>
+      <AddOrEditRoleModal
+        modalProps={{...editRoleProps, title: "编辑角色"}}
+        actions={editRoleActions}
+        refresh={() => getRolePage(roleData.page, roleData.size)}/>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useEffect} from "react";
 import {
   Avatar,
   Button,
@@ -16,14 +16,14 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
-import { useAppContext } from "@/context";
-import { reqUpdateUserInfo, reqUpdateUserPassword, reqUploadFile } from "@/api/base";
-import { UpdateUserPasswordReq, UserInfo } from "@/api/base/types";
+import {useNavigate} from "react-router-dom";
+import {useAppContext} from "@/context";
+import {reqUpdateUserInfo, reqUpdateUserPassword, reqUploadFile} from "@/api/base";
+import {UpdateUserPasswordReq, UserInfo} from "@/api/base/types";
 import styles from "./index.module.scss";
 
 const Profile = () => {
-  const { dicts, userInfo, setUserInfo } = useAppContext();
+  const {dict, userInfo, setUserInfo} = useAppContext();
   const navigate = useNavigate();
   const [baseForm] = Form.useForm<UserInfo>();
   const userRoles = Form.useWatch("roles", baseForm) || [];
@@ -98,10 +98,10 @@ const Profile = () => {
           form={baseForm}
           autoComplete="off"
           variant="filled"
-          labelCol={{ span: 5 }}
+          labelCol={{span: 5}}
           labelAlign="left"
           className="base-form"
-          initialValues={{ gender: "M" }}
+          initialValues={{gender: "M"}}
           onFinish={updateUserInfo}
           onFinishFailed={(err) => console.error(err)}>
           <Form.Item hidden name="id">
@@ -109,17 +109,17 @@ const Profile = () => {
           </Form.Item>
           <Form.Item name="headImg" getValueFromEvent={normFile}>
             <Upload {...uploadProps}>
-              <Avatar src={userAvator} alt="avatar" style={{ width: "100%", height: "100%" }} />
+              <Avatar src={userAvator} alt="avatar" style={{width: "100%", height: "100%"}}/>
             </Upload>
           </Form.Item>
-          <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
-            <Input placeholder="请输入用户名" disabled />
+          <Form.Item label="用户名" name="username" rules={[{required: true}]}>
+            <Input placeholder="请输入用户名" disabled/>
           </Form.Item>
-          <Form.Item label="昵称" name="name" rules={[{ required: true }]}>
-            <Input placeholder="请输入昵称" />
+          <Form.Item label="昵称" name="name" rules={[{required: true}]}>
+            <Input placeholder="请输入昵称"/>
           </Form.Item>
-          <Form.Item label="性别" name="gender" rules={[{ required: true }]}>
-            <Radio.Group options={dicts.getDict("gender")}></Radio.Group>
+          <Form.Item label="性别" name="gender" rules={[{required: true}]}>
+            <Radio.Group options={dict.getDictItemList("gender")}></Radio.Group>
           </Form.Item>
           <Form.Item label="角色" name="roles">
             <Space>
@@ -133,13 +133,13 @@ const Profile = () => {
             </Space>
           </Form.Item>
           <Form.Item label="职务" name="title">
-            <Input placeholder="请输入职务" />
+            <Input placeholder="请输入职务"/>
           </Form.Item>
           <Form.Item label="手机号" name="phoneNumber">
-            <InputNumber placeholder="请输入手机号" controls={false} style={{ width: "100%" }} />
+            <InputNumber placeholder="请输入手机号" controls={false} style={{width: "100%"}}/>
           </Form.Item>
           <Form.Item label="邮箱" name="email">
-            <Input placeholder="请输入邮箱" />
+            <Input placeholder="请输入邮箱"/>
           </Form.Item>
           <Form.Item>
             <Space size={50}>
@@ -172,26 +172,26 @@ const Profile = () => {
           form={passwordForm}
           autoComplete="off"
           variant="filled"
-          labelCol={{ span: 5 }}
+          labelCol={{span: 5}}
           labelAlign="left"
           className="safety-form"
           onFinish={updateUserPassword}>
           <Form.Item hidden name="id">
             <div></div>
           </Form.Item>
-          <Form.Item label="旧密码" name="oldPassword" rules={[{ required: true }]}>
-            <Input.Password placeholder="请输入旧密码" />
+          <Form.Item label="旧密码" name="oldPassword" rules={[{required: true}]}>
+            <Input.Password placeholder="请输入旧密码"/>
           </Form.Item>
-          <Form.Item label="新密码" name="newPassword" rules={[{ required: true }]}>
-            <Input.Password placeholder="请输入新密码" />
+          <Form.Item label="新密码" name="newPassword" rules={[{required: true}]}>
+            <Input.Password placeholder="请输入新密码"/>
           </Form.Item>
           <Form.Item
             label="再次输入"
             name="newPassword2"
             dependencies={["newPassword"]}
             rules={[
-              { required: true },
-              ({ getFieldValue }) => ({
+              {required: true},
+              ({getFieldValue}) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("newPassword") === value) {
                     return Promise.resolve();
@@ -200,7 +200,7 @@ const Profile = () => {
                 },
               }),
             ]}>
-            <Input.Password placeholder="再次输入新密码" />
+            <Input.Password placeholder="再次输入新密码"/>
           </Form.Item>
           <Form.Item>
             <Flex justify="end">

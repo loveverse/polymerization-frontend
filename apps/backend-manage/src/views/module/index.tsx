@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {Button, Input, Table, message} from "antd";
+import React, {useEffect, useMemo, useState} from "react";
+import {Button, Input, Table, App} from "antd";
 import type {TableColumnsType} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
 
-import {reqModuleList,} from "@/api/module";
+import {reqDelModule, reqModuleList,} from "@/api/module";
 import {ModuleDataRes,} from "@/api/module/types";
 import AddOrEditModuleModal from "./AddOrEditModuleModal";
 import styles from "./index.module.scss";
 import {useModalControls} from "@/hooks";
+import {reqBatchDelRole} from "@/api/system";
 
 const ModuleManage: React.FC = () => {
+  const {message, modal} = App.useApp()
   const [searchValue, setSearchValue] = useState("");
   const columns: TableColumnsType<ModuleDataRes> = [
     {
@@ -26,6 +28,10 @@ const ModuleManage: React.FC = () => {
       align: "center"
     },
     {
+      title: "排序",
+      dataIndex: "sortOrder",
+    },
+    {
       title: "操作",
       align: "center",
       width: 200,
@@ -39,7 +45,7 @@ const ModuleManage: React.FC = () => {
           >
             编辑
           </Button>
-          <Button type="text" danger disabled>
+          <Button type="text" danger onClick={() => delModule(record)}>
             删除
           </Button>
         </>
@@ -60,13 +66,32 @@ const ModuleManage: React.FC = () => {
     }
     setLoading(false);
   };
+  const computedModuleList = useMemo(() => {
+    return moduleList.filter(k => k.moduleName.includes(searchValue))
+  }, [searchValue, moduleList])
 
   const [addModuleProps, addModuleActions] = useModalControls()
   const [editModuleProps, editModuleActions] = useModalControls()
+  const delModule = async (values: ModuleDataRes) => {
+    modal.confirm({
+      title: "提示",
+      closable: true,
+      content: `确定要删除【${values.moduleName}】吗？`,
+      onOk: async () => {
+        const res = await reqDelModule({id: values.id});
+        if (res.code === 200) {
+          message.success("删除模块成功");
+          void getModuleList();
+        } else {
+          message.error(res.msg);
+        }
+      },
+    });
+  }
 
 
   useEffect(() => {
-    getModuleList();
+    void getModuleList();
   }, []);
 
   return (
@@ -96,17 +121,19 @@ const ModuleManage: React.FC = () => {
       <Table
         pagination={false}
         columns={columns}
-        dataSource={moduleList}
+        dataSource={computedModuleList}
         loading={loading}
         rowKey={(record) => record.id}
       />
       <AddOrEditModuleModal
         actions={addModuleActions}
         modalProps={{...addModuleProps, title: "新增模块"}}
+        refresh={getModuleList}
       />
       <AddOrEditModuleModal
         actions={editModuleActions}
         modalProps={{...editModuleProps, title: "编辑模块"}}
+        refresh={getModuleList}
       />
     </div>
   );

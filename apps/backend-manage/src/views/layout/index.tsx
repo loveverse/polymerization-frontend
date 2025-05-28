@@ -4,7 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation, useOutlet } from "react-router-dom";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 
-import { defaultDicts, useAppContext } from "@/context";
+import { defaultDict, useAppContext } from "@/context";
 import { reqLogOut } from "@/api/login";
 import Logo from "@/assets/imgs/logo.png";
 import { useRouteToMenuFn } from "@/router/hooks";
@@ -15,7 +15,7 @@ const { Sider, Content, Header } = Layout;
 
 const LayoutMain: React.FC = () => {
   const navigate = useNavigate();
-  const { userInfo, permissionRoutes, setDicts } = useAppContext();
+  const { userInfo, permissionRoutes, setDict } = useAppContext();
   const { pathname } = useLocation();
   const outletElement = useOutlet();
   const nodeRef = useRef(null);
@@ -28,7 +28,7 @@ const LayoutMain: React.FC = () => {
     if (res.code === 200) {
       localStorage.removeItem("backend-token");
       // 重新获取路由
-      setDicts(defaultDicts);
+      setDict(defaultDict);
       navigate("/login");
       message.success("退出登录成功");
     } else {
@@ -64,7 +64,7 @@ const LayoutMain: React.FC = () => {
         className="sider-menu">
         <div className="signboard-box">
           <img src={Logo} className="logo" alt="" />
-          {!collapsed ? <span className="title">具身课程管理端</span> : null}
+          {!collapsed ? <span className="title">后台管理</span> : null}
         </div>
         <Menu
           mode="inline"

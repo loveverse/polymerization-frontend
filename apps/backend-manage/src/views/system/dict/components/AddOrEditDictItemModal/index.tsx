@@ -9,17 +9,17 @@ import {useEffect} from "react";
 const AddOrEditDictItemModal = (props: ModalControlsProps) => {
   const {modalProps, actions, refresh} = props
   const {message} = App.useApp()
-  const [dictForm] = Form.useForm<UpdateDictItemReq>();
+  const [dictForm] = Form.useForm<UpdateDictItemReq | AddDictItemReq>();
 
   const addDictItem = async (values: AddDictItemReq) => {
     actions.setLoading(true)
-    const res = await reqAddDictItem({
-      ...values,
-    });
+
+    const res = await reqAddDictItem(values);
     if (res.code === 200) {
       actions.hide()
-
-      message.success("添加字典详情成功");
+      message.success("添加字典项成功");
+      dictForm.resetFields()
+      refresh?.()
     } else {
       message.error(res.msg);
     }
@@ -31,7 +31,8 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
     const res = await reqUpdateDictItem(values);
     if (res.code === 200) {
       actions.hide();
-      message.success("修改字典信息成功");
+      message.success("修改字典项信息成功");
+      refresh?.()
     } else {
       message.error(res.msg);
     }
@@ -53,7 +54,7 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
         dictForm
           .validateFields()
           .then((values) => {
-            // values.id ? editDictItem(values) : addDictItem(values)
+            "id" in values && values.id ? editDictItem(values) : addDictItem(values as AddDictItemReq)
           })
           .catch((err) => {
             console.error(err);
@@ -67,16 +68,15 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
         <Form.Item hidden name="dictId">
           <div></div>
         </Form.Item>
-        <Form.Item label="展示值(label)" name="label" rules={[{required: true, max: 255}]}>
+        <Form.Item label="展示值(label)" name="dictItemLabel" rules={[{required: true, max: 255}]}>
           <Input placeholder="请输入展示值(label)"/>
         </Form.Item>
-        <Form.Item label="字典值(value)" name="value" rules={[{required: true, max: 255}]}>
+        <Form.Item label="字典值(value)" name="dictItemValue" rules={[{required: true, max: 255}]}>
           <Input placeholder="请输入字典值(value)"/>
         </Form.Item>
 
-        <Form.Item label="排序值" name="dictSort" rules={[{required: true, type: "number"}]}>
+        <Form.Item label="排序值" name="sortOrder" rules={[{required: true, type: "number"}]}>
           <InputNumber
-
             placeholder="请输入排序值"
             style={{width: "100%"}}
             addonBefore={

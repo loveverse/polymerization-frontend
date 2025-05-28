@@ -7,4 +7,4 @@ export { default as NotFound } from "./ErrorPages/404";
 export { default as ServerError } from "./ErrorPages/500";
 export { default as PreviewFile, type FileInfo } from "./PreviewFile";
 export { default as SpinLoading, ComEmpty } from "./SpinLoading";
-export { default as ComSvgIcon } from "./ComSvgIcon";
+// export { default as ComSvgIcon } from "./ComSvgIcon";

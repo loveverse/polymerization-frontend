@@ -2,7 +2,7 @@ import {useCallback} from "react";
 import {GetProp, MenuProps} from "antd";
 import {AppRouteObject} from "@/router";
 import {UserMenuReq} from "@/api/login/types";
-import {ComSvgIcon} from "@/components";
+// import {ComSvgIcon} from "@/components";
 
 export const generateBreadcrumbNameMap = (routerList: AppRouteObject[]) => {
   const map = new Map();
@@ -92,8 +92,7 @@ export function useRouteToMenuFn() {
           key: cur.path!,
           label: cur.meta ? cur.meta.label : "",
           disabled: cur.meta ? cur.meta.disabled : false,
-          icon: typeof cur.meta?.icon === "string" ?
-            <ComSvgIcon alias={cur.meta.icon}/> : cur.meta?.icon,
+          icon:  cur.meta?.icon,
           children: child?.length ? routeToMenuFn(child) : undefined,
         });
     }, []);

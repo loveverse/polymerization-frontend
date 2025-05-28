@@ -48,34 +48,34 @@ module.exports = {
           },
         };
       }
-      webpackConfig.module.rules[1].oneOf = [
-        ...[
-          {
-            test: /.svg$/,
-            // 存放svg的文件夹
-            include: path.resolve(__dirname, "./src/assets/svgs"),
-            use: [
-              {
-                loader: "babel-loader",
-              },
-              {
-                loader: "@svgr/webpack",
-                options: {
-                  babel: false,
-                  icon: true,
-                },
-              },
-              {
-                loader: "svgo-loader",
-                options: {
-                  plugins: [{ name: "removeAttrs", params: { attrs: "fill" } }],
-                },
-              },
-            ],
-          },
-        ],
-        ...webpackConfig.module.rules[1].oneOf,
-      ];
+      // webpackConfig.module.rules[1].oneOf = [
+      //   ...[
+      //     {
+      //       test: /.svg$/,
+      //       // 存放svg的文件夹
+      //       include: path.resolve(__dirname, "./src/assets/svgs"),
+      //       use: [
+      //         {
+      //           loader: "babel-loader",
+      //         },
+      //         {
+      //           loader: "@svgr/webpack",
+      //           options: {
+      //             babel: false,
+      //             icon: true,
+      //           },
+      //         },
+      //         {
+      //           loader: "svgo-loader",
+      //           options: {
+      //             plugins: [{ name: "removeAttrs", params: { attrs: "fill" } }],
+      //           },
+      //         },
+      //       ],
+      //     },
+      //   ],
+      //   ...webpackConfig.module.rules[1].oneOf,
+      // ];
       return webpackConfig;
     },
   },

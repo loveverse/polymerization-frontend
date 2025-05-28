@@ -1,22 +1,24 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import { message } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import { reqUserMenu, reqUserPermission, reqUserRole } from "@/api/login";
-import Router, { AppRouteObject } from "./index";
-import AppContext, { defaultDicts } from "@/context";
-import { reqDictItemList, reqDictList } from "@/api/system";
-import { SpinLoading } from "@/components";
-import { reqUserInfo } from "@/api/base";
-import { UserInfo } from "@/api/base/types";
-import { layoutRoutes } from "./routes";
-import { filterRoutesByUserRoutes } from "./hooks";
+import {Suspense, useEffect, useRef, useState} from "react";
+import {message} from "antd";
+import {useLocation, useNavigate} from "react-router-dom";
+import {reqUserMenu, reqUserPermission, reqUserRole} from "@/api/login";
+import Router, {AppRouteObject} from "./index";
+import AppContext, {defaultDict, Dict, DictItemData} from "@/context";
+import {reqDictItemCollect,} from "@/api/system";
+import {SpinLoading} from "@/components";
+import {reqUserInfo} from "@/api/base";
+import {UserInfo} from "@/api/base/types";
+import {layoutRoutes} from "./routes";
+import {filterRoutesByUserRoutes} from "./hooks";
+import {DictItemDataRes} from "@/api/system/types";
+
 
 // 处理登录后，页面初始化时的钩子
 function BeforeRouterEnter() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [dicts, setDicts] = useState<Dicts>(defaultDicts);
+  const [dict, setDict] = useState<Dict>(defaultDict);
   const [permissionRoutes, setPermissionRoutes] = useState<AppRouteObject[]>([]); // 权限路由
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(false);
@@ -34,69 +36,60 @@ function BeforeRouterEnter() {
   };
   const getInitData = async () => {
     setLoading(true);
-    try {
-      const res1 = await reqUserRole();
-      if (res1.code === 200) {
-        const [res2, res3, res4, res5] = await Promise.all([
-          reqUserMenu(res1.data),
-          reqUserPermission(res1.data),
-          reqDictList(),
-          reqDictItemList(),
+    // try {
+    //   const res1 = await reqUserRole();
+    //   if (res1.code === 200) {
+        const [res4] = await Promise.all([
+
+          reqDictItemCollect()
         ]);
-        if ([res2, res3, res4, res5].every((k) => k.code === 200)) {
-          const detail: Dict = {};
-          // res5.data.forEach((itemSub: DictItem) => {
-          //   const list: DictItem[] = detail[itemSub.dictId] || [];
-          //   list.push(itemSub);
-          //   detail[itemSub.dictId] = list;
-          // });
-          const label: Label = {};
-          const dict: Dict = {};
-          // res4.data.forEach((item: DictItem) => {
-          //   const details = detail[item.dictId];
-          //   // 字典详情
-          //   dict[item.name] = details;
-          //   // 字典对象
-          //   label[item.name] = {};
-          //   if (dict[item.name]) {
-          //     dict[item.name].forEach((k: DictItem) => {
-          //       label[item.name][k.value] = k.label;
-          //     });
-          //   }
-          // });
-          const dicts: Dicts = {
-            dict: dict,
-            label: label,
-            getDict: function (type: string) {
-              return this.dict[type] || [];
+        if ([res4].every((k) => k.code === 200)) {
+          // 遍历dictMap的每个键
+          const dictMap: { [key: string]: DictItemData[] } = Object.fromEntries(
+            Object.entries(res4.data.dictMap).map(([key, items]) => [
+              key,
+              items.map((item: DictItemDataRes): DictItemData => {
+                return {
+                  ...item,
+                  value: item.dictItemValue,
+                  label: item.dictItemLabel
+                };
+              })
+            ])
+          );
+          const dict: Dict = {
+            dictMap,
+            dictKeyMap: res4.data.dictKeyMap,
+            getDictItemList: function (type: string) {
+              return this.dictMap[type] || [];
             },
-            getLabel: function (type: string, value: string) {
-              return typeof this.label[type] === "object" ? this.label[type][value] : "";
+            getDictItemMap: function (type: string, value: string) {
+              return typeof this.dictMap[type] === "object" ? this.dictKeyMap[type][value] : "";
             },
           };
 
-          setDicts(dicts);
+          setDict(dict);
           // true：本地路由，false: 线上路由
           if (process.env.NODE_ENV === "development") {
             setPermissionRoutes(layoutRoutes);
             console.log("%c [ 字典值 ]-83", "font-size:13px; background:pink; color:#bf2c9f;", {
-              dict,
-              label,
+              dictMap: dict.dictMap,
+              dictKeyMap: dict.dictKeyMap,
             });
           } else {
-            const userPermissionRoutes = filterRoutesByUserRoutes(layoutRoutes, res2.data);
+            const userPermissionRoutes = filterRoutesByUserRoutes(layoutRoutes, []);
             setPermissionRoutes(userPermissionRoutes);
           }
         } else {
           message.error("获取初始化信息失败，请刷新重试！");
         }
-      } else {
-        message.error(res1.msg);
-      }
-    } catch (error) {
-      message.error("系统繁忙，请刷新重试！");
-      navigate("/500");
-    }
+      // } else {
+      //   message.error(res1.msg);
+      // }
+    // } catch (error) {
+    //   message.error("系统繁忙，请刷新重试！");
+    //   navigate("/500");
+    // }
 
 
     isLoaded.current = true;
@@ -112,23 +105,24 @@ function BeforeRouterEnter() {
     // if (!userInfo) {
     //   fetchUserInfo();
     // }
-    // if (!Object.keys(dicts.dict).length) {
-    //   getInitData();
-    // }
+    if (!Object.keys(dict.dictMap).length) {
+      getInitData();
+    }
     setPermissionRoutes(layoutRoutes);
   }, [location.pathname]);
 
   if (loading) {
-    return <SpinLoading variant="full" />;
+    return <SpinLoading variant="full"/>;
   }
 
   return (
-    <Suspense fallback={<SpinLoading variant="full" />}>
+    <Suspense fallback={<SpinLoading variant="full"/>}>
       <AppContext.Provider
-        value={{ permissionRoutes, setPermissionRoutes, dicts, setDicts, userInfo, setUserInfo }}>
-        <Router permissionRoutes={permissionRoutes} isLoaded={isLoaded.current} />
+        value={{permissionRoutes, setPermissionRoutes, dict, setDict, userInfo, setUserInfo}}>
+        <Router permissionRoutes={permissionRoutes} isLoaded={isLoaded.current}/>
       </AppContext.Provider>
     </Suspense>
   );
 }
+
 export default BeforeRouterEnter;

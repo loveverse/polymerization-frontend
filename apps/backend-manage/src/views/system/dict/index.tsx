@@ -21,7 +21,6 @@ import {
 import type {
   DictDataRes,
   DictItemDataRes,
-
 } from "@/api/system/types";
 import {SpinLoading} from "@/components";
 import styles from "./index.module.scss";
@@ -92,9 +91,10 @@ const DictManage: React.FC = () => {
     const res = await reqDictList();
     if (res.code === 200) {
       setDictionaries({...dictionaries, dict: res.data})
-      if (res.data.length) {
-        setSelectDictId(res.data[0].id)
-        void getDictItemList(res.data[0].id)
+      if (res.data.length && !selectDictId) {
+        const dictId = res.data[0].id
+        setSelectDictId(dictId)
+        void getDictItemList(dictId)
       }
     } else {
       message.error(res.msg);
@@ -116,17 +116,16 @@ const DictManage: React.FC = () => {
   // 字典详情增删改查
   const [addDictItemProps, addDictItemActions] = useModalControls()
   const [editDictItemProps, editDictItemActions] = useModalControls()
-  const delDictItem = async (values: DictItemDataRes) => {
+  const delDictItem = (values: DictItemDataRes) => {
     modal.confirm({
       title: "提示",
       closable: true,
       content: `确定要删除【${values.dictItemLabel}】吗？`,
-      onOk: async (close) => {
+      onOk: async () => {
         const res = await reqDelDictItem(values);
         if (res.code === 200) {
-          getDictItemList(selectDictId);
-          close();
-          message.success("删除字典详情成功");
+          message.success("删除字典项成功");
+          void getDictItemList(selectDictId);
         } else {
           message.error(res.msg);
         }
@@ -199,7 +198,7 @@ const DictManage: React.FC = () => {
                       void getDictItemList(item.id)
                     }}>
                     <div className="text text-ellipsis" title={item.dictValue}>
-                      {item.dictLabel}
+                      {item.dictLabel}【{item.dictValue}】
                     </div>
                     <Space>
                       <EditTwoTone
@@ -217,7 +216,7 @@ const DictManage: React.FC = () => {
                         }}
                         onConfirm={() => delDict(item)}>
                         <DeleteTwoTone
-                          twoToneColor="red"
+                          twoToneColor={["red", "transparent"]}
                           onClick={(e) => {
                             e.stopPropagation();
                           }}
@@ -235,10 +234,10 @@ const DictManage: React.FC = () => {
         <Button
           type="primary"
           className="add-dict-detail"
-          onClick={() => {
-            addDictItemActions.show()
-          }}>
-          新增字典详情
+          onClick={() => addDictItemActions.show({
+            dictId: selectDictId,
+          })}>
+          新增字典项
         </Button>
         <Table
           pagination={false}
@@ -248,14 +247,23 @@ const DictManage: React.FC = () => {
           rowKey={(record) => record.id}
         />
       </div>
-      <AddOrEditDictModal modalProps={{...addDictProps, title: "新增字典"}}
-                          actions={addDictActions}/>
-      <AddOrEditDictModal modalProps={{...editDictProps, title: "编辑字典"}}
-                          actions={editDictActions}/>
-      <AddOrEditDictItemModal actions={addDictItemActions}
-                              modalProps={{...addDictItemProps, title: "新增字典项"}}/>
-      <AddOrEditDictItemModal actions={editDictItemActions}
-                              modalProps={{...editDictItemProps, title: "编辑字典项"}}/>
+      <AddOrEditDictModal
+        modalProps={{...addDictProps, title: "新增字典"}}
+        actions={addDictActions}
+        refresh={getDictList}/>
+      <AddOrEditDictModal
+        modalProps={{...editDictProps, title: "编辑字典"}}
+        actions={editDictActions}
+        refresh={getDictList}/>
+      <AddOrEditDictItemModal
+        actions={addDictItemActions}
+        modalProps={{...addDictItemProps, title: "新增字典项"}}
+        refresh={() => getDictItemList(selectDictId)
+        }/>
+      <AddOrEditDictItemModal
+        actions={editDictItemActions}
+        modalProps={{...editDictItemProps, title: "编辑字典项"}}
+        refresh={() => getDictItemList(selectDictId)}/>
     </div>
   );
 };

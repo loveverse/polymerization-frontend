@@ -71,7 +71,7 @@ const schoolCountList: CountList[] = [
   },
 ];
 const Home = () => {
-  const { dicts } = useAppContext();
+  const { dict } = useAppContext();
   const [schoolId, setSchoolId] = useState(undefined);
   const [schoolName, setSchoolName] = useState("");
   const [schoolList, setSchoolList] = useState<SchoolDataRes[]>([]);
@@ -203,7 +203,7 @@ const Home = () => {
               课程分类
               <Select
                 allowClear
-                options={dicts.getDict("course_classify").slice(1)}
+                options={dict.getDictItemList("course_classify").slice(1)}
                 placeholder="全部课程"
                 style={{ width: 150 }}
                 onChange={(val) => {

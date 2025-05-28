@@ -1,7 +1,10 @@
 /* 角色管理 */
+
 export interface RolePageParam extends PageParam {
 
 }
+
+export type RoleListReq = Partial<Pick<RoleDataRes, "status">>
 
 export interface RoleDataRes {
   id: string;
@@ -15,14 +18,12 @@ export interface RoleDataRes {
 export interface AddRoleReq {
   roleName: string;
   roleKey: string;
+  status?: number;
 }
 
 export type UpdateRoleReq = AddRoleReq & CommonId;
+export type UpdateRoleStatusReq = Pick<AddRoleReq, "status"> & CommonId;
 
-export interface SetRolePermissionReq {
-  roleId: string;
-  powerIds: string[];
-}
 
 /* 字典管理 */
 export interface AddDictReq {
@@ -50,9 +51,11 @@ export interface AddDictItemReq {
 }
 
 export type UpdateDictItemReq = Omit<AddDictItemReq, "dictId"> & CommonId;
-export interface  DictItemListReq{
+
+export interface DictItemListReq {
   dictId?: string;
 }
+
 export interface DictItemDataRes {
   id: string;
   createTime: string;
@@ -62,6 +65,49 @@ export interface DictItemDataRes {
   dictItemLabel: string;
   sortOrder: number;
 }
+
+export interface DictItemCollectReq {
+  moduleId?: string
+}
+
+export interface DictItemCollectRes {
+  dictMap: {
+    [key: string]: DictItemDataRes[]
+  }
+  dictKeyMap: {
+    [key: string]: Record<string, any>
+  }
+}
+
+
+export interface UserDataRes {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  userName: string;
+  nickName: string;
+  sex: string;
+  status: number;
+  phoneNumber: string;
+  email: string;
+  roleList: RoleDataRes[]
+}
+
+export interface AddUserReq {
+  userName: string;
+  password: string;
+  sex: string;
+  nickName?: string;
+  status?: number;
+  phoneNumber?: string;
+  email?: string;
+  roleIds?: string[];
+}
+
+export type UpdateUserReq = AddUserReq & CommonId;
+export type UpdateUserStatusReq = Pick<AddUserReq, "status"> & CommonId;
+export type ResetUserPasswordReq = Pick<AddUserReq, "password"> & CommonId;
+export type UpdateUserInfoReq = UpdateUserReq | UpdateUserStatusReq | ResetUserPasswordReq;
 
 /* 菜单管理 */
 export interface AddMenuReq {
@@ -76,12 +122,6 @@ export interface AddMenuReq {
 }
 
 export type UpdateMenuReq = AddMenuReq & CommonId;
-export type IMenuList = Pick<AddMenuReq, "moduleName">;
-
-export interface AssignRoleToUserReq {
-  userIds: string[];
-  roleId: string;
-}
 
 
 

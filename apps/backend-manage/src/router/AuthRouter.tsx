@@ -5,7 +5,7 @@ interface AuthRouterProps {
   children: JSX.Element;
 }
 const AuthRouter = ({ isLoaded, children }: AuthRouterProps) => {
-  const { dicts, userInfo } = useAppContext();
+  const { dict, userInfo } = useAppContext();
   // 白名单路由
   // const whiteRoutes = ["/login"];
   // if (whiteRoutes.includes(pathname)) {

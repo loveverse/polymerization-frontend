@@ -15,6 +15,7 @@ const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
     const res = await reqAddRole(values);
     if (res.code === 200) {
       actions.hide();
+      roleForm.resetFields();
       message.success("添加角色成功");
       refresh?.()
     } else {
@@ -28,7 +29,6 @@ const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
     const res = await reqUpdateRole(values);
     if (res.code === 200) {
       actions.hide();
-      roleForm.resetFields();
       message.success("修改角色信息成功");
       refresh?.()
     } else {

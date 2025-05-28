@@ -1,8 +1,10 @@
-import {Form, Modal, Input, App} from "antd";
+import {Form, Modal, Input, App, Select} from "antd";
 import {AddDictReq, UpdateDictReq} from "@/api/system/types";
 import {reqAddDict, reqUpdateDict} from "@/api/system";
 import {ModalControlsProps} from "@/hooks/useModalControls";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {reqModuleList} from "@/api/module";
+import {ModuleDataRes} from "@/api/module/types";
 
 
 const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
@@ -15,6 +17,7 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
     const res = await reqAddDict(values);
     if (res.code === 200) {
       actions.hide();
+      dictForm.resetFields();
       message.success("添加字典成功");
       refresh?.()
     } else {
@@ -28,7 +31,6 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
     const res = await reqUpdateDict(values);
     if (res.code === 200) {
       actions.hide();
-      dictForm.resetFields();
       message.success("修改字典信息成功");
       refresh?.()
     } else {
@@ -36,9 +38,20 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
     }
     actions.setLoading(false)
   };
-// 监听modalProps.open变化，设置表单初始值
+  const [moduleList, setModuleList] = useState<ModuleDataRes[]>([]);
+  const getModuleList = async () => {
+    const res = await reqModuleList();
+    if (res.code === 200) {
+      setModuleList(res.data);
+    } else {
+      message.error(res.msg);
+    }
+  };
+
+  // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
     if (modalProps.open) {
+      void getModuleList()
       const initialValues = actions.getInitialValues();
       if (initialValues) {
         dictForm.setFieldsValue(initialValues);
@@ -64,14 +77,15 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
         <Form.Item hidden name="id">
           <div></div>
         </Form.Item>
-        <Form.Item label="字典标识" name="dictValue" rules={[{required: true, max: 255}]}>
-          <Input placeholder="请输入字典标识"/>
-        </Form.Item>
         <Form.Item label="字典名称" name="dictLabel" rules={[{required: true, max: 255}]}>
           <Input placeholder="请输入字典名称"/>
         </Form.Item>
-        <Form.Item label="字典分组类型" name="dictType">
-          <Input placeholder="请输入字典分组类型"/>
+        <Form.Item label="字典标识" name="dictValue" rules={[{required: true, max: 255}]}>
+          <Input placeholder="请输入字典标识"/>
+        </Form.Item>
+        <Form.Item label="模块分组" name="moduleId">
+          <Select placeholder="请选择应用的模块" options={moduleList}
+                  fieldNames={{value: "id", label: "moduleName"}}/>
         </Form.Item>
       </Form>
     </Modal>

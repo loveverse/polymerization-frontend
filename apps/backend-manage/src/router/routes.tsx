@@ -95,18 +95,18 @@ export const errorRoutes: AppRouteObject[] = [
     path: "/403",
     element: <NotAuth/>,
   },
-  {
-    path: "/404",
-    element: <NotFound/>,
-  },
+  // {
+  //   path: "/404",
+  //   element: <NotFound/>,
+  // },
   {
     path: "/500",
     element: <ServerError/>,
   },
-  {
-    path: "*",
-    element: <Navigate to="/404" replace/>,
-  },
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/404" replace/>,
+  // },
 ];
 
 // 异步路由，渲染动态路由
