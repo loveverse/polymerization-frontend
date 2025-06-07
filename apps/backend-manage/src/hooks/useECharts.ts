@@ -1,11 +1,11 @@
 // useECharts.ts
 import * as echarts from "echarts";
-import { useEffect, useRef } from "react";
+import {useEffect, useRef} from "react";
 
 /**
  * 使用React Hook来初始化并管理ECharts实例。
  *
- * @returns {Object} 返回一个包含chartRef和chartInstanceRef的对象。
+ * @returns 返回一个包含chartRef和chartInstanceRef的对象。
  *                   chartRef是HTMLDivElement的引用，用于挂载ECharts实例；
  *                   chartInstanceRef是ECharts实例的引用，用于调用如`setOption`等方法更新图表配置与数据。
  */
@@ -36,5 +36,5 @@ export const useECharts = () => {
   }, []);
 
   // 返回包含chartRef和chartInstanceRef的对象
-  return { chartRef, chartInstanceRef };
+  return {chartRef, chartInstanceRef};
 };

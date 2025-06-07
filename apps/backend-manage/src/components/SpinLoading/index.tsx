@@ -29,7 +29,7 @@ const SpinLoading = (props: SpinLoadingProps) => {
     }
   }, []);
 
-  const customloadingIcon = (
+  const customLoadingIcon = (
     <div className="loading-icon-box">
       {/*[...Array(9)].map*/}
       {Array.from({length: 9}, (_value, index) => (
@@ -42,7 +42,7 @@ const SpinLoading = (props: SpinLoadingProps) => {
       <Spin
         {...spinProps}
         className={styles["full-loading-wrapper"]}
-        indicator={customloadingIcon}></Spin>
+        indicator={customLoadingIcon}></Spin>
     );
   }
   return (
@@ -69,7 +69,6 @@ export function ComEmpty(props: EmptyProps) {
   return (
     <Empty
       image={imgEmpty}
-
       imageStyle={{height: 180}}
       {...props}
       className={styles["root-empty"]}></Empty>

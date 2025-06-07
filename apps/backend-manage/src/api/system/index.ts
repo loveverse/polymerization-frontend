@@ -13,7 +13,7 @@ import {
   MenuListRes,
   RoleDataRes,
   RoleListReq,
-  RolePageReq,
+  RolePageReq, SetRolePermissionsReq,
   UpdateDictItemReq,
   UpdateDictReq,
   UpdateMenuReq,
@@ -34,6 +34,10 @@ export const reqRoleList = (params?: RoleListReq) =>
   http.get<RoleDataRes[]>("/auth-api/v1/system/role/list", params);
 export const reqRolePage = (params: RolePageReq) =>
   http.get<PageResult<RoleDataRes>>("/auth-api/v1/system/role/page", params);
+export const reqMenuIdsByRoleId = (params: { roleId: string }) =>
+  http.get<RoleDataRes>("/auth-api/v1/system/role/menu-tree-by-role/" + params.roleId);
+export const reqSetRolePermissions = (params: SetRolePermissionsReq) =>
+  http.post("/auth-api/v1/system/role/update-role-permissions", params);
 
 /* 字典管理 */
 export const reqAddDict = (params: AddDictReq) =>
@@ -70,6 +74,6 @@ export const reqDelMenu = (params: CommonId) =>
   http.delete("/auth-api/v1/system/menu/delete", params);
 export const reqUpdateMenu = (params: UpdateMenuReq) =>
   http.put("/auth-api/v1/system/menu/update", params);
-export const reqMenuListByModuleId = (params: { moduleId: string }) =>
-  http.get<MenuListRes[]>("/auth-api/v1/system/menu/menu_tree_by_module/" + params.moduleId);
+export const reqMenuTreeByModuleId = (params: { moduleId: string }) =>
+  http.get<MenuListRes[]>("/auth-api/v1/system/menu/menu-tree-by-module/" + params.moduleId);
 

@@ -3,12 +3,14 @@ import {AddRoleReq, UpdateRoleReq} from "@/api/system/types";
 import {reqAddRole, reqUpdateRole} from "@/api/system";
 import {ModalControlsProps} from "@/hooks/useModalControls";
 import {useEffect} from "react";
+import role from "@/views/system/role";
 
 
 const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
   const {message} = App.useApp()
   const {modalProps, actions, refresh} = props;
   const [roleForm] = Form.useForm<UpdateRoleReq>();
+  const roleId = Form.useWatch("id",roleForm);
 
   const addRole = async (values: AddRoleReq) => {
     actions.setLoading(true)
@@ -65,7 +67,7 @@ const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
           <Input placeholder="请输入角色名称"/>
         </Form.Item>
         <Form.Item label="角色标识" name="roleKey" rules={[{required: true, max: 255}]}>
-          <Input placeholder="请输入角色标识"/>
+          <Input placeholder="请输入角色标识" disabled={!!roleId}/>
         </Form.Item>
       </Form>
     </Modal>

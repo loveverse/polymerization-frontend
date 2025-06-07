@@ -1,6 +1,6 @@
 /* 角色管理 */
 
-import Menu from "@/views/system/menu";
+import {reqSetRolePermissions} from "@/api/system/index";
 
 export interface RolePageReq extends PageParam {
 
@@ -15,6 +15,8 @@ export interface RoleDataRes {
   roleName: string;
   roleKey: string;
   status: number;
+  disabled?: boolean;
+  menuIds: string[]
 }
 
 export interface AddRoleReq {
@@ -25,6 +27,7 @@ export interface AddRoleReq {
 
 export type UpdateRoleReq = AddRoleReq & CommonId;
 export type UpdateRoleStatusReq = Pick<AddRoleReq, "status"> & CommonId;
+export type SetRolePermissionsReq = Pick<RoleDataRes, "menuIds"> & CommonId;
 
 
 /* 字典管理 */

@@ -8,6 +8,11 @@ import {PAGE_CURRENT, PAGE_SIZE} from "@/utils/constant";
 import AddOrEditRoleModal from "./components/AddOrEditRoleModal";
 import styles from "./index.module.scss";
 import {useModalControls} from "@/hooks";
+import SetRoleMenuDrawer from "@/views/system/role/components/SetRoleMenuDrawer";
+import {useDrawerControls} from "@/hooks/useDrawerControls";
+
+// 系统管理员不能操作
+const isAdmin = 'ROLE_ADMIN'
 
 const RoleManage: React.FC = () => {
   const {message, modal} = App.useApp();
@@ -25,6 +30,7 @@ const RoleManage: React.FC = () => {
     {
       title: "角色状态", dataIndex: "status", render: (value, record) => {
         return <Switch value={value} checkedChildren="启用" unCheckedChildren="停用"
+                       disabled={record.roleKey === isAdmin}
                        onChange={(val) => {
                          void updateRoleStatus({id: record.id, status: Number(val)});
                        }}/>
@@ -39,8 +45,10 @@ const RoleManage: React.FC = () => {
           <Button
             type="link"
             icon={<SettingOutlined/>}
+            disabled={record.roleKey === isAdmin}
             onClick={() => {
-
+              setRoleId(record.id)
+              setRoleMenuActions.show()
             }}
           >
             设置权限
@@ -48,6 +56,7 @@ const RoleManage: React.FC = () => {
           <Button
             type="link"
             icon={<EditOutlined/>}
+            disabled={record.roleKey === isAdmin}
             onClick={() => {
               editRoleActions.show(record);
             }}
@@ -58,6 +67,7 @@ const RoleManage: React.FC = () => {
             type="text"
             danger
             icon={<DeleteOutlined/>}
+            disabled={record.roleKey === isAdmin}
             onClick={() => {
               delRole(record);
             }}
@@ -68,6 +78,7 @@ const RoleManage: React.FC = () => {
       ),
     },
   ];
+
   const [roleData, setRoleData] = useState<PageResult<RoleDataRes>>({
     page: PAGE_CURRENT,
     size: PAGE_SIZE,
@@ -79,6 +90,9 @@ const RoleManage: React.FC = () => {
     setLoading(true)
     const res = await reqRolePage({page, size});
     if (res.code === 200) {
+      res.data.data.forEach(item => {
+        item.disabled = item.roleKey === isAdmin
+      })
       setRoleData(res.data);
     } else {
       message.error(res.msg);
@@ -95,8 +109,8 @@ const RoleManage: React.FC = () => {
       onOk: async () => {
         const res = await reqBatchDelRole([values.id]);
         if (res.code === 200) {
-          void getRolePage(roleData.page, roleData.size);
           message.success("删除角色成功");
+          await getRolePage(roleData.page, roleData.size);
         } else {
           message.error(res.msg);
         }
@@ -107,12 +121,13 @@ const RoleManage: React.FC = () => {
     const res = await reqUpdateRole(values as UpdateRoleReq);
     if (res.code === 200) {
       message.success("修改状态成功")
-      void getRolePage(roleData.page, roleData.size);
+      await getRolePage(roleData.page, roleData.size);
     } else {
       message.error(res.msg);
     }
   }
-
+  const [roleId, setRoleId] = useState("")
+  const [setRoleMenuProps, setRoleMenuActions] = useDrawerControls()
 
   useEffect(() => {
     void getRolePage();
@@ -143,7 +158,9 @@ const RoleManage: React.FC = () => {
         columns={columns}
         dataSource={roleData.data}
         loading={loading}
-        rowSelection={{selections: true}}
+        rowSelection={{
+          selections: true
+        }}
         rowKey={(record) => record.id}
         pagination={{
           showSizeChanger: true,
@@ -163,6 +180,8 @@ const RoleManage: React.FC = () => {
         modalProps={{...editRoleProps, title: "编辑角色"}}
         actions={editRoleActions}
         refresh={() => getRolePage(roleData.page, roleData.size)}/>
+      <SetRoleMenuDrawer roleId={roleId} actions={setRoleMenuActions}
+                         drawerProps={setRoleMenuProps}/>
     </div>
   );
 };

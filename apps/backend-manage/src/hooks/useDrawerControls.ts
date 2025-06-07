@@ -1,7 +1,9 @@
 import {useMemo, useRef, useState} from "react";
-import type {DrawerProps, ModalProps} from "antd";
+import {Drawer, DrawerProps} from "antd";
 
-
+interface DrawerControls  extends DrawerProps{
+  confirmLoading?: boolean
+}
 export interface ExposeMethods<T> {
   // 可以只更新部分字段
   setFieldsValue: (fields: Partial<T>) => void;
@@ -15,27 +17,27 @@ export interface BaseActions<T, M> {
   exposeMethods: (methods: Partial<ExposeMethods<T>> & Partial<M>) => void;
 }
 
-type ModalActions<T, M extends Record<string, any>> = BaseActions<T, M> & M;
+type DrawerActions<T, M extends Record<string, any>> = BaseActions<T, M> & M;
 
 // 子组件 props 类型
-export interface ModalControlsProps<T extends Record<string, any> = Record<string, any>, M extends Record<string, any> = Record<string, any>> {
-  actions: ModalActions<T, M>;
-  modalProps: ModalProps;
+export interface DrawerControlsProps<T extends Record<string, any> = Record<string, any>, M extends Record<string, any> = Record<string, any>> {
+  actions: DrawerActions<T, M>;
+  drawerProps: DrawerControls;
   refresh?: () => void
 }
 
 // 父组件使用
-export const useModalControls = <T extends Record<string, any>, M extends Record<string, any> = Record<string, any>>(): [ModalProps, ModalActions<T, M>] => {
+export const useDrawerControls = <T extends Record<string, any>, M extends Record<string, any> = Record<string, any>>(): [DrawerProps, DrawerActions<T, M>] => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const methodMapRef = useRef<M & ExposeMethods<T>>({} as M & ExposeMethods<T>);
   // const [_, forceUpdate] = useState(0); // 用于强制更新 actions 引用
-  const modalProps: ModalProps = {
+  const modalProps: DrawerControls = {
     open,
     confirmLoading,
-    onCancel: () => setOpen(false),
+    onClose: () => setOpen(false),
   }
-  const baseActions: ModalActions<T, M> = {
+  const baseActions: DrawerActions<T, M> = {
     show: (values?: Partial<T>) => {
       if (values) {
         methodMapRef.current.setFieldsValue(values)
@@ -54,12 +56,12 @@ export const useModalControls = <T extends Record<string, any>, M extends Record
       // forceUpdate(x => x + 1); // 强制刷新 actions
 
     }
-  } as ModalActions<T, M>
+  } as DrawerActions<T, M>
   // const actions = useMemo(() => {
   //   return {
   //     ...baseActions,
   //     ...methodMapRef.current,
-  //   } as ModalActions<T, O>;
+  //   } as DrawerActions<T, O>;
   // }, [_, methodMapRef.current]);
 
   // 使用 Proxy 包装 actions，确保获取时是最新的,会照成页面卡顿
@@ -71,7 +73,7 @@ export const useModalControls = <T extends Record<string, any>, M extends Record
         }
         return methodMapRef.current?.[key as keyof typeof methodMapRef.current];
       },
-    }) as ModalActions<T, M>;
+    }) as DrawerActions<T, M>;
   }, []);
   return [modalProps, actions];
 }

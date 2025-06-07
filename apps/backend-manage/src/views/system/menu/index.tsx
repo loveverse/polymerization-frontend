@@ -12,7 +12,7 @@ import {
 } from "antd";
 import {DownOutlined, RightOutlined} from "@ant-design/icons";
 
-import {reqDelMenu, reqMenuListByModuleId} from "@/api/system";
+import {reqDelMenu, reqMenuTreeByModuleId} from "@/api/system";
 import type {AddMenuReq, MenuListRes, UpdateMenuReq} from "@/api/system/types";
 
 import styles from "./index.module.scss";
@@ -85,7 +85,7 @@ const MenuManage: React.FC = () => {
   const [menuList, setMenuList] = useState<MenuListRes[]>([]);
   const getMenuList = async (value?: string) => {
     setLoading(true);
-    const res = await reqMenuListByModuleId({moduleId: value || moduleId});
+    const res = await reqMenuTreeByModuleId({moduleId: value || moduleId});
     if (res.code === 200) {
       setMenuList(res.data);
     } else {

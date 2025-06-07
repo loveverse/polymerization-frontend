@@ -129,7 +129,7 @@ const AddOrEditMenuModal = (props: ModalControlsProps<AddMenuReq | UpdateMenuReq
               <Select options={dict.getDictItemList("menu_type")}
                       placeholder="请选择菜单类型"></Select>
             </Form.Item>
-            <Form.Item label="排序值" name="orderValue">
+            <Form.Item label="排序值" name="sortOrder">
               <InputNumber
                 placeholder="请输入排序值"
                 step={10}
