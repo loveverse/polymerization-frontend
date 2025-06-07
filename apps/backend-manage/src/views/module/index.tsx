@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
-import {Button, Input, Table, App} from "antd";
 import type {TableColumnsType} from "antd";
+import {App, Button, Input, Table} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
 
 import {reqDelModule, reqModuleList,} from "@/api/module";
@@ -8,7 +8,6 @@ import {ModuleDataRes,} from "@/api/module/types";
 import AddOrEditModuleModal from "./AddOrEditModuleModal";
 import styles from "./index.module.scss";
 import {useModalControls} from "@/hooks";
-import {reqBatchDelRole} from "@/api/system";
 
 const ModuleManage: React.FC = () => {
   const {message, modal} = App.useApp()
@@ -72,7 +71,7 @@ const ModuleManage: React.FC = () => {
 
   const [addModuleProps, addModuleActions] = useModalControls()
   const [editModuleProps, editModuleActions] = useModalControls()
-  const delModule = async (values: ModuleDataRes) => {
+  const delModule = (values: ModuleDataRes) => {
     modal.confirm({
       title: "提示",
       closable: true,

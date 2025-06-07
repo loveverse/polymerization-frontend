@@ -9,7 +9,7 @@ import {useEffect} from "react";
 const AddOrEditDictItemModal = (props: ModalControlsProps) => {
   const {modalProps, actions, refresh} = props
   const {message} = App.useApp()
-  const [dictForm] = Form.useForm<UpdateDictItemReq | AddDictItemReq>();
+  const [dictItemForm] = Form.useForm<UpdateDictItemReq | AddDictItemReq>();
 
   const addDictItem = async (values: AddDictItemReq) => {
     actions.setLoading(true)
@@ -18,7 +18,7 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
     if (res.code === 200) {
       actions.hide()
       message.success("添加字典项成功");
-      dictForm.resetFields()
+      dictItemForm.resetFields()
       refresh?.()
     } else {
       message.error(res.msg);
@@ -40,18 +40,15 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
   };
 // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
-    if (modalProps.open) {
-      const initialValues = actions.getInitialValues();
-      if (initialValues) {
-        dictForm.setFieldsValue(initialValues);
-      }
-    }
-  }, [modalProps.open]);
+    actions.exposeMethods?.({
+      setFieldsValue: dictItemForm.getFieldsValue
+    })
+  }, []);
   return (
     <Modal
       {...modalProps}
       onOk={() => {
-        dictForm
+        dictItemForm
           .validateFields()
           .then((values) => {
             "id" in values && values.id ? editDictItem(values) : addDictItem(values as AddDictItemReq)
@@ -61,7 +58,7 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
           });
       }}
     >
-      <Form form={dictForm} autoComplete="off" labelCol={{span: 6}}>
+      <Form form={dictItemForm} autoComplete="off" labelCol={{span: 6}}>
         <Form.Item hidden name="id">
           <div></div>
         </Form.Item>
@@ -79,6 +76,7 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
           <InputNumber
             placeholder="请输入排序值"
             style={{width: "100%"}}
+            step={10}
             addonBefore={
               <Tooltip className="cur-pointer" placement="bottom" title="数字越小，排序越靠前">
                 <ExclamationCircleOutlined/>

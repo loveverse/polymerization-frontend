@@ -38,13 +38,10 @@ const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
   };
 // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
-    if (modalProps.open) {
-      const initialValues = actions.getInitialValues();
-      if (initialValues) {
-        roleForm.setFieldsValue(initialValues);
-      }
-    }
-  }, [modalProps.open]);
+    actions.exposeMethods({
+      setFieldsValue: roleForm.setFieldsValue
+    })
+  }, []);
 
   return (
     <Modal

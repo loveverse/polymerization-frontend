@@ -48,16 +48,12 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
     }
   };
 
-  // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
-    if (modalProps.open) {
-      void getModuleList()
-      const initialValues = actions.getInitialValues();
-      if (initialValues) {
-        dictForm.setFieldsValue(initialValues);
-      }
-    }
-  }, [modalProps.open]);
+    actions.exposeMethods?.({
+      setFieldsValue: dictForm.setFieldsValue
+    })
+    void getModuleList()
+  }, []);
 
   return (
     <Modal

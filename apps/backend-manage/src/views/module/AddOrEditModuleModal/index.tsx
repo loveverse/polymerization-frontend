@@ -1,17 +1,13 @@
 import {AddModuleReq, UpdateModuleReq} from "@/api/module/types";
 import {Button, Form, Input, InputNumber, message, Modal} from "antd";
-
 import {ModalControlsProps} from "@/hooks/useModalControls";
-
 import {reqAddModule, reqUpdateModule} from "@/api/module";
 import {useEffect} from "react";
 
 const AddOrEditModuleModal = (props: ModalControlsProps) => {
   const {modalProps, actions, refresh} = props
-
   const [moduleForm] = Form.useForm<UpdateModuleReq>();
   const editable = !!Form.useWatch("id", moduleForm);
-
   const addModule = async (values: AddModuleReq) => {
     actions.setLoading(true);
     const res = await reqAddModule(values);
@@ -39,13 +35,10 @@ const AddOrEditModuleModal = (props: ModalControlsProps) => {
     actions.setLoading(false);
   };
   useEffect(() => {
-    if (modalProps.open) {
-      const initialValues = actions.getInitialValues();
-      if (initialValues) {
-        moduleForm.setFieldsValue(initialValues);
-      }
-    }
-  }, [modalProps.open]);
+    actions.exposeMethods({
+      setFieldsValue: moduleForm.setFieldsValue
+    })
+  }, []);
   return (
     <Modal
       {...modalProps}

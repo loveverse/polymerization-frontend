@@ -1,6 +1,8 @@
 /* 角色管理 */
 
-export interface RolePageParam extends PageParam {
+import Menu from "@/views/system/menu";
+
+export interface RolePageReq extends PageParam {
 
 }
 
@@ -111,17 +113,37 @@ export type UpdateUserInfoReq = UpdateUserReq | UpdateUserStatusReq | ResetUserP
 
 /* 菜单管理 */
 export interface AddMenuReq {
-  name: string;
-  pid: string;
+  id: string;
+  moduleId: string;
+  createTime: string;
+  updateTime: string;
+  menuName: string;
+  path: string;
+  menuType: string;
+  parentId: string;
   icon?: string;
-  route?: string;
-  type?: string;
-  powerKey?: string;
-  orderValue?: number;
-  moduleName: string;
+  permission?: string;
+  visible: number;
+  sortOrder?: number;
 }
 
 export type UpdateMenuReq = AddMenuReq & CommonId;
+
+
+export interface MenuListRes {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  menuName: string;
+  path: string;
+  menuType: string;
+  parentId: string;
+  icon: string;
+  permission: string;
+  visible: number;
+  sortOrder: number;
+  children?: MenuListRes[]
+}
 
 
 

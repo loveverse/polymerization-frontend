@@ -6,7 +6,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import {message} from "antd";
-import {domain} from "@/config";
+import {domain, publicPath} from "@/config";
 import {SERVER_STATUS} from "@/utils/constant";
 
 interface ApiResponse<T> {
@@ -30,7 +30,7 @@ class RequestHttp {
     this.service.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         const token = localStorage.getItem("backend-token");
-        token && (config.headers["ZRT-ADMIN-TOKEN"] = token);
+        token && (config.headers["Authorization"] = token);
         return config;
       },
       (error: AxiosError) => Promise.reject(error)
@@ -45,14 +45,14 @@ class RequestHttp {
         if (error && error.response) {
           const errorData = {
             code: error.response.status,
-            message: SERVER_STATUS[error.response.status] ?? "系统繁忙，请刷新后重试！",
+            msg: SERVER_STATUS[error.response.status] ?? "系统繁忙，请刷新后重试！",
           };
-          message.error(errorData.message);
+          message.error(errorData.msg);
           return Promise.reject(errorData);
         }
         return Promise.reject({
           code: 10000,
-          message: "网络错误，请检查网络设置！",
+          msg: "网络错误，请检查网络设置！",
         });
       }
     );
@@ -60,12 +60,10 @@ class RequestHttp {
 
   private handleResponse<T>(res: AxiosResponse<ApiResponse<T>>): ApiResponse<T> {
     const data = res.data;
-    // if (data.code === 401) {
-    //   localStorage.removeItem("backend-token");
-    //   window.location.replace(window.origin + publicPath + "#/login");
-    //   window.location.reload();
-    //   throw new Error(data.message);
-    // }
+    if (data.code === 401) {
+      localStorage.removeItem("backend-token");
+      window.location.replace(window.origin + publicPath + "#/login");
+    }
     return data;
   }
 

@@ -12,15 +12,13 @@ import loginLeft from "@/assets/imgs/ikon.png";
 import {reqLogin} from "@/api/login";
 import {LoginInfoReq} from "@/api/login/types";
 import {domain, password, username} from "@/config";
-import {useAppContext} from "@/context";
 
 function Login() {
   const token = localStorage.getItem("backend-token");
   if (token) {
-    return <Navigate to="/home" replace/>;
+    return <Navigate to="/module" replace/>;
   }
 
-  const {setUserInfo} = useAppContext();
   const navigate = useNavigate();
   const [form] = Form.useForm<LoginInfoReq>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,18 +36,10 @@ function Login() {
       const {token} = res.data;
       localStorage.setItem("backend-token", token);
       message.success("登录成功")
-      // const res2 = await reqUserInfo();
-      // if (res2.code === 200) {
-      //   setUserInfo(res2.data);
-      navigate("/home");
-      //   message.success("登录成功");
-      // } else {
-      //   message.error("获取用户信息失败");
-      // }
+      navigate("/module");
     } else {
       message.error(res.msg);
     }
-    console.log(222)
     setLoading(false);
   };
   const onFinishFailed = (errorInfo: any) => {

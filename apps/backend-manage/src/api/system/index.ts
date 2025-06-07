@@ -10,9 +10,10 @@ import {
   DictItemCollectRes,
   DictItemDataRes,
   DictItemListReq,
+  MenuListRes,
   RoleDataRes,
   RoleListReq,
-  RolePageParam,
+  RolePageReq,
   UpdateDictItemReq,
   UpdateDictReq,
   UpdateMenuReq,
@@ -20,7 +21,7 @@ import {
   UpdateUserInfoReq,
   UserDataRes,
 } from "./types";
-import {MODULE_NAME} from "@/utils/constant";
+
 
 /* 角色管理 */
 export const reqAddRole = (params: AddRoleReq) =>
@@ -31,7 +32,7 @@ export const reqUpdateRole = (params: UpdateRoleReq) =>
   http.put("/auth-api/v1/system/role/update", params);
 export const reqRoleList = (params?: RoleListReq) =>
   http.get<RoleDataRes[]>("/auth-api/v1/system/role/list", params);
-export const reqRolePage = (params: RolePageParam) =>
+export const reqRolePage = (params: RolePageReq) =>
   http.get<PageResult<RoleDataRes>>("/auth-api/v1/system/role/page", params);
 
 /* 字典管理 */
@@ -63,14 +64,12 @@ export const reqUserPage = (params: PageParam) =>
   http.get<PageResult<UserDataRes>>("/auth-api/v1/system/user/page", params);
 
 /* 菜单管理 */
-export const reqMenuTree = () =>
-  http.post("/auth-api/manager/menu/v1/system/module_tree", {moduleName: MODULE_NAME});
-// 角色菜单
 export const reqAddMenu = (params: AddMenuReq) =>
-  http.post("/auth-api/manager/menu/v1/system/add", params);
-export const reqUpdateMenu = (params: UpdateMenuReq) =>
-  http.post("/auth-api/manager/menu/v1/system/update", params);
+  http.post("/auth-api/v1/system/menu/create", params);
 export const reqDelMenu = (params: CommonId) =>
-  http.post("/auth-api/manager/menu/v1/system/delete", params);
-
+  http.delete("/auth-api/v1/system/menu/delete", params);
+export const reqUpdateMenu = (params: UpdateMenuReq) =>
+  http.put("/auth-api/v1/system/menu/update", params);
+export const reqMenuListByModuleId = (params: { moduleId: string }) =>
+  http.get<MenuListRes[]>("/auth-api/v1/system/menu/menu_tree_by_module/" + params.moduleId);
 

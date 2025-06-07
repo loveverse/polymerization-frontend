@@ -1,5 +1,5 @@
-import {RoleDataRes, RolePageParam} from "@/api/system/types";
-import { TreeDataNode } from "antd";
+import {RoleDataRes} from "@/api/system/types";
+import {TreeDataNode} from "antd";
 
 /* 学校管理 */
 export interface PeriodListRes {
