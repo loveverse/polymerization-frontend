@@ -50,9 +50,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 60px;
+        height: 50px;
         padding: 0 30px 0 20px;
-        line-height: 60px;
+        line-height: 50px;
         background-color: #fff;
         box-shadow: inset -1px -1px 0px 0px #f2f3f5;
         .breadcrumb-box {
@@ -65,7 +65,8 @@
         .user-info {
           display: flex;
           align-items: center;
-          cursor: pointer;
+          height: 100%;
+          border-radius: 0;
           .username {
             margin-left: 5px;
           }
@@ -100,6 +101,17 @@
         opacity: 0;
         transition: opacity 300ms;
       }
+    }
+  }
+}
+.dropdown-wrapper {
+  :global {
+    .btn-group {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.08) 0px 6px 16px 0px,
+      rgba(0, 0, 0, 0.12) 0px 3px 6px -4px,
+      rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
     }
   }
 }

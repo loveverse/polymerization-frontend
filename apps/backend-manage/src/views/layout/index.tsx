@@ -1,32 +1,36 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Layout, Menu, Button, Dropdown, message, Avatar } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { useNavigate, useLocation, useOutlet } from "react-router-dom";
-import { SwitchTransition, CSSTransition } from "react-transition-group";
+import React, {useEffect, useMemo, useRef, useState} from "react";
+import {Avatar, Button, Dropdown, Layout, Menu, message} from "antd";
+import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
+import {useLocation, useNavigate, useOutlet} from "react-router-dom";
+import {CSSTransition, SwitchTransition} from "react-transition-group";
 
-import { defaultDict, useAppContext } from "@/context";
-import { reqLogOut } from "@/api/login";
+import {defaultDict, useAppContext} from "@/context";
+import {reqLogOut} from "@/api/login";
 import Logo from "@/assets/imgs/logo.png";
-import { useRouteToMenuFn } from "@/router/hooks";
-import CustomBreadcrumb from "./Breadcrumb";
+import {useRouteToMenuFn} from "@/router/hooks";
 import styles from "./index.module.scss";
+import UserCenterDrawer from "@/views/layout/components/UserCenterDrawer";
+import CustomBreadcrumb from "@/views/layout/components/Breadcrumb";
+import {useDrawerControls} from "@/hooks/useDrawerControls";
+import userCenterDrawer from "@/views/layout/components/UserCenterDrawer";
 
-const { Sider, Content, Header } = Layout;
+const {Sider, Content, Header} = Layout;
 
 const LayoutMain: React.FC = () => {
   const navigate = useNavigate();
-  const { userInfo, permissionRoutes, setDict } = useAppContext();
-  const { pathname } = useLocation();
+
+  const {permissionRoutes, setDict, userInfo} = useAppContext();
+  const {pathname} = useLocation();
   const outletElement = useOutlet();
   const nodeRef = useRef(null);
-
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const logOut = async () => {
+  const logout = async () => {
     const res = await reqLogOut();
     if (res.code === 200) {
       localStorage.removeItem("backend-token");
+      localStorage.removeItem("userInfo")
       // 重新获取路由
       setDict(defaultDict);
       navigate("/login");
@@ -35,10 +39,14 @@ const LayoutMain: React.FC = () => {
       message.error(res.msg);
     }
   };
+  const [userCenterProps, userCenterActions] = useDrawerControls();
+
+
   const routeToMenuFn = useRouteToMenuFn();
   const menuList = useMemo(() => {
     return routeToMenuFn(permissionRoutes);
   }, [routeToMenuFn, permissionRoutes]);
+
 
   // 刷新页面菜单保持高亮
   useEffect(() => {
@@ -63,7 +71,7 @@ const LayoutMain: React.FC = () => {
         width={220}
         className="sider-menu">
         <div className="signboard-box">
-          <img src={Logo} className="logo" alt="" />
+          <img src={Logo} className="logo" alt=""/>
           {!collapsed ? <span className="title">后台管理</span> : null}
         </div>
         <Menu
@@ -73,7 +81,7 @@ const LayoutMain: React.FC = () => {
           openKeys={openKeys}
           selectedKeys={selectedKeys}
           className="sider-menus"
-          onClick={({ key }) => {
+          onClick={({key}) => {
             navigate(key);
           }}
           onOpenChange={(openKeys) => {
@@ -87,33 +95,35 @@ const LayoutMain: React.FC = () => {
             <Button
               className="fold-box"
               type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
               onClick={() => setCollapsed(!collapsed)}></Button>
-            <CustomBreadcrumb userMenu={permissionRoutes} />
+            <CustomBreadcrumb userMenu={permissionRoutes}/>
           </div>
           <Dropdown
+            trigger={["hover"]}
+            rootClassName={styles["dropdown-wrapper"]}
             menu={{
               items: [
                 {
                   key: "1",
                   label: "个人中心",
                   onClick: () => {
-                    navigate("/system/profile");
+                    userCenterActions.show();
                   },
                 },
-                { type: "divider" },
+                {type: "divider"},
                 {
                   key: "2",
                   label: "退出登录",
                   danger: true,
-                  onClick: logOut,
+                  onClick: logout,
                 },
               ],
             }}>
-            <div className="user-info">
-              <Avatar src={userInfo?.headImg} size={44} alt="avatar" />
-              <span className="username">{userInfo?.name}</span>
-            </div>
+            <Button type="text" className="user-info">
+              <Avatar src={userInfo?.avatar} size={34} alt="avatar"/>
+              <span className="username">{userInfo?.username}</span>
+            </Button>
           </Dropdown>
         </Header>
 
@@ -133,6 +143,7 @@ const LayoutMain: React.FC = () => {
           </SwitchTransition>
         </Content>
       </Layout>
+      <UserCenterDrawer drawerProps={userCenterProps} actions={userCenterActions}/>
     </Layout>
   );
 };

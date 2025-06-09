@@ -1,5 +1,5 @@
 import {useMemo, useRef, useState} from "react";
-import {Drawer, DrawerProps} from "antd";
+import {DrawerProps} from "antd";
 
 interface DrawerControls  extends DrawerProps{
   confirmLoading?: boolean

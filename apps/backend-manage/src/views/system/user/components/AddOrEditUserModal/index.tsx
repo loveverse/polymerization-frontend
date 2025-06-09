@@ -76,11 +76,14 @@ const AddOrEditUserModal = (props: ModalControlsProps) => {
         form={userForm}
         autoComplete="off"
         labelCol={{span: 5}}
-        initialValues={{sex: "M"}}>
+        initialValues={{sex: "M",avatar: "https://avatars.githubusercontent.com/u/64570135?v=4"}}>
         <Form.Item hidden name="id">
           <div></div>
         </Form.Item>
-        <Form.Item label="用户名" name="userName" rules={[{required: true, max: 255}]}>
+        <Form.Item hidden name="avatar">
+          <div></div>
+        </Form.Item>
+        <Form.Item label="用户名" name="username" rules={[{required: true, max: 255}]}>
           <Input placeholder="请输入用户名"/>
         </Form.Item>
         {editable ? null : (
@@ -88,7 +91,7 @@ const AddOrEditUserModal = (props: ModalControlsProps) => {
             <Input.Password placeholder="请输入密码"/>
           </Form.Item>
         )}
-        <Form.Item label="昵称" name="nickName">
+        <Form.Item label="昵称" name="nickname">
           <Input placeholder="请输入昵称"/>
         </Form.Item>
         <Form.Item label="性别" name="sex" rules={[{required: true}]}>

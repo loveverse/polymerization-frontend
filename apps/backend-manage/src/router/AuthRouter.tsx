@@ -1,11 +1,12 @@
-import { useAppContext } from "@/context";
+import {useAppContext} from "@/context";
 
 interface AuthRouterProps {
   isLoaded: boolean;
   children: JSX.Element;
 }
-const AuthRouter = ({ isLoaded, children }: AuthRouterProps) => {
-  const { dict, userInfo } = useAppContext();
+
+const AuthRouter = ({isLoaded, children}: AuthRouterProps) => {
+  const {dict} = useAppContext();
   // 白名单路由
   // const whiteRoutes = ["/login"];
   // if (whiteRoutes.includes(pathname)) {

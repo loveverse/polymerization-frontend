@@ -1,7 +1,8 @@
-import { Base64 } from "js-base64";
-import { reqDownloadFile } from "@/api/base";
-import { FILE_TYPE_LIST } from "./constant";
-import { preViewUrl } from "../config";
+import {Base64} from "js-base64";
+import {reqDownloadFile} from "@/api/base";
+import {FILE_TYPE_LIST} from "./constant";
+import {preViewUrl} from "@/config";
+import React from "react";
 
 /**
  * @description 对象数组深克隆
@@ -196,13 +197,12 @@ export const convertorFileSize = (fileSize: number | string) => {
     //其他转化成GB
     data = (fileSize / (1024 * 1024 * 1024)).toFixed(2) + "GB";
   }
-  const sizestr = data + "";
   // let len = sizestr.indexOf("\.");
   // let dec = sizestr.substring(len + 1, len + 3);
   // if (dec == "00") {//当小数点后为00时 去掉小数部分
   //     return sizestr.substring(0, len) + sizestr.substring(len + 3, len + 5);
   // }
-  return sizestr;
+  return data + "";
 };
 /**
  *
@@ -296,16 +296,15 @@ export const generateLetter = (
     num = 4;
   }
   const includesType = ["sxz", "mxz", "pd", "hh"];
-  const list = Array.from({ length: num }, (_, i) => {
+  return Array.from({length: num}, (_, i) => {
     const text = String.fromCharCode(65 + i);
     let label = text;
     if (type === "pd") {
       label = label === "A" ? "√" : "×";
     }
     if (flag) {
-      return { value: text, label: label };
+      return {value: text, label: label};
     }
     return includesType.includes(type) ? text : "";
   });
-  return list;
 };

@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import {
-  Avatar,
+  App, Avatar,
   Button,
-  Flex,
+  Drawer,
   Form,
   Input,
   InputNumber,
@@ -10,33 +10,26 @@ import {
   Space,
   Tabs,
   TabsProps,
-  Tag,
-  Upload,
+  Tag, Upload,
   UploadProps,
-  message,
 } from "antd";
-import dayjs from "dayjs";
 import {useNavigate} from "react-router-dom";
 import {useAppContext} from "@/context";
-import {reqUpdateUserInfo, reqUpdateUserPassword, reqUploadFile} from "@/api/base";
-import {UpdateUserPasswordReq, UserInfo} from "@/api/base/types";
+import {reqUpdateUserPassword, reqUploadFile} from "@/api/base";
+import {UpdateUserPasswordReq} from "@/api/base/types";
 import styles from "./index.module.scss";
+import {DrawerControlsProps} from "@/hooks/useDrawerControls";
+import {reqUpdateUser} from "@/api/system";
+import {UpdateUserReq, UserInfoRes} from "@/api/system/types";
+import {use} from "echarts/core";
 
-const Profile = () => {
+
+const UserCenterDrawer = (props: DrawerControlsProps) => {
+  const {drawerProps, actions, refresh} = props
+  const {message} = App.useApp()
   const {dict, userInfo, setUserInfo} = useAppContext();
   const navigate = useNavigate();
-  const [baseForm] = Form.useForm<UserInfo>();
-  const userRoles = Form.useWatch("roles", baseForm) || [];
-  const userAvator = Form.useWatch("headImg", baseForm);
-  const updateUserInfo = async (values: UserInfo) => {
-    const res = await reqUpdateUserInfo(values);
-    if (res.code === 200) {
-      setUserInfo(values);
-      message.success("修改用户信息成功");
-    } else {
-      message.error(res.msg);
-    }
-  };
+
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
@@ -63,7 +56,7 @@ const Profile = () => {
       reqUploadFile(formData)
         .then((res) => {
           if (res.code === 200) {
-            baseForm.setFieldValue("headImg", res.data.url);
+
             options.onSuccess?.(res.data);
             message.success("上传头像成功");
           } else {
@@ -89,19 +82,33 @@ const Profile = () => {
       message.error(res.msg);
     }
   };
+
+  const [userForm] = Form.useForm<Omit<UpdateUserReq, "roleIds">>();
+  const updateUserInfo = async (values: UpdateUserReq) => {
+    values.roleIds = userInfo?.roleList.map(k => k.id)
+    const res = await reqUpdateUser(values);
+    if (res.code === 200) {
+      message.success("修改用户信息成功");
+      const {roleIds, ...rest} = values
+      setUserInfo({...userInfo as UserInfoRes, ...rest});
+    } else {
+      message.error(res.msg);
+    }
+  };
+
   const navbar: TabsProps["items"] = [
     {
       key: "base",
       label: "基础信息",
       children: (
         <Form
-          form={baseForm}
+          form={userForm}
           autoComplete="off"
           variant="filled"
           labelCol={{span: 5}}
           labelAlign="left"
           className="base-form"
-          initialValues={{gender: "M"}}
+          // initialValues={{sex: "M"}}
           onFinish={updateUserInfo}
           onFinishFailed={(err) => console.error(err)}>
           <Form.Item hidden name="id">
@@ -109,21 +116,21 @@ const Profile = () => {
           </Form.Item>
           <Form.Item name="headImg" getValueFromEvent={normFile}>
             <Upload {...uploadProps}>
-              <Avatar src={userAvator} alt="avatar" style={{width: "100%", height: "100%"}}/>
+              <Avatar src={userInfo?.avatar} alt="avatar" style={{width: "100%", height: "100%"}}/>
             </Upload>
           </Form.Item>
           <Form.Item label="用户名" name="username" rules={[{required: true}]}>
             <Input placeholder="请输入用户名" disabled/>
           </Form.Item>
-          <Form.Item label="昵称" name="name" rules={[{required: true}]}>
+          <Form.Item label="昵称" name="nickname" rules={[{required: true}]}>
             <Input placeholder="请输入昵称"/>
           </Form.Item>
-          <Form.Item label="性别" name="gender" rules={[{required: true}]}>
-            <Radio.Group options={dict.getDictItemList("gender")}></Radio.Group>
+          <Form.Item label="性别" name="sex" rules={[{required: true}]}>
+            <Radio.Group options={dict.getDictItemList("sex_type")}></Radio.Group>
           </Form.Item>
-          <Form.Item label="角色" name="roles">
+          <Form.Item label="角色" name="roleIds">
             <Space>
-              {userRoles.map((item: UserInfo["roles"][0], index: number) => {
+              {userInfo?.roleList.map((item, index) => {
                 return (
                   <Tag key={index} color="processing">
                     {item.roleName}
@@ -132,9 +139,6 @@ const Profile = () => {
               })}
             </Space>
           </Form.Item>
-          <Form.Item label="职务" name="title">
-            <Input placeholder="请输入职务"/>
-          </Form.Item>
           <Form.Item label="手机号" name="phoneNumber">
             <InputNumber placeholder="请输入手机号" controls={false} style={{width: "100%"}}/>
           </Form.Item>
@@ -142,24 +146,9 @@ const Profile = () => {
             <Input placeholder="请输入邮箱"/>
           </Form.Item>
           <Form.Item>
-            <Space size={50}>
-              <div>
-                账号ID：<b>{userInfo?.id}</b>
-              </div>
-              <div>
-                注册时间：<b>{dayjs(userInfo?.createTime).format("YYYY/MM/DD HH:mm")}</b>
-              </div>
-            </Space>
-          </Form.Item>
-          <Form.Item>
-            <Flex justify="end">
-              <Space>
-                <Button>重置</Button>
-                <Button type="primary" htmlType="submit">
-                  保存
-                </Button>
-              </Space>
-            </Flex>
+            <Button type="primary" htmlType="submit">
+              更新个人信息
+            </Button>
           </Form.Item>
         </Form>
       ),
@@ -203,11 +192,9 @@ const Profile = () => {
             <Input.Password placeholder="再次输入新密码"/>
           </Form.Item>
           <Form.Item>
-            <Flex justify="end">
-              <Button type="primary" htmlType="submit">
-                修改密码
-              </Button>
-            </Flex>
+            <Button type="primary" htmlType="submit">
+              修改密码
+            </Button>
           </Form.Item>
         </Form>
       ),
@@ -215,25 +202,24 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    baseForm.setFieldsValue({
-      id: userInfo?.id,
-      username: userInfo?.username,
-      name: userInfo?.name,
-      gender: userInfo?.gender,
-      roles: userInfo?.roles,
-      title: userInfo?.title,
-      phoneNumber: userInfo?.phoneNumber,
-      email: userInfo?.email,
-      headImg: userInfo?.headImg,
-    });
-    passwordForm.setFieldValue("id", userInfo?.id);
-  }, []);
-
+    if (drawerProps.open) {
+      userForm.setFieldsValue({
+        id: userInfo?.id,
+        username: userInfo?.username,
+        nickname: userInfo?.nickname,
+        sex: userInfo?.sex,
+        avatar: userInfo?.avatar,
+        email: userInfo?.email,
+        status: userInfo?.status,
+        phoneNumber: userInfo?.phoneNumber,
+      })
+    }
+  }, [drawerProps.open]);
   return (
-    <div className={styles["root"]}>
-      <Tabs items={navbar} className="navbar-box tabs-box"></Tabs>
-    </div>
+    <Drawer {...drawerProps} width={600} className={styles["root"]}>
+      <Tabs items={navbar} className="navbar-box"></Tabs>
+    </Drawer>
   );
 };
 
-export default Profile;
+export default UserCenterDrawer;

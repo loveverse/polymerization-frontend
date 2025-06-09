@@ -33,8 +33,8 @@ function Login() {
     setLoading(true);
     const res = await reqLogin(params);
     if (res.code === 200) {
-      const {token} = res.data;
-      localStorage.setItem("backend-token", token);
+      localStorage.setItem("backend-token", res.data.token);
+      localStorage.setItem("userInfo", JSON.stringify(res.data.user));
       message.success("登录成功")
       navigate("/module");
     } else {
@@ -78,19 +78,23 @@ function Login() {
             <Form.Item name="password" rules={[{required: true, message: "请输入密码"}]}>
               <Input.Password placeholder="请输入密码" prefix={<LockOutlined/>}/>
             </Form.Item>
-            <Form.Item>
-              <Form.Item name="captchaCode" rules={[{required: true, message: "请输入验证码"}]}
-                         style={{display: 'inline-block', width: 'calc(50% - 8px)'}}>
-                <Input placeholder="请输入验证码" prefix={<LockOutlined/>}/>
-              </Form.Item>
-              <img src={captchaImg} alt="验证码"
-                   className="captcha-img"
-                   onClick={generateCaptchaImg}
-              />
-            </Form.Item>
-            <Form.Item name="captchaKey" hidden={true}>
-              <div></div>
-            </Form.Item>
+            {
+              process.env.REACT_APP_CAPTCHA_ENABLE === "true" ? <>
+                <Form.Item>
+                  <Form.Item name="captchaCode" rules={[{required: true, message: "请输入验证码"}]}
+                             style={{display: 'inline-block', width: 'calc(50% - 8px)'}}>
+                    <Input placeholder="请输入验证码" prefix={<LockOutlined/>}/>
+                  </Form.Item>
+                  <img src={captchaImg} alt="验证码"
+                       className="captcha-img"
+                       onClick={generateCaptchaImg}
+                  />
+                </Form.Item>
+                <Form.Item name="captchaKey" hidden={true}>
+                  <div></div>
+                </Form.Item>
+              </> : null
+            }
             <Form.Item className="login-btn">
               <Button loading={loading} type="primary" htmlType="submit" block>
                 登录

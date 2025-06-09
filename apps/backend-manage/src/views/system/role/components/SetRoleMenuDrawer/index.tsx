@@ -1,9 +1,9 @@
 import {reqMenuIdsByRoleId, reqMenuTreeByModuleId, reqSetRolePermissions} from "@/api/system";
 import {SpinLoading} from "@/components";
-import {Button, Drawer, message, Space, Tree, TreeProps} from "antd";
+import {Button, Drawer, message, Space, Tree} from "antd";
 import React, {useEffect, useState} from "react";
 import {DrawerControlsProps} from "@/hooks/useDrawerControls";
-import {MenuListRes, RoleDataRes} from "@/api/system/types";
+import {MenuListRes} from "@/api/system/types";
 
 export interface SetRoleMenuProps extends DrawerControlsProps {
   roleId: string;

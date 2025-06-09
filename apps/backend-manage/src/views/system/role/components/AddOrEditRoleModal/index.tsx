@@ -1,9 +1,8 @@
-import {Form, Modal, Input, App} from "antd";
+import {App, Form, Input, Modal} from "antd";
 import {AddRoleReq, UpdateRoleReq} from "@/api/system/types";
 import {reqAddRole, reqUpdateRole} from "@/api/system";
 import {ModalControlsProps} from "@/hooks/useModalControls";
 import {useEffect} from "react";
-import role from "@/views/system/role";
 
 
 const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {

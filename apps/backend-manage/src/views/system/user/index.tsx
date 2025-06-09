@@ -20,8 +20,8 @@ const UserManage: React.FC = () => {
       width: 80,
       render: (_value, _record, index) => (userData.page - 1) * userData.size + index + 1,
     },
-    {title: "用户名", dataIndex: "userName", align: "center"},
-    {title: "昵称", dataIndex: "nickName", align: "center"},
+    {title: "用户名", dataIndex: "username", align: "center"},
+    {title: "昵称", dataIndex: "nickname", align: "center"},
     {
       title: "性别",
       dataIndex: "sex",
@@ -78,7 +78,7 @@ const UserManage: React.FC = () => {
                 modal.confirm({
                   title: "提示",
                   closable: true,
-                  content: `是否将【${record.userName}】密码重置为123456 ?`,
+                  content: `是否将【${record.username}】密码重置为123456 ?`,
                   onOk: () =>
                     resetUserPassword({id: record.id, password: "123456"})
                 });
@@ -142,7 +142,7 @@ const UserManage: React.FC = () => {
     modal.confirm({
       title: "提示",
       closable: true,
-      content: `确定要删除【${values.userName}】吗？`,
+      content: `确定要删除【${values.username}】吗？`,
       onOk: async () => {
         const res = await reqDelBatchUser([values.id]);
         if (res.code === 200) {

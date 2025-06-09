@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Space, Table, TableColumnsType, App, Switch} from "antd";
+import {App, Button, Space, Switch, Table, TableColumnsType} from "antd";
 import {DeleteOutlined, EditOutlined, SettingOutlined} from "@ant-design/icons";
 import {reqBatchDelRole, reqRolePage, reqUpdateRole} from "@/api/system";
 import {RoleDataRes, UpdateRoleReq, UpdateRoleStatusReq} from "@/api/system/types";

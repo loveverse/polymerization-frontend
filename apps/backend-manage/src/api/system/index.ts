@@ -13,13 +13,14 @@ import {
   MenuListRes,
   RoleDataRes,
   RoleListReq,
-  RolePageReq, SetRolePermissionsReq,
+  RolePageReq,
+  SetRolePermissionsReq,
   UpdateDictItemReq,
   UpdateDictReq,
   UpdateMenuReq,
   UpdateRoleReq,
   UpdateUserInfoReq,
-  UserDataRes,
+  UserDataRes, UserInfoRes,
 } from "./types";
 
 
@@ -54,8 +55,10 @@ export const reqDelDictItem = (params: CommonId) =>
   http.delete("/auth-api/v1/system/dict/dict-item/delete", params);
 export const reqUpdateDictItem = (params: UpdateDictItemReq) =>
   http.put("/auth-api/v1/system/dict/dict-item/update", params);
-export const reqDictItemList = (params?: DictItemListReq) => http.get<DictItemDataRes[]>("/auth-api/v1/system/dict/dict-item/list", params);
-export const reqDictItemCollect = (params?: DictItemCollectReq) => http.get<DictItemCollectRes>("/auth-api/v1/system/dict/dict-items", params);
+export const reqDictItemList = (params?: DictItemListReq) =>
+  http.get<DictItemDataRes[]>("/auth-api/v1/system/dict/dict-item/list", params);
+export const reqDictItemCollect = (params?: DictItemCollectReq) =>
+  http.get<DictItemCollectRes>("/auth-api/v1/system/dict/dict-items", params);
 
 /* 用户管理 */
 export const reqAddUser = (params: AddUserReq) =>
@@ -66,6 +69,8 @@ export const reqUpdateUser = (params: UpdateUserInfoReq) =>
   http.put("/auth-api/v1/system/user/update", params);
 export const reqUserPage = (params: PageParam) =>
   http.get<PageResult<UserDataRes>>("/auth-api/v1/system/user/page", params);
+export const reqUserInfo = (params: CommonId) =>
+  http.get<UserInfoRes>("/auth-api/v1/system/user/detail/" + params.id);
 
 /* 菜单管理 */
 export const reqAddMenu = (params: AddMenuReq) =>

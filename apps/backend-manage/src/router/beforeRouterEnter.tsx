@@ -3,27 +3,23 @@ import {message} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
 import Router, {AppRouteObject} from "./index";
 import AppContext, {defaultDict, Dict, DictItemData} from "@/context";
-import {reqDictItemCollect,} from "@/api/system";
+import {reqDictItemCollect, reqUserInfo,} from "@/api/system";
 import {SpinLoading} from "@/components";
-import {UserInfo} from "@/api/base/types";
 import {layoutRoutes} from "./routes";
-import {filterRoutesByUserRoutes} from "./hooks";
-import {DictItemDataRes} from "@/api/system/types";
-
+import {DictItemDataRes, UserInfoRes} from "@/api/system/types";
 
 // 处理登录后，页面初始化时的钩子
 function BeforeRouterEnter() {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const storeUserInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
   const [dict, setDict] = useState<Dict>(defaultDict);
+  const [userInfo, setUserInfo] = useState<UserInfoRes | null>(null)
   const [permissionRoutes, setPermissionRoutes] = useState<AppRouteObject[]>([]); // 权限路由
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const isLoaded = useRef(false); // 判断是否已经加载
 
-  const getInitData = async () => {
-    setLoading(true);
+  const getDictList = async () => {
     const res4 = await reqDictItemCollect()
     if (res4.code === 200) {
       // 遍历dictMap的每个键
@@ -49,25 +45,35 @@ function BeforeRouterEnter() {
           return typeof this.dictMap[type] === "object" ? this.dictKeyMap[type][value] : "";
         },
       };
-
       setDict(dict);
-      // true：本地路由，false: 线上路由
-      if (process.env.NODE_ENV === "development") {
-        setPermissionRoutes(layoutRoutes);
-        console.log("%c [ 字典值 ]-83", "font-size:13px; background:pink; color:#bf2c9f;", {
-          dictMap: dict.dictMap,
-          dictKeyMap: dict.dictKeyMap,
-        });
-      } else {
-        const userPermissionRoutes = filterRoutesByUserRoutes(layoutRoutes, []);
-        setPermissionRoutes(userPermissionRoutes);
-      }
     } else {
-      message.error("获取初始化信息失败，请刷新重试！");
+      message.error("获取字典信息失败，请刷新重试！");
     }
-    isLoaded.current = true;
-    setLoading(false);
   };
+  const getUserInfo = async () => {
+    setLoading(true)
+    const res = await reqUserInfo({id: storeUserInfo.id});
+    if (res.code !== 200) {
+      setLoading(false)
+      message.error(res.msg);
+      return
+    }
+    setUserInfo(res.data)
+    // 继续获取权限和菜单信息
+    // // true：本地路由，false: 线上路由
+    // if (process.env.NODE_ENV === "development") {
+    //   setPermissionRoutes(layoutRoutes);
+    //   console.log("%c [ 字典值 ]-83", "font-size:13px; background:pink; color:#bf2c9f;", {
+    //     dictMap: dict.dictMap,
+    //     dictKeyMap: dict.dictKeyMap,
+    //   });
+    // } else {
+    //   const userPermissionRoutes = filterRoutesByUserRoutes(layoutRoutes, []);
+    //   setPermissionRoutes(userPermissionRoutes);
+    // }
+    setLoading(false)
+
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("backend-token");
@@ -76,7 +82,10 @@ function BeforeRouterEnter() {
       return;
     }
     if (!Object.keys(dict.dictMap).length) {
-      void getInitData();
+      void getDictList();
+    }
+    if (!userInfo) {
+      void getUserInfo()
     }
     setPermissionRoutes(layoutRoutes);
   }, [location.pathname]);
@@ -88,7 +97,7 @@ function BeforeRouterEnter() {
   return (
     <Suspense fallback={<SpinLoading variant="full"/>}>
       <AppContext.Provider
-        value={{permissionRoutes, setPermissionRoutes, dict, setDict, userInfo, setUserInfo}}>
+        value={{dict, setDict, userInfo, setUserInfo, permissionRoutes, setPermissionRoutes}}>
         <Router permissionRoutes={permissionRoutes} isLoaded={isLoaded.current}/>
       </AppContext.Provider>
     </Suspense>

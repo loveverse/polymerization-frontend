@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonProps, RadioProps, SelectProps, Space } from "antd";
+import {Button, RadioProps, SelectProps, Space} from "antd";
 import styles from "./index.module.scss";
 
 // type RadioButtonSize = ButtonProps["size"] | "default";

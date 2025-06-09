@@ -1,12 +1,12 @@
 import React, {createContext, useContext} from "react";
 import {AppRouteObject} from "./router";
-import {UserInfo} from "./api/base/common/types";
-import {DictItemCollectRes, DictItemDataRes} from "@/api/system/types";
+import {DictItemCollectRes, DictItemDataRes, UserInfoRes} from "@/api/system/types";
 
-export interface DictItemData extends DictItemDataRes{
+export interface DictItemData extends DictItemDataRes {
   value: string;
   label: string;
 }
+
 export interface Dict extends DictItemCollectRes {
   dictMap: {
     [key: string]: DictItemData[]
@@ -18,8 +18,8 @@ export interface Dict extends DictItemCollectRes {
 interface AppContextType {
   dict: Dict;
   setDict: React.Dispatch<React.SetStateAction<Dict>>;
-  userInfo: UserInfo | null;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
+  userInfo: UserInfoRes | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfoRes | null>>;
   permissionRoutes: AppRouteObject[];
   setPermissionRoutes: React.Dispatch<React.SetStateAction<AppRouteObject[]>>;
 }

@@ -1,7 +1,6 @@
-import {App, Form, Input, InputNumber, Modal, Tooltip} from "antd";
+import {App, Form, Input, InputNumber, Modal} from "antd";
 import {ModalControlsProps} from "@/hooks/useModalControls";
 import {AddDictItemReq, UpdateDictItemReq} from "@/api/system/types";
-import {ExclamationCircleOutlined} from "@ant-design/icons";
 
 import {reqAddDictItem, reqUpdateDictItem} from "@/api/system";
 import {useEffect} from "react";
@@ -72,16 +71,11 @@ const AddOrEditDictItemModal = (props: ModalControlsProps) => {
           <Input placeholder="请输入字典值(value)"/>
         </Form.Item>
 
-        <Form.Item label="排序值" name="sortOrder" rules={[{required: true, type: "number"}]}>
+        <Form.Item label="排序值" name="sortOrder" tooltip="数字越小，排序越靠前" rules={[{required: true, type: "number"}]}>
           <InputNumber
             placeholder="请输入排序值"
             style={{width: "100%"}}
             step={10}
-            addonBefore={
-              <Tooltip className="cur-pointer" placement="bottom" title="数字越小，排序越靠前">
-                <ExclamationCircleOutlined/>
-              </Tooltip>
-            }
           />
         </Form.Item>
       </Form>

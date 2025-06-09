@@ -1,7 +1,5 @@
 /* 角色管理 */
 
-import {reqSetRolePermissions} from "@/api/system/index";
-
 export interface RolePageReq extends PageParam {
 
 }
@@ -84,28 +82,30 @@ export interface DictItemCollectRes {
   }
 }
 
-
+/* 用户管理 */
 export interface UserDataRes {
   id: string;
   createTime: string;
   updateTime: string;
-  userName: string;
-  nickName: string;
+  username: string;
+  nickname: string;
   sex: string;
   status: number;
   phoneNumber: string;
   email: string;
-  roleList: RoleDataRes[]
+  avatar: string;
+  roleList: Pick<RoleDataRes, "id" | "roleKey" | "roleName">[]
 }
 
 export interface AddUserReq {
-  userName: string;
+  username: string;
+  nickname?: string;
   password: string;
   sex: string;
-  nickName?: string;
   status?: number;
   phoneNumber?: string;
   email?: string;
+  avatar?: string
   roleIds?: string[];
 }
 
@@ -113,6 +113,8 @@ export type UpdateUserReq = AddUserReq & CommonId;
 export type UpdateUserStatusReq = Pick<AddUserReq, "status"> & CommonId;
 export type ResetUserPasswordReq = Pick<AddUserReq, "password"> & CommonId;
 export type UpdateUserInfoReq = UpdateUserReq | UpdateUserStatusReq | ResetUserPasswordReq;
+export type UserInfoRes = UserDataRes
+
 
 /* 菜单管理 */
 export interface AddMenuReq {
@@ -131,7 +133,6 @@ export interface AddMenuReq {
 }
 
 export type UpdateMenuReq = AddMenuReq & CommonId;
-
 
 export interface MenuListRes {
   id: string;

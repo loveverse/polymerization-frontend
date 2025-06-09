@@ -10,7 +10,6 @@ import UserManage from "@/views/system/user";
 import DictManage from "@/views/system/dict";
 import RoleManage from "@/views/system/role";
 import MenuManage from "@/views/system/menu";
-import Profile from "@/views/system/profile";
 
 import {NotAuth, NotFound, ServerError} from "@/components";
 
@@ -48,12 +47,6 @@ export const asyncRoutes: AppRouteObject[] = [
         path: "/system/user",
         element: <UserManage/>,
         meta: {label: "用户管理", icon: <UserOutlined/>},
-      },
-      // 不需要做权限的路由
-      {
-        path: "/system/profile",
-        element: <Profile/>,
-        meta: {label: "个人中心", hideMenu: true, permission: true},
       },
       {
         path: "/system/role",

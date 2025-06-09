@@ -11,10 +11,14 @@ export interface LoginInfoReq {
 }
 
 export interface LoginInfoRes {
-  permission: any[];
+  expireTime: string;
   token: string;
-  user: any;
-  roles: any[]
+  tokenPrefix: string;
+  user: {
+    id: string;
+    userId: string;
+    username: string;
+  };
 }
 
 export interface UserMenuReq {
