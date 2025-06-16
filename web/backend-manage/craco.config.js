@@ -1,16 +1,24 @@
 const path = require("path");
 
-if(process.env.NODE_ENV === "development"){
-  console.info(process.env)
-}
 module.exports = {
+  renderer: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern-compiler",
+          silenceDeprecations: ['legacy-js-api']
+        }
+      }
+    }
+  },
   devServer: {
     port: 40200,
   },
   style: {
     sass: {
+      // sass 1.80 不再支持老的 js api 接口
       loaderOptions: {
-        additionalData: `@import "@/assets/css/global.scss";`,
+        additionalData: `@use "@/assets/css/global.scss" as *;`,
       },
     },
   },
@@ -18,11 +26,13 @@ module.exports = {
     alias: {
       "@": path.join(__dirname, "src"),
     },
-    configure: (webpackConfig, { env }) => {
+    configure: (webpackConfig, {env}) => {
+      console.log("环境变量：", process.env)
+
       webpackConfig.devtool = env === "development" ? "source-map" : false;
       // 设置静态资源公共路径
       webpackConfig.output = {
-        path: path.resolve(__dirname, "build"), // 打包后的路径名
+        path: path.resolve(__dirname, "dist"), // 打包后的路径名
         publicPath: process.env.REACT_APP_PUBLIC_PATH,
         // 这里预设为hash,contenthash根据内容生成
         // filename: "static/js/[name].[contenthash].js", // 只会处理js文件
@@ -76,6 +86,8 @@ module.exports = {
       //   ],
       //   ...webpackConfig.module.rules[1].oneOf,
       // ];
+
+      // 找到匹配 .scss 的规则（通常在 oneOf 里）
       return webpackConfig;
     },
   },

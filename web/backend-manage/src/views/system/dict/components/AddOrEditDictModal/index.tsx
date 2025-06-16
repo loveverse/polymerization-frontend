@@ -9,34 +9,34 @@ import {ModuleDataRes} from "@/api/module/types";
 
 const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
   const {message} = App.useApp()
-  const {modalProps, actions, refresh} = props;
+  const {modalProps, modalActions, refresh} = props;
   const [dictForm] = Form.useForm<UpdateDictReq>();
 
   const addDict = async (values: AddDictReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
     const res = await reqAddDict(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       dictForm.resetFields();
       message.success("添加字典成功");
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
 
   const editDict = async (values: UpdateDictReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqUpdateDict(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改字典信息成功");
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
   const [moduleList, setModuleList] = useState<ModuleDataRes[]>([]);
   const getModuleList = async () => {
@@ -49,7 +49,7 @@ const AddOrEditDictModal = (props: ModalControlsProps<UpdateDictReq>) => {
   };
 
   useEffect(() => {
-    actions.exposeMethods?.({
+    modalActions.exposeMethods?.({
       setFieldsValue: dictForm.setFieldsValue
     })
     void getModuleList()

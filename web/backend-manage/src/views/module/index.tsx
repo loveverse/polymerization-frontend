@@ -8,6 +8,7 @@ import {ModuleDataRes,} from "@/api/module/types";
 import AddOrEditModuleModal from "./AddOrEditModuleModal";
 import styles from "./index.module.scss";
 import {useModalControls} from "@/hooks";
+import {Permission} from "@/components";
 
 const ModuleManage: React.FC = () => {
   const {message, modal} = App.useApp()
@@ -36,17 +37,22 @@ const ModuleManage: React.FC = () => {
       width: 200,
       render: (_value, record) => (
         <>
-          <Button
-            type="link"
-            onClick={() => {
-              editModuleActions.show(record)
-            }}
-          >
-            编辑
-          </Button>
-          <Button type="text" danger onClick={() => delModule(record)}>
-            删除
-          </Button>
+          <Permission code="sys:module:edit">
+            <Button
+              type="link"
+              onClick={() => {
+                editModuleActions.show(record)
+              }}
+            >
+              编辑
+            </Button>
+          </Permission>
+          <Permission code="sys:module:del">
+            <Button type="text" danger onClick={() => delModule(record)}>
+              删除
+            </Button>
+          </Permission>
+
         </>
       ),
     },
@@ -96,14 +102,17 @@ const ModuleManage: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className="operation-header">
-        <Button
-          type="primary"
-          onClick={() => {
-            addModuleActions.show()
-          }}
-        >
-          新增模块
-        </Button>
+        <Permission code="sys:module:add" fallback={<div></div>}>
+          <Button
+            type="primary"
+            onClick={() => {
+              addModuleActions.show()
+            }}
+          >
+            新增模块
+          </Button>
+        </Permission>
+
 
         <Input
           className="search"
@@ -125,12 +134,12 @@ const ModuleManage: React.FC = () => {
         rowKey={(record) => record.id}
       />
       <AddOrEditModuleModal
-        actions={addModuleActions}
+        modalActions={addModuleActions}
         modalProps={{...addModuleProps, title: "新增模块"}}
         refresh={getModuleList}
       />
       <AddOrEditModuleModal
-        actions={editModuleActions}
+        modalActions={editModuleActions}
         modalProps={{...editModuleProps, title: "编辑模块"}}
         refresh={getModuleList}
       />

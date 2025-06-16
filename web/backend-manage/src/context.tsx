@@ -17,11 +17,14 @@ export interface Dict extends DictItemCollectRes {
 
 interface AppContextType {
   dict: Dict;
-  setDict: React.Dispatch<React.SetStateAction<Dict>>;
-  userInfo: UserInfoRes | null;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfoRes | null>>;
-  permissionRoutes: AppRouteObject[];
-  setPermissionRoutes: React.Dispatch<React.SetStateAction<AppRouteObject[]>>;
+  userInfo: UserInfoRes | null; // 用户信息
+  permissions: string[];  // 权限标识
+  asyncRoutes: AppRouteObject[];  // 动态路由
+  actions: {
+    setUserInfo: React.Dispatch<React.SetStateAction<UserInfoRes | null>>;
+    setAsyncRoutes: React.Dispatch<React.SetStateAction<AppRouteObject[]>>;
+    resetAppContext: () => void; // 清除一些缓存信息，比如退出时清除字典信息、路由，避免使用旧的数据
+  }
 }
 
 export const defaultDict: Dict = {

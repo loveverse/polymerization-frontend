@@ -21,13 +21,12 @@ import styles from "./index.module.scss";
 import {DrawerControlsProps} from "@/hooks/useDrawerControls";
 import {reqUpdateUser} from "@/api/system";
 import {UpdateUserReq, UserInfoRes} from "@/api/system/types";
-import {use} from "echarts/core";
 
 
 const UserCenterDrawer = (props: DrawerControlsProps) => {
-  const {drawerProps, actions, refresh} = props
+  const {drawerProps, drawerActions, refresh} = props
   const {message} = App.useApp()
-  const {dict, userInfo, setUserInfo} = useAppContext();
+  const {dict, userInfo, actions} = useAppContext();
   const navigate = useNavigate();
 
   const normFile = (e: any) => {
@@ -90,7 +89,7 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
     if (res.code === 200) {
       message.success("修改用户信息成功");
       const {roleIds, ...rest} = values
-      setUserInfo({...userInfo as UserInfoRes, ...rest});
+      actions.setUserInfo({...userInfo as UserInfoRes, ...rest});
     } else {
       message.error(res.msg);
     }

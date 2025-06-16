@@ -6,40 +6,40 @@ import {reqAddDictItem, reqUpdateDictItem} from "@/api/system";
 import {useEffect} from "react";
 
 const AddOrEditDictItemModal = (props: ModalControlsProps) => {
-  const {modalProps, actions, refresh} = props
+  const {modalProps, modalActions, refresh} = props
   const {message} = App.useApp()
   const [dictItemForm] = Form.useForm<UpdateDictItemReq | AddDictItemReq>();
 
   const addDictItem = async (values: AddDictItemReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
 
     const res = await reqAddDictItem(values);
     if (res.code === 200) {
-      actions.hide()
+      modalActions.hide()
       message.success("添加字典项成功");
       dictItemForm.resetFields()
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
 
   const editDictItem = async (values: UpdateDictItemReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
     const res = await reqUpdateDictItem(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改字典项信息成功");
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
 // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
-    actions.exposeMethods?.({
+    modalActions.exposeMethods?.({
       setFieldsValue: dictItemForm.getFieldsValue
     })
   }, []);

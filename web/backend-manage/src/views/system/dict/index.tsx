@@ -249,19 +249,19 @@ const DictManage: React.FC = () => {
       </div>
       <AddOrEditDictModal
         modalProps={{...addDictProps, title: "新增字典"}}
-        actions={addDictActions}
+        modalActions={addDictActions}
         refresh={getDictList}/>
       <AddOrEditDictModal
         modalProps={{...editDictProps, title: "编辑字典"}}
-        actions={editDictActions}
+        modalActions={editDictActions}
         refresh={getDictList}/>
       <AddOrEditDictItemModal
-        actions={addDictItemActions}
+        modalActions={addDictItemActions}
         modalProps={{...addDictItemProps, title: "新增字典项"}}
         refresh={() => getDictItemList(selectDictId)
         }/>
       <AddOrEditDictItemModal
-        actions={editDictItemActions}
+        modalActions={editDictItemActions}
         modalProps={{...editDictItemProps, title: "编辑字典项"}}
         refresh={() => getDictItemList(selectDictId)}/>
     </div>

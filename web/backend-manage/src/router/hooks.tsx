@@ -1,7 +1,7 @@
 import {useCallback} from "react";
 import {GetProp, MenuProps} from "antd";
 import {AppRouteObject} from "@/router";
-import {UserMenuReq} from "@/api/login/types";
+import {MenuListRes} from "@/api/system/types";
 // import {ComSvgIcon} from "@/components";
 
 export const generateBreadcrumbNameMap = (routerList: AppRouteObject[]) => {
@@ -25,12 +25,12 @@ export const generateBreadcrumbNameMap = (routerList: AppRouteObject[]) => {
 
 export function filterRoutesByUserRoutes(
   localRoutes: AppRouteObject[],
-  userRoutes: UserMenuReq[]
+  userRoutes: MenuListRes[]
 ): AppRouteObject[] {
   // 递归过滤函数，检查是否在 b 中存在并返回对应的菜单
   const filterMenu = (
     localRoutes: AppRouteObject[],
-    userRoutes: UserMenuReq[]
+    userRoutes: MenuListRes[]
   ): AppRouteObject[] => {
     return localRoutes
       .map((localRoute) => {
@@ -40,14 +40,14 @@ export function filterRoutesByUserRoutes(
         }
         // 寻找匹配的用户路由
         const matchedUserRoute = userRoutes.find(
-          (userRoute) => userRoute.route === localRoute.path
+          (userRoute) => userRoute.path === localRoute.path
         );
 
         // 如果找到了匹配的用户路由
         if (matchedUserRoute) {
           // 检查是否需要排除 hideMenu 为 true 的路由
           if (localRoute.meta?.hideMenu) {
-            return {...localRoute, order: matchedUserRoute.orderValue}; // 不返回该路由
+            return {...localRoute, order: matchedUserRoute.sortOrder}; // 不返回该路由
           }
 
           // 如果有子路由，递归处理子路由
@@ -60,7 +60,7 @@ export function filterRoutesByUserRoutes(
 
           return {
             ...localRoute,
-            order: matchedUserRoute.orderValue,
+            order: matchedUserRoute.sortOrder,
             children: filteredChildren.length > 0 ? filteredChildren : undefined,
           };
         }
@@ -92,7 +92,7 @@ export function useRouteToMenuFn() {
           key: cur.path!,
           label: cur.meta ? cur.meta.label : "",
           disabled: cur.meta ? cur.meta.disabled : false,
-          icon:  cur.meta?.icon,
+          icon: cur.meta?.icon,
           children: child?.length ? routeToMenuFn(child) : undefined,
         });
     }, []);

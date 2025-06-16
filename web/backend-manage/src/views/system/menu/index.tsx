@@ -46,7 +46,7 @@ const MenuManage: React.FC = () => {
           <>
             <Button
               type="link"
-              disabled={record.menuType === "0"}
+              disabled={record.menuType === "2"}
               onClick={(e) => {
                 e.stopPropagation();
                 setModalTitle("添加子菜单")
@@ -63,6 +63,7 @@ const MenuManage: React.FC = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 editMenuActions.show(record)
+                editMenuActions.setParentOptions(record.parentId, menuList)
               }}>
               编辑
             </Button>
@@ -176,10 +177,10 @@ const MenuManage: React.FC = () => {
       />
 
       <AddOrEditMenuModal modalProps={{...addMenuProps, title: modalTitle}}
-                          actions={addMenuActions}
+                          modalActions={addMenuActions}
                           refresh={getMenuList}/>
       <AddOrEditMenuModal modalProps={{...editMenuProps, title: "编辑菜单"}}
-                          actions={editMenuActions}
+                          modalActions={editMenuActions}
                           refresh={getMenuList}/>
     </div>
   );

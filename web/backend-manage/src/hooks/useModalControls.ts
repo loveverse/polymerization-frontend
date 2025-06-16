@@ -19,7 +19,7 @@ type ModalActions<T, M extends Record<string, any>> = BaseActions<T, M> & M;
 
 // 子组件 props 类型
 export interface ModalControlsProps<T extends Record<string, any> = Record<string, any>, M extends Record<string, any> = Record<string, any>> {
-  actions: ModalActions<T, M>;
+  modalActions: ModalActions<T, M>;
   modalProps: ModalProps;
   refresh?: () => void
 }

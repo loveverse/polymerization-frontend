@@ -56,18 +56,16 @@ export interface RouteMeta {
    */
   params?: Params<string>;
 }
+
 export type AppRouteObject = {
   order?: number;
   meta?: RouteMeta;
   children?: AppRouteObject[];
 } & Omit<RouteObject, "children">;
 
-export default function Router({
-  permissionRoutes,
-  isLoaded,
-}: {
+export default function Router({asyncRoutes, isLoaded}: {
   isLoaded: boolean;
-  permissionRoutes: AppRouteObject[];
+  asyncRoutes: AppRouteObject[];
 }) {
   const routes: AppRouteObject[] = [
     loginRoute,
@@ -75,10 +73,10 @@ export default function Router({
       path: "/",
       element: (
         <AuthRouter isLoaded={isLoaded}>
-          <Layout />
+          <Layout/>
         </AuthRouter>
       ),
-      children: [...staticRoutes, ...permissionRoutes, ...errorRoutes],
+      children: [...staticRoutes, ...asyncRoutes, ...errorRoutes],
     },
   ];
   return useRoutes(routes as unknown as RouteObject[]);

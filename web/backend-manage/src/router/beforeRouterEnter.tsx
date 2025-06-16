@@ -9,6 +9,7 @@ import {layoutRoutes} from "./routes";
 import {DictItemDataRes, UserInfoRes} from "@/api/system/types";
 import {filterRoutesByUserRoutes} from "@/router/hooks";
 import {WHITE_ROUTES} from "@/utils/constant";
+import {reqAuthorityInfo} from "@/api/login";
 
 // 处理登录后，页面初始化时的钩子
 function BeforeRouterEnter() {
@@ -17,7 +18,10 @@ function BeforeRouterEnter() {
   const storeUserInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
   const [dict, setDict] = useState<Dict>(defaultDict);
   const [userInfo, setUserInfo] = useState<UserInfoRes | null>(null)
-  const [permissionRoutes, setPermissionRoutes] = useState<AppRouteObject[]>([]); // 权限路由
+  // 权限标识
+  const [permissions, setPermissions] = useState<string[]>([])
+  // 动态路由
+  const [asyncRoutes, setAsyncRoutes] = useState<AppRouteObject[]>([]); // 权限路由
   const [loading, setLoading] = useState(false);
   const isLoaded = useRef(false); // 判断是否已经加载
 
@@ -68,15 +72,23 @@ function BeforeRouterEnter() {
     }
     setUserInfo(res.data)
     // 继续获取权限和菜单信息
+    const res1 = await reqAuthorityInfo({id: storeUserInfo.id});
     // // true：本地路由，false: 线上路由
-    if (process.env.NODE_ENV === "development") {
-      setPermissionRoutes(layoutRoutes);
+    if (process.env.NODE_ENV !== "development") {
+      setAsyncRoutes(layoutRoutes);
     } else {
-      const userPermissionRoutes = filterRoutesByUserRoutes(layoutRoutes, []);
-      setPermissionRoutes(userPermissionRoutes);
+      const userAsyncRoutes = filterRoutesByUserRoutes(layoutRoutes, res1.data.menus);
+      setAsyncRoutes(userAsyncRoutes);
+      setPermissions(res1.data.permissions)
     }
     isLoaded.current = true
     setLoading(false)
+  }
+  // 重置缓存上下文信息
+  const resetAppContext = () => {
+    // 需要重新获取用户信息
+    setUserInfo(null)
+    setDict(defaultDict);
   }
 
   useEffect(() => {
@@ -104,11 +116,18 @@ function BeforeRouterEnter() {
   return (
     <Suspense fallback={<SpinLoading variant="full"/>}>
       <AppContext.Provider
-        value={{dict, setDict, userInfo, setUserInfo, permissionRoutes, setPermissionRoutes}}>
-        <Router permissionRoutes={permissionRoutes} isLoaded={isLoaded.current}/>
+        value={{
+          dict,
+          userInfo,
+          permissions,
+          asyncRoutes,
+          actions: {setAsyncRoutes, setUserInfo, resetAppContext}
+        }}>
+        < Router asyncRoutes={asyncRoutes} isLoaded={isLoaded.current}/>
       </AppContext.Provider>
     </Suspense>
   );
 }
+
 
 export default BeforeRouterEnter;

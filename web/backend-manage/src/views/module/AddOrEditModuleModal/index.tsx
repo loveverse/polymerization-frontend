@@ -5,37 +5,37 @@ import {reqAddModule, reqUpdateModule} from "@/api/module";
 import {useEffect} from "react";
 
 const AddOrEditModuleModal = (props: ModalControlsProps) => {
-  const {modalProps, actions, refresh} = props
+  const {modalProps, modalActions, refresh} = props
   const [moduleForm] = Form.useForm<UpdateModuleReq>();
   const editable = !!Form.useWatch("id", moduleForm);
   const addModule = async (values: AddModuleReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqAddModule(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       moduleForm.resetFields();
       message.success("添加模块成功");
       refresh?.();
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
 
   const editModule = async (values: UpdateModuleReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqUpdateModule(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改模块信息成功");
       refresh?.();
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
   useEffect(() => {
-    actions.exposeMethods({
+    modalActions.exposeMethods({
       setFieldsValue: moduleForm.setFieldsValue
     })
   }, []);

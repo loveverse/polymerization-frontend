@@ -1,3 +1,5 @@
+import {MenuListRes} from "@/api/system/types";
+
 type LoginType = "student" | "teacher";
 type LoginDevice = "pc" | "app" | "desktop";
 
@@ -21,18 +23,11 @@ export interface LoginInfoRes {
   };
 }
 
-export interface UserMenuReq {
-  id: string;
-  name: string;
-  pid: string;
-  icon: string;
-  route: string;
-  type: string;
-  orderValue: number;
-  createTime: number;
-  updateTime: number;
-  hasChildren: boolean;
-  moduleName: string;
-  isDisabled: number;
-  children?: UserMenuReq[];
+export interface AuthorityInfoRes {
+  menus: MenuListRes[];
+  permissions: [];
+  roles: [];
 }
+
+
+

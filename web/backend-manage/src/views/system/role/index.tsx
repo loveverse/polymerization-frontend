@@ -173,14 +173,14 @@ const RoleManage: React.FC = () => {
       />
       <AddOrEditRoleModal
         modalProps={{...addRoleProps, title: "新增角色"}}
-        actions={addRoleActions}
+        modalActions={addRoleActions}
         refresh={getRolePage}
       />
       <AddOrEditRoleModal
         modalProps={{...editRoleProps, title: "编辑角色"}}
-        actions={editRoleActions}
+        modalActions={editRoleActions}
         refresh={() => getRolePage(roleData.page, roleData.size)}/>
-      <SetRoleMenuDrawer roleId={roleId} actions={setRoleMenuActions}
+      <SetRoleMenuDrawer roleId={roleId} drawerActions={setRoleMenuActions}
                          drawerProps={setRoleMenuProps}/>
     </div>
   );

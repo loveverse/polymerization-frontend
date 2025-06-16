@@ -49,7 +49,7 @@ const findParentItems = (data: MenuListRes[], pid: string) => {
 const rootDir = [{value: "0", label: "根菜单"}];
 
 const AddOrEditMenuModal = (props: ModalControlsProps<AddMenuReq | UpdateMenuReq, MenuMethods>) => {
-  const {modalProps, actions, refresh} = props
+  const {modalProps, modalActions, refresh} = props
   const {message} = App.useApp()
   const {dict} = useAppContext();
 
@@ -57,38 +57,39 @@ const AddOrEditMenuModal = (props: ModalControlsProps<AddMenuReq | UpdateMenuReq
   const menuId = Form.useWatch("id", menuForm);
   const menuType = Form.useWatch("menuType", menuForm);
   const addMenu = async (values: AddMenuReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqAddMenu(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("添加菜单成功");
       menuForm.resetFields();
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
   const editMenu = async (values: UpdateMenuReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
     const res = await reqUpdateMenu(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改菜单信息成功");
       refresh?.();
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
   const [parentMenuOptions, setParentMenuOptions] = useState<SelectOptions>(rootDir)
   const setParentOptions = (parentId: string, data: MenuListRes[]) => {
+    console.log(parentId, data, 444);
     const nodes = findParentItems(data, parentId);
-    setParentMenuOptions(nodes);
+    setParentMenuOptions(nodes.length ? nodes : rootDir);
   }
 
   useEffect(() => {
-    actions.exposeMethods({
+    modalActions.exposeMethods({
       setParentOptions,
       setFieldsValue: menuForm.setFieldsValue,
     })

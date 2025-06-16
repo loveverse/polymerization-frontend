@@ -19,7 +19,7 @@ const {Sider, Content, Header} = Layout;
 const LayoutMain: React.FC = () => {
   const navigate = useNavigate();
 
-  const {permissionRoutes, setDict, userInfo} = useAppContext();
+  const {asyncRoutes, userInfo, actions} = useAppContext();
   const {pathname} = useLocation();
   const outletElement = useOutlet();
   const nodeRef = useRef(null);
@@ -32,7 +32,7 @@ const LayoutMain: React.FC = () => {
       localStorage.removeItem("backend-token");
       localStorage.removeItem("userInfo")
       // 重新获取路由
-      setDict(defaultDict);
+      actions.resetAppContext();
       navigate("/login");
       message.success("退出登录成功");
     } else {
@@ -44,8 +44,8 @@ const LayoutMain: React.FC = () => {
 
   const routeToMenuFn = useRouteToMenuFn();
   const menuList = useMemo(() => {
-    return routeToMenuFn(permissionRoutes);
-  }, [routeToMenuFn, permissionRoutes]);
+    return routeToMenuFn(asyncRoutes);
+  }, [routeToMenuFn, asyncRoutes]);
 
 
   // 刷新页面菜单保持高亮
@@ -97,7 +97,7 @@ const LayoutMain: React.FC = () => {
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
               onClick={() => setCollapsed(!collapsed)}></Button>
-            <CustomBreadcrumb userMenu={permissionRoutes}/>
+            <CustomBreadcrumb userMenu={asyncRoutes}/>
           </div>
           <Dropdown
             trigger={["hover"]}
@@ -143,7 +143,7 @@ const LayoutMain: React.FC = () => {
           </SwitchTransition>
         </Content>
       </Layout>
-      <UserCenterDrawer drawerProps={userCenterProps} actions={userCenterActions}/>
+      <UserCenterDrawer drawerProps={userCenterProps} drawerActions={userCenterActions}/>
     </Layout>
   );
 };

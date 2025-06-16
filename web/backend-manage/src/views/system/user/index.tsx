@@ -187,11 +187,11 @@ const UserManage: React.FC = () => {
         }}
       />
       <AddOrEditUserModal
-        actions={addUserActions}
+        modalActions={addUserActions}
         modalProps={{...addUserProps, title: "新增用户"}}
         refresh={getUserPage}/>
       <AddOrEditUserModal
-        actions={editUserActions}
+        modalActions={editUserActions}
         modalProps={{...editUserProps, title: "编辑用户"}}
         refresh={() => getUserPage(userData.page, userData.size)}
       />

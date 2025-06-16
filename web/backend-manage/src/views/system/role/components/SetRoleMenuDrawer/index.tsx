@@ -1,9 +1,10 @@
 import {reqMenuIdsByRoleId, reqMenuTreeByModuleId, reqSetRolePermissions} from "@/api/system";
 import {SpinLoading} from "@/components";
-import {Button, Drawer, message, Space, Tree} from "antd";
+import {Button, Drawer, message, Space} from "antd";
 import React, {useEffect, useState} from "react";
 import {DrawerControlsProps} from "@/hooks/useDrawerControls";
 import {MenuListRes} from "@/api/system/types";
+import EnhancedTree from "@/views/system/role/components/EnhancedTree";
 
 export interface SetRoleMenuProps extends DrawerControlsProps {
   roleId: string;
@@ -15,7 +16,7 @@ interface RoleMenuInfo {
 }
 
 const SetRoleMenuDrawer = (props: SetRoleMenuProps) => {
-  const {roleId, drawerProps, actions, refresh} = props;
+  const {roleId, drawerProps, drawerActions} = props;
 
   const [menuLoading, setMenuLoading] = useState(false);
   const [menuInfo, setMenuInfo] = useState<RoleMenuInfo>({
@@ -43,7 +44,7 @@ const SetRoleMenuDrawer = (props: SetRoleMenuProps) => {
       menuIds: menuInfo.menuIds,
     });
     if (res.code === 200) {
-      actions.hide();
+      drawerActions.hide();
       message.success("设置角色菜单权限成功");
     } else {
       message.error(res.msg);
@@ -63,7 +64,7 @@ const SetRoleMenuDrawer = (props: SetRoleMenuProps) => {
       width={400}
       extra={
         <Space>
-          <Button onClick={() => actions.hide()}>取消</Button>
+          <Button onClick={() => drawerActions.hide()}>取消</Button>
           <Button
             type="primary"
             loading={drawerProps.confirmLoading}
@@ -77,18 +78,16 @@ const SetRoleMenuDrawer = (props: SetRoleMenuProps) => {
       <div>
         <SpinLoading spinning={menuLoading} hasData={menuInfo.menuList.length}>
           {menuInfo.menuList.length ? (
-            <Tree
+            <EnhancedTree
               checkable
               defaultExpandAll
-              checkStrictly
-              checkedKeys={menuInfo.menuIds}
+              // checkedKeys={menuInfo.menuIds} // 避免影响组件内部逻辑
               treeData={menuInfo.menuList}
               fieldNames={{key: "id", title: "menuName"}}
-              onCheck={(checkedKeys: any) => {
-                setMenuInfo({
-                  ...menuInfo,
-                  menuIds: checkedKeys.checked,
-                });
+              value={menuInfo.menuIds}
+              onChange={(values) => {
+
+                setMenuInfo({...menuInfo, menuIds: values as string[]});
               }}
             />
           ) : null}

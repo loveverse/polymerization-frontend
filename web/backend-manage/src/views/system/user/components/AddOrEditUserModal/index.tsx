@@ -7,7 +7,7 @@ import {reqAddUser, reqRoleList, reqUpdateUser} from "@/api/system";
 
 
 const AddOrEditUserModal = (props: ModalControlsProps) => {
-  const {modalProps, actions, refresh} = props;
+  const {modalProps, modalActions, refresh} = props;
   const {dict} = useAppContext()
 
   const [userForm] = Form.useForm<UpdateUserReq>();
@@ -23,34 +23,34 @@ const AddOrEditUserModal = (props: ModalControlsProps) => {
   }
 
   const addUser = async (values: AddUserReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
     const res = await reqAddUser(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("添加用户成功");
       userForm.resetFields();
       refresh?.();
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
 
   const editUser = async (values: UpdateUserReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqUpdateUser(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改用户信息成功");
       refresh?.();
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false);
+    modalActions.setLoading(false);
   };
 
   useEffect(() => {
-    actions.exposeMethods({
+    modalActions.exposeMethods({
       setFieldsValue:userForm.setFieldsValue
     })
      getRoleList().then((res) => {

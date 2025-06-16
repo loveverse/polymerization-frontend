@@ -144,7 +144,7 @@ export interface MenuListRes {
   parentId: string;
   icon: string;
   permission: string;
-  visible: number;
+  visible: number;  // 0-隐藏，1-可见，控制是否在菜单栏显示
   sortOrder: number;
   children?: MenuListRes[]
 }

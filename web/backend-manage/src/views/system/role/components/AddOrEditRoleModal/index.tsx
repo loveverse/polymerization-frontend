@@ -7,39 +7,39 @@ import {useEffect} from "react";
 
 const AddOrEditRoleModal = (props: ModalControlsProps<UpdateRoleReq>) => {
   const {message} = App.useApp()
-  const {modalProps, actions, refresh} = props;
+  const {modalProps, modalActions, refresh} = props;
   const [roleForm] = Form.useForm<UpdateRoleReq>();
-  const roleId = Form.useWatch("id",roleForm);
+  const roleId = Form.useWatch("id", roleForm);
 
   const addRole = async (values: AddRoleReq) => {
-    actions.setLoading(true)
+    modalActions.setLoading(true)
     const res = await reqAddRole(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       roleForm.resetFields();
       message.success("添加角色成功");
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
 
   const editRole = async (values: UpdateRoleReq) => {
-    actions.setLoading(true);
+    modalActions.setLoading(true);
     const res = await reqUpdateRole(values);
     if (res.code === 200) {
-      actions.hide();
+      modalActions.hide();
       message.success("修改角色信息成功");
       refresh?.()
     } else {
       message.error(res.msg);
     }
-    actions.setLoading(false)
+    modalActions.setLoading(false)
   };
 // 监听modalProps.open变化，设置表单初始值
   useEffect(() => {
-    actions.exposeMethods({
+    modalActions.exposeMethods({
       setFieldsValue: roleForm.setFieldsValue
     })
   }, []);
