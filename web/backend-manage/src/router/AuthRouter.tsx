@@ -1,6 +1,6 @@
 import {useAppContext} from "@/context";
 import {useLocation} from "react-router-dom";
-import {JSX, ReactNode} from "react";
+import {JSX} from "react";
 import {WHITE_ROUTES} from "@/utils/constant";
 
 interface AuthRouterProps {

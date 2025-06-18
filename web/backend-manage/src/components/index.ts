@@ -9,3 +9,5 @@ export {default as PreviewFile, type FileInfo} from "./PreviewFile";
 export {default as SpinLoading, ComEmpty} from "./SpinLoading";
 // export { default as ComSvgIcon } from "./ComSvgIcon";
 export {default as Permission} from "./Permission";
+export {default as ComImportData} from "./ComImportData";
+

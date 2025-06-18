@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Button, Card, message} from "antd";
+import {App, Button, Card} from "antd";
 import axios from "axios";
 
 import styles from "./index.module.scss";
 
 const Home = () => {
+  const {message} = App.useApp()
   const [commitData, setCommitData] = useState<PageResult<any[]>>({
     page: 1,
     size: 20,

@@ -9,7 +9,7 @@ import {message} from "antd";
 import {domain, publicPath} from "@/config";
 import {SERVER_STATUS} from "@/utils/constant";
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   code: string | number;
   data: T;
   msg: string;
@@ -76,11 +76,14 @@ class RequestHttp {
     url: string,
     params: any = {},
     config?: AxiosRequestConfig | ContentType
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T extends Blob ? Blob : ApiResponse<Exclude<T, Blob>>> {
     try {
       const axiosConfig = typeof config === "string" ? getConfig(config) : config;
-      const res = await this.service.get<ApiResponse<T>>(url, {...axiosConfig, params});
-      return this.handleResponse(res);
+      const res = await this.service.get<T>(url, {...axiosConfig, params});
+      if (axiosConfig?.responseType === 'blob') {
+        return res.data as T extends Blob ? Blob : never;
+      }
+      return this.handleResponse(res as AxiosResponse<ApiResponse<Exclude<T, Blob>>>) as any;
     } catch (err) {
       return this.handleError(err);
     }

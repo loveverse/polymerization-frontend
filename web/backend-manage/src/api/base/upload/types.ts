@@ -1,10 +1,11 @@
 import { UploadFile } from "antd";
 
-export interface UploadFileRes extends UploadFile {
+export interface ResponseFile  {
   id: string;
   name: string;
   url: string;
 }
+export type UploadFileRes = UploadFile<ResponseFile>
 
 export interface UploadExcelData {
   baseType: string;

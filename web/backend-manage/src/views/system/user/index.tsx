@@ -8,6 +8,7 @@ import AddOrEditUserModal from "./components/AddOrEditUserModal";
 import styles from "./index.module.scss";
 import {useAppContext} from "@/context";
 import {useModalControls} from "@/hooks";
+import {ComImportData} from "@/components";
 
 const UserManage: React.FC = () => {
   const {message, modal} = App.useApp()
@@ -155,6 +156,9 @@ const UserManage: React.FC = () => {
     });
   };
 
+  // 导入
+  const [importDataProps, importDataActions] = useModalControls()
+
   useEffect(() => {
     void getUserPage();
   }, []);
@@ -162,13 +166,18 @@ const UserManage: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className="operation-header">
-        <Button
-          type="primary"
-          onClick={() => {
-            addUserActions.show();
-          }}>
-          新增用户
-        </Button>
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => {
+              addUserActions.show();
+            }}>
+            新增用户
+          </Button>
+          <Button type="primary" onClick={() => {
+            importDataActions.show()
+          }}>导入</Button>
+        </Space>
       </div>
       <Table
         columns={columns}
@@ -195,6 +204,8 @@ const UserManage: React.FC = () => {
         modalProps={{...editUserProps, title: "编辑用户"}}
         refresh={() => getUserPage(userData.page, userData.size)}
       />
+      <ComImportData modalActions={importDataActions}
+                     modalProps={{...importDataProps, title: "导入用户"}}/>
     </div>
   );
 };

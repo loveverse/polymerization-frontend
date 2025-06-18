@@ -4,7 +4,7 @@ import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
 import {useLocation, useNavigate, useOutlet} from "react-router-dom";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 
-import {defaultDict, useAppContext} from "@/context";
+import {useAppContext} from "@/context";
 import {reqLogOut} from "@/api/login";
 import Logo from "@/assets/imgs/logo.png";
 import {useRouteToMenuFn} from "@/router/hooks";
@@ -12,7 +12,6 @@ import styles from "./index.module.scss";
 import UserCenterDrawer from "@/views/layout/components/UserCenterDrawer";
 import CustomBreadcrumb from "@/views/layout/components/Breadcrumb";
 import {useDrawerControls} from "@/hooks/useDrawerControls";
-import userCenterDrawer from "@/views/layout/components/UserCenterDrawer";
 
 const {Sider, Content, Header} = Layout;
 

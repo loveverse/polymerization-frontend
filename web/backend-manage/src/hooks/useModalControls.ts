@@ -1,5 +1,5 @@
 import {useMemo, useRef, useState} from "react";
-import type {DrawerProps, ModalProps} from "antd";
+import type {ModalProps} from "antd";
 
 
 export interface ExposeMethods<T> {

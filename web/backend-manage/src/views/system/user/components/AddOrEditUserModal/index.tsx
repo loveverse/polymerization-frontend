@@ -53,9 +53,7 @@ const AddOrEditUserModal = (props: ModalControlsProps) => {
     modalActions.exposeMethods({
       setFieldsValue:userForm.setFieldsValue
     })
-     getRoleList().then((res) => {
-       console.log(res)
-     })
+     void getRoleList()
   }, [modalProps.open]);
 
   return (

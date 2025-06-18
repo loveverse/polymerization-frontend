@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {
-  App, Avatar,
+  App,
+  Avatar,
   Button,
   Drawer,
   Form,
@@ -10,7 +11,8 @@ import {
   Space,
   Tabs,
   TabsProps,
-  Tag, Upload,
+  Tag,
+  Upload,
   UploadProps,
 } from "antd";
 import {useNavigate} from "react-router-dom";
@@ -24,7 +26,7 @@ import {UpdateUserReq, UserInfoRes} from "@/api/system/types";
 
 
 const UserCenterDrawer = (props: DrawerControlsProps) => {
-  const {drawerProps, drawerActions, refresh} = props
+  const {drawerProps} = props
   const {message} = App.useApp()
   const {dict, userInfo, actions} = useAppContext();
   const navigate = useNavigate();

@@ -104,7 +104,7 @@ export const findIds = (tree: any, targetId?: string): string[] => {
  * @param source 流和url
  * @param filename 文件名
  */
-export const downloadFile = async (source: string | Blob, filename: string) => {
+export const downloadFile = async (source: Blob | string, filename: string) => {
   try {
     let fileBlob;
     if (typeof source === "string") {
@@ -150,6 +150,7 @@ function sliceFileName(fileName: string) {
   const lastDotIndex = fileName.lastIndexOf(".");
   return lastDotIndex !== -1 ? fileName.substring(lastDotIndex + 1) : "";
 }
+
 /**
  * 根据后端返回的文件/文件类型返回匹配的图片
  * @param fileName 文件名称
@@ -270,6 +271,7 @@ export const findTreeListById = (
   }
   return undefined;
 };
+
 // 生成数字
 export function generateArray(start = 3, end = 7, flag = false) {
   const result: any[] = [];
@@ -277,7 +279,7 @@ export function generateArray(start = 3, end = 7, flag = false) {
     if (flag) {
       result.push(i);
     } else {
-      result.push({ value: i, label: i });
+      result.push({value: i, label: i});
     }
   }
   return result;
