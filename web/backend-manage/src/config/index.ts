@@ -8,8 +8,8 @@ let username: string,
 if (process.env.NODE_ENV === "development") {
   username = "admin";
   password = "admin";
-  // domain = "http://locahost:30000";
-  domain = "http://localhost:30200";
+  domain = "http://192.168.37.20:30010";
+  domain = "http://127.0.0.1:30010";
   uploadUrl = "http://192.168.1.18:10006";
   preViewUrl = "http://192.168.1.18:10006/onlinePreview/onlinePreview";
   publicPath = "/";

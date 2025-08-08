@@ -22,3 +22,7 @@ module2
 
 - pnpm i xxx -w: 全局安装依赖
 - pnpm up: 更新子目录版本依赖已经通过workspace:*
+
+## 项目说明
+- node >= 18
+- pnpm >= 9

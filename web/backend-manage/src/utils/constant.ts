@@ -40,7 +40,7 @@ export const FILE_TYPE_LIST = [
   },
   {value: "kj", logoImg: pdfLogo, list: ["pdf"]},
   {value: "kj", logoImg: pptLogo, list: ["ppt", "pptx"]},
-  {value: "kj", logoImg: wordLogo, list: ["doc", "docx"]},
+  {value: "kj", logoImg: wordLogo, list: ["docs", "docx"]},
   {value: "kj", logoImg: xlsxLogo, list: ["xlsx"]},
   {value: "kj", logoImg: zipLogo, list: ["zip"]},
 ];

@@ -12,7 +12,7 @@ module.exports = {
     }
   },
   devServer: {
-    port: 40200,
+    port: 30000,
   },
   style: {
     sass: {

@@ -12,6 +12,7 @@ import {downloadFile} from "@/utils/common";
 const ComImportData = (props: ModalControlsProps) => {
   const {modalProps, modalActions} = props
   const {message} = App.useApp()
+
   const [fileList, setFileList] = useState<UploadFileRes[]>([])
   const uploadProps: UploadProps = {
     name: 'file',
