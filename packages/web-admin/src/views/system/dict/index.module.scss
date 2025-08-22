@@ -1,0 +1,63 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  height: 100%;
+  :global {
+    .dict-list-wrapper {
+      height: 100%;
+      width: 300px;
+      margin-right: 20px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      .dict-list-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        padding: 0 20px;
+        border-bottom: 1px solid #ddd;
+        .title {
+          margin: 0;
+        }
+      }
+      .dict-list {
+        @include scroll-default;
+        height: calc(100% - 82px);
+        overflow-y: auto;
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 40px;
+          padding: 0 10px 0 20px;
+          cursor: pointer;
+          transition: all ease-in-out 0.2s;
+          &:not(:last-child) {
+            margin-bottom: 5px;
+          }
+          &:hover {
+            background-color: $bg-color-primary;
+            .text {
+              color: $color-primary;
+            }
+          }
+          .text {
+            flex: 1;
+          }
+        }
+        .selected {
+          background-color: $bg-color-primary;
+          color: $color-primary;
+        }
+      }
+    }
+    .dict-detail {
+      flex: 1;
+      background-color: #fff;
+      .add-dict-detail {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# 当配置与根目录不一致会覆盖，保留是为了单独作为根目录打开时，防止编码风格不一致
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
+charset = utf-8
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+end_of_line = lf
+max_line_length = 100

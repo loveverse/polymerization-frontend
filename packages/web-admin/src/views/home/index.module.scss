@@ -1,0 +1,17 @@
+.root {
+  :global {
+    .system-list {
+      margin-bottom: 20px;
+
+      .item {
+        width: 25%;
+        text-align: center;
+        cursor: pointer;
+
+        .ant-btn {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

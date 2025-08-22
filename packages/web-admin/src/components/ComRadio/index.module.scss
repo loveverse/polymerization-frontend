@@ -1,0 +1,15 @@
+.root {
+  :global {
+    .btn-option {
+      padding: 0 9px;
+      color: #666;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      overflow: hidden; // 隐藏动画
+    }
+    .ant-btn-primary {
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.root {
+  :global {
+    .navbar-box {
+      .ant-tabs-nav {
+        border: none;
+      }
+      .ant-tabs-content-holder {
+        padding: 10px 20px;
+      }
+    }
+  }
+}
