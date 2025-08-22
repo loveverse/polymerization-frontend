@@ -1,9 +1,21 @@
-[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
-charset = utf-8
-indent_size = 2
-indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
+# https://editorconfig.org
+root = true
 
+[*]
+# 文件编码是 utf-8
+charset = utf-8
+# 缩进空格为2个
+indent_size = 2
+# 空格缩进
+indent_style = space
+# 文件末尾添加一个空行
+insert_final_newline = true
+# 去除行首的任意空白字符
+trim_trailing_whitespace = true
+# 控制换行类型(lf | cr | crlf)
 end_of_line = lf
 max_line_length = 100
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false

@@ -26,3 +26,39 @@ module2
 ## 项目说明
 - node >= 18
 - pnpm >= 9
+
+# 代码规范
+  - eslint prettier eslint-config-prettier eslint-plugin-prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin
+pnpm install --save-dev eslint prettier eslint-config-prettier eslint-plugin-prettier
+# React相关
+npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks
+# Vue相关
+npm install --save-dev eslint-plugin-vue vue-eslint-parser
+
+# 注意事项
+ - ESLint 在 v9.0.0 中做了重大变更：
+
+默认配置文件从 .eslintrc.*（旧的 JSON/JS 格式）改为 eslint.config.js（新的扁平配置格式）。
+- --save-exact: 固定安装版本
+
+
+# Prettier
+.prettierrc（JSON 格式）
+.prettierrcon
+.prettierrc.yaml / .prettierrc.yml
+.prettierrc.toml
+package.json 中的 prettier 字段
+
+# webStorm工具栏不折叠
+View -> Appearance -> Show Main Menu in Separate Toolbar
+
+# 显示虚拟空格
+搜索virtual space -> Show virtual space at the bottom of the file
+
+# webstorm 推荐插件
+- One Dark Theme
+- .ignore
+
+set-ExecutionPolicy RemoteSigned
+
+ElMessage 这种 API 根本不会被 unplugin-auto-import 的 ElementPlusResolver 自动生成，这是插件本身的限制（它对大部分组件 OK，但对 message/notification 这种“函数 API”支持不完整）。
