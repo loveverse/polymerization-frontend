@@ -233,7 +233,7 @@ const handleDelFile = async (id: number) => {
   const result = await reqDelFile(params)
   if (result.code === 200) {
     ElMessage.success(t("message.fileDelSuccess"))
-    getFileList()
+    await getFileList()
   } else {
     ElMessage.error(result.msg)
   }

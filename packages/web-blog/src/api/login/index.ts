@@ -1,11 +1,5 @@
-import http from "@/utils/http.ts"
-import {
-  AddUserReq,
-  CaptchaImgReq,
-  ReqLoginForm,
-  ResLogin,
-  UserInfoRes,
-} from "@/api/login/types.ts"
+import http from "@/utils/http"
+import { AddUserReq, CaptchaImgReq, ReqLoginForm, ResLogin, UserInfoRes } from "@/api/login/types"
 
 export const reqLogin = (params: ReqLoginForm) =>
   http.post<ResLogin>("/auth-api/auth/v1/login", params)
