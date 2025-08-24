@@ -1,3 +1,4 @@
+
 import { fileURLToPath, URL } from "node:url"
 
 import { defineConfig, loadEnv } from "vite"
@@ -6,6 +7,9 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import VueSetupExtend from "vite-plugin-vue-setup-extend"
+// @ts-ignore 忽略类型检查错误
+import eslint from "vite-plugin-eslint";
+
 
 console.info("[ 打包] >", process.env)
 // https://vite.dev/config/
@@ -42,6 +46,13 @@ export default defineConfig(({ mode, command }) => {
         resolvers: [ElementPlusResolver({ importStyle: "sass" })],
         dts: "./src/types/components.d.ts",
       }),
+      eslint({
+        lintOnStart: true, // 启动时检查
+        emitWarning: true, // 输出警告到控制台
+        emitError: true, // 输出错误到控制台
+        failOnWarning: false, // 警告不阻断构建
+        failOnError: false, // 错误不阻断构建（生产环境可设为 true）
+      })
     ],
     server: {
       port: 40300,

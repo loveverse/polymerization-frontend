@@ -37,7 +37,7 @@ const baseConfig = {
 
 // TypeScript 配置
 const typescriptConfig = {
-  files: ["**/*.{ts,tsx}"],
+  files: ["**/*.{ts,tsx,vue}"],
   plugins: {
     "@typescript-eslint": typescriptEslint.plugin,
   },
@@ -46,6 +46,7 @@ const typescriptConfig = {
     parserOptions: {
       projectService: true,
       tsconfigRootDir: process.cwd(),
+      extraFileExtensions: [".vue"],
     },
   },
   rules: {
@@ -88,25 +89,35 @@ const importConfig = {
 // Vue 配置
 const getVueConfig = async () => {
   const vuePlugin = await import("eslint-plugin-vue")
+  // 导入 Vue 专用解析器
+  const vueParser = await import("vue-eslint-parser")
   return {
     files: ["packages/web-blog/**/*.{vue,ts,tsx,js,jsx}"],
     plugins: { vue: vuePlugin.default, "@typescript-eslint": typescriptEslint.plugin },
     languageOptions: {
-      parser: typescriptEslint.parser,
+      parser: vueParser.default,
       parserOptions: {
+        // 为 script 部分指定 TypeScript 解析器
+        parser: {
+          ts: typescriptEslint.parser,
+          tsx: typescriptEslint.parser,
+          js: "espree",
+          jsx: "espree",
+        },
         extraFileExtensions: [".vue"],
         ecmaVersion: "latest",
         sourceType: "module",
+        projectService: true,
       },
     },
     processor: vuePlugin.default.processors[".vue"],
     rules: {
       ...vuePlugin.default.configs["flat/essential"].rules,
       ...vuePlugin.default.configs["flat/recommended"].rules,
-      // "vue/script-indent": ["error", 2, { baseIndent: 0, switchCase: 1 }],
-      // "vue/html-indent": ["error", 2],
-      // "vue/multi-word-component-names": ["warn", { ignores: ["index"] }],
-      // "@typescript-eslint/no-explicit-any": ["warn"],
+      "vue/script-indent": ["error", 2, { baseIndent: 0, switchCase: 1 }],
+      "vue/html-indent": ["error", 2],
+      "vue/multi-word-component-names": ["warn", { ignores: ["index"] }],
+      "@typescript-eslint/no-explicit-any": ["warn"],
     },
   }
 }
