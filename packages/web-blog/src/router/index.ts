@@ -1,51 +1,39 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import {asyncRoutes, loginRoute, staticRoutes} from "@/router/routes.ts";
-
+import { createRouter, createWebHistory } from "vue-router"
+import { asyncRoutes, loginRoute, staticRoutes } from "@/router/routes.ts"
+import { usePermissionStoreHook } from "@/store/permission"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     loginRoute,
     {
-      path: '/',
+      path: "/",
       redirect: "/home",
       component: () => import("@/views/layout/index.vue"),
-      children: [
-        ...asyncRoutes,
-      ]
+      children: [...asyncRoutes],
     },
     ...staticRoutes,
   ],
 })
-router.beforeEach((to, from, next) => {
-const token = localStorage.getItem("");
-if (token) {
-  if (to.path === "/login") {
-    next("/");
-  } else {
-    // 存在用户信息
-    next();
-    // const { userInfo } = store.getters;
-    // if (userInfo.userId) {
-    //   next();
-    // } else {
-    //   store
-    //     .dispatch("user/logout")
-    //     .then(() => {
-    //       Message.success("退出登录成功");
-    //     })
-    //     .catch((error) => {
-    //       Message.error(error);
-    //     });
-    // }
+
+let initialized = false
+router.beforeEach(async (to, _from, next) => {
+  const permissionStore = usePermissionStoreHook()
+  if (!initialized) {
+    initialized = true
+    // 从本地或接口获取权限码，这里示例从本地缓存读取
+    const saved = localStorage.getItem("permission-codes")
+    const codes: string[] = saved ? JSON.parse(saved) : [
+      "home",
+      "blog",
+      "blog:chat",
+      "blog:cloudDisk",
+      "blog:wallpaper",
+      "blog:about",
+    ]
+    permissionStore.setPermissions(codes)
+    permissionStore.generateRoutesFromPermissions()
   }
-} else {
-  localStorage.removeItem("token");
-  if (to.path === "/login") {
-    next();
-  } else {
-    next("/login");
-  }
-}
+  next()
 })
 export default router

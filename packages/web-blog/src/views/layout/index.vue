@@ -1,69 +1,79 @@
 <template>
-  <el-container class="layout_wrapper">
-    <el-header class="layout-header">
-      <ComHeader/>
-    </el-header>
-    <!-- 直接使用router-view不显示,不需要padding的在meta定义inter为true -->
-    <el-main :class="['layout-main',route.meta.inter && 'interval']">
-      <ComLayout/>
-    </el-main>
+  <div class="app" :class="{ dark: isDark }">
+    <!-- 背景装饰 -->
+    <div class="bg-element bg-primary"></div>
+    <div class="bg-element bg-secondary"></div>
 
-    <el-footer class="layout-footer">
-      <ComFooter/>
-    </el-footer>
-  </el-container>
+    <Header :is-dark="isDark" @toggle-theme="toggleTheme" />
+
+    <main class="container main-container">
+      <router-view />
+    </main>
+
+    <Footer />
+
+    <BackToTop />
+  </div>
 </template>
 
 <script lang="ts" setup>
-import ComHeader from "./components/ComHeader.vue";
-import ComFooter from "./components/ComFooter.vue";
-import {useRoute} from "vue-router";
-const route = useRoute()
+import { ref, onMounted } from "vue"
+import Header from "./components/Header.vue"
+import Footer from "./components/Footer.vue"
+import BackToTop from "@/components/BackToTop/index.vue"
 
+const isDark = ref(false)
+
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  const theme = isDark.value ? "dark" : "light"
+  localStorage.setItem("theme", theme)
+  document.documentElement.classList.toggle('dark', isDark.value)
+}
+
+onMounted(() => {
+  // 检查本地存储中的主题偏好
+  const savedTheme = localStorage.getItem("theme")
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+
+  const shouldDark = savedTheme === "dark" || (!savedTheme && prefersDark)
+  isDark.value = shouldDark
+  document.documentElement.classList.toggle('dark', shouldDark)
+})
 </script>
+
 <style lang="scss" scoped>
-.layout_wrapper {
-  .layout-header {
-    position: sticky;
-    top: 0;
-    height: 48px;
-    padding-bottom: 48px;
-    box-shadow: 0 2px 5px 0 #ddd;
-    z-index: 9999; // 头部保持最高层级
-  }
+@import "@/styles/variables";
 
-  .layout-main {
-    @include scroll-default;
-    //@include tranition;
+.app {
+  position: relative;
+  overflow-x: clip; // 防止装饰元素造成横向滚动
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    // 需要包含默认边距
-    padding-bottom: 60px;
-  }
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 
-  .interval {
-    padding: 0;
-  }
+.main-container {
+  /* 预留与固定头部相同的空间，避免被覆盖并保持布局稳定 */
+  padding-top: 64px;
+  padding-bottom: 2rem;
+  flex: 1;
+  width: 100%;
+}
 
-  .layout-footer {
-    position: absolute;
-    width: 100%;
-    //padding-top: 40px;
-    bottom: 0;
-    height: 40px;
-    background-color: #99ccff;
-  }
+.glass-footer {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+}
 
-  // .el-main {
-  //   padding: 0;
-  //   .interval {
-  //     // height: 100%;
-  //     padding: 20px;
-  //     box-sizing: border-box;
-  //   }
-  // }
-  // .el-footer {
-  //   padding: 0;
-  //   background-color: antiquewhite;
-  // }
+.dark .glass-footer {
+  background: rgba(30, 30, 30, 0.5);
 }
 </style>

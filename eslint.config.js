@@ -79,10 +79,33 @@ const javascriptConfig = {
 const importConfig = {
   files: ["**/*.{js,jsx,ts,tsx,vue}"],
   plugins: { "import-x": importX },
+  // 配置模块解析设置
+  settings: {
+    "import-x/resolver": {
+      typescript: {
+        project: "tsconfig.json",
+        alwaysTryTypes: true,
+      },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"],
+      },
+    },
+    "import-x/extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"],
+    "import-x/external-module-folders": ["node_modules", "node_modules/@types"],
+  },
   rules: {
     // ...importX.configs.recommended.rules,
     ...importX.configs.typescript.rules,
     "import-x/no-nodejs-modules": ["error", { allow: builtinModules.map(m => `node:${m}`) }],
+    // // 确保导入路径正确
+    // "import-x/no-unresolved": ["error", { commonjs: true, amd: true }],
+    // "import-x/extensions": ["error", "ignorePackages", {
+    //   js: "never",
+    //   jsx: "never",
+    //   ts: "never",
+    //   tsx: "never",
+    //   vue: "never",
+    // }],
   },
 }
 
@@ -118,6 +141,7 @@ const getVueConfig = async () => {
       "vue/html-indent": ["error", 2],
       "vue/multi-word-component-names": ["warn", { ignores: ["index"] }],
       "@typescript-eslint/no-explicit-any": ["warn"],
+      // "import-x/no-unresolved": "error",
     },
   }
 }
