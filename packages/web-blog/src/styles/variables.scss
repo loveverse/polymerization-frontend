@@ -1,0 +1,22 @@
+// 变量定义
+:root {
+  --primary: #6366f1;
+  --secondary: #a855f7;
+  --accent: #22d3ee;
+  --text: #1f2937;
+  --text-light: #6b7280;
+  --bg: #f8fafc;
+  --bg-dark: #111827;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-dark-bg: rgba(17, 24, 39, 0.4);
+  --glass-dark-border: rgba(255, 255, 255, 0.08);
+}
+
+.dark {
+  --text: #f3f4f6;
+  --text-light: #d1d5db;
+  --bg: #111827;
+  --glass-bg: var(--glass-dark-bg);
+  --glass-border: var(--glass-dark-border);
+}
