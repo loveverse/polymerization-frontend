@@ -76,9 +76,9 @@ import {
   reqUpdateExcerptData,
   reqDelExcerptData,
 } from "@/api/blog/chatRoom"
-import { formatterTime, urlify } from "@/utils/common"
-import Ws from "@/utils/websocket"
-import { useDebounce } from "@/hooks/useDebounce"
+import { formatterTime, urlify } from "@/utils/common.ts"
+import Ws from "@/utils/websocket.ts"
+import { useDebounce } from "@/hooks/useDebounce.ts"
 import { CaretTop } from "@element-plus/icons-vue"
 
 // 将Ws放在state中同时监视，watch不到里面的对象和属性，因为没有实例化WebSocket

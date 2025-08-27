@@ -1,18 +1,18 @@
-import React, {useEffect, useMemo, useState} from "react";
-import type {TableColumnsType} from "antd";
-import {App, Button, Input, Table} from "antd";
-import {SearchOutlined} from "@ant-design/icons";
+import React, { useEffect, useMemo, useState } from "react"
+import type { TableColumnsType } from "antd"
+import { App, Button, Input, Table } from "antd"
+import { SearchOutlined } from "@ant-design/icons"
 
-import {reqDelModule, reqModuleList,} from "@/api/module";
-import {ModuleDataRes,} from "@/api/module/types";
-import AddOrEditModuleModal from "./AddOrEditModuleModal";
-import styles from "./index.module.scss";
-import {useModalControls} from "@/hooks";
-import {Permission} from "@/components";
+import { reqDelModule, reqModuleList } from "@/api/module"
+import { ModuleDataRes } from "@/api/module/types"
+import AddOrEditModuleModal from "./AddOrEditModuleModal"
+import styles from "./index.module.scss"
+import { useModalControls } from "@/hooks"
+import { Permission } from "@/components"
 
 const ModuleManage: React.FC = () => {
-  const {message, modal} = App.useApp()
-  const [searchValue, setSearchValue] = useState("");
+  const { message, modal } = App.useApp()
+  const [searchValue, setSearchValue] = useState("")
   const columns: TableColumnsType<ModuleDataRes> = [
     {
       title: "序号",
@@ -20,12 +20,12 @@ const ModuleManage: React.FC = () => {
       width: 80,
       render: (_value, _record, index) => index + 1,
     },
-    {title: "模块名称", dataIndex: "moduleName"},
+    { title: "模块名称", dataIndex: "moduleName" },
 
     {
       title: "添加时间",
       dataIndex: "createTime",
-      align: "center"
+      align: "center",
     },
     {
       title: "排序",
@@ -42,8 +42,7 @@ const ModuleManage: React.FC = () => {
               type="link"
               onClick={() => {
                 editModuleActions.show(record)
-              }}
-            >
+              }}>
               编辑
             </Button>
           </Permission>
@@ -52,25 +51,23 @@ const ModuleManage: React.FC = () => {
               删除
             </Button>
           </Permission>
-
         </>
       ),
     },
-  ];
+  ]
 
-
-  const [loading, setLoading] = useState(false);
-  const [moduleList, setModuleList] = useState<ModuleDataRes[]>([]);
+  const [loading, setLoading] = useState(false)
+  const [moduleList, setModuleList] = useState<ModuleDataRes[]>([])
   const getModuleList = async () => {
-    setLoading(true);
-    const res = await reqModuleList();
+    setLoading(true)
+    const res = await reqModuleList()
     if (res.code === 200) {
-      setModuleList(res.data);
+      setModuleList(res.data)
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
   const computedModuleList = useMemo(() => {
     return moduleList.filter(k => k.moduleName.includes(searchValue))
   }, [searchValue, moduleList])
@@ -83,21 +80,20 @@ const ModuleManage: React.FC = () => {
       closable: true,
       content: `确定要删除【${values.moduleName}】吗？`,
       onOk: async () => {
-        const res = await reqDelModule({id: values.id});
+        const res = await reqDelModule({ id: values.id })
         if (res.code === 200) {
-          message.success("删除模块成功");
-          void getModuleList();
+          message.success("删除模块成功")
+          void getModuleList()
         } else {
-          message.error(res.msg);
+          message.error(res.msg)
         }
       },
-    });
+    })
   }
 
-
   useEffect(() => {
-    void getModuleList();
-  }, []);
+    void getModuleList()
+  }, [])
 
   return (
     <div className={styles.root}>
@@ -107,22 +103,20 @@ const ModuleManage: React.FC = () => {
             type="primary"
             onClick={() => {
               addModuleActions.show()
-            }}
-          >
+            }}>
             新增模块
           </Button>
         </Permission>
 
-
         <Input
           className="search"
-          prefix={<SearchOutlined/>}
+          prefix={<SearchOutlined />}
           value={searchValue}
           allowClear
           placeholder="请输入模块名称进行搜索"
           maxLength={100}
-          onChange={(e) => {
-            setSearchValue(e.target.value);
+          onChange={e => {
+            setSearchValue(e.target.value)
           }}
         />
       </div>
@@ -131,20 +125,20 @@ const ModuleManage: React.FC = () => {
         columns={columns}
         dataSource={computedModuleList}
         loading={loading}
-        rowKey={(record) => record.id}
+        rowKey={record => record.id}
       />
       <AddOrEditModuleModal
         modalActions={addModuleActions}
-        modalProps={{...addModuleProps, title: "新增模块"}}
+        modalProps={{ ...addModuleProps, title: "新增模块" }}
         refresh={getModuleList}
       />
       <AddOrEditModuleModal
         modalActions={editModuleActions}
-        modalProps={{...editModuleProps, title: "编辑模块"}}
+        modalProps={{ ...editModuleProps, title: "编辑模块" }}
         refresh={getModuleList}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ModuleManage;
+export default ModuleManage

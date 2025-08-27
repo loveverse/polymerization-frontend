@@ -73,7 +73,7 @@
     "eslint-plugin-react": "catalog:",
     "rimraf": "catalog:",
     "sass": "^1.89.1",
-    "sass-loader": "^13.3.3",
+    "sass-loader": "^16.0.5",
     "svgo-loader": "^4.0.0"
   }
 }

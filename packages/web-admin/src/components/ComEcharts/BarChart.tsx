@@ -1,22 +1,22 @@
-import { useECharts } from "@/hooks/useECharts";
-import React, { useEffect } from "react";
-import { BarECOption } from "@/utils/echarts";
+import { useECharts } from "@/hooks/useECharts"
+import React, { useEffect } from "react"
+import { BarECOption } from "@/utils/echarts"
 
 interface BarChartProps {
   // 柱状图系列的数据
-  seriesData: Record<string, any>[];
+  seriesData: Recordable[]
   // 柱状图X轴的数据
-  xAxisData: string[] | number[];
-  xName?: string;
-  yName?: string;
-  xType?: string;
-  yType?: string;
-  isStack?: boolean;
-  style?: React.CSSProperties;
+  xAxisData: string[] | number[]
+  xName?: string
+  yName?: string
+  xType?: string
+  yType?: string
+  isStack?: boolean
+  style?: React.CSSProperties
 }
 
-const BarChart: React.FC<BarChartProps> = (props) => {
-  const { chartRef: barRef, chartInstanceRef: barChart } = useECharts();
+const BarChart: React.FC<BarChartProps> = props => {
+  const { chartRef: barRef, chartInstanceRef: barChart } = useECharts()
   const {
     seriesData,
     xAxisData,
@@ -26,7 +26,7 @@ const BarChart: React.FC<BarChartProps> = (props) => {
     xType = "category",
     yType = "value",
     style,
-  } = props;
+  } = props
   useEffect(() => {
     barChart.current?.setOption({
       tooltip: {
@@ -48,9 +48,9 @@ const BarChart: React.FC<BarChartProps> = (props) => {
           interval: 0, // 显示所有标签
           formatter: (value: string) => {
             if (typeof value === "string") {
-              return value.replace(/(.{5})/g, "$1\n"); // 每5个字符后插入换行符
+              return value.replace(/(.{5})/g, "$1\n") // 每5个字符后插入换行符
             }
-            return value;
+            return value
           },
         },
         axisTick: {
@@ -76,7 +76,7 @@ const BarChart: React.FC<BarChartProps> = (props) => {
             // if (typeof value === "string") {
             //   return value.replace(/(.{5})/g, "$1\n"); // 每5个字符后插入换行符
             // }
-            return value;
+            return value
           },
         },
         axisTick: {
@@ -92,7 +92,7 @@ const BarChart: React.FC<BarChartProps> = (props) => {
 
         max: yType == "category" ? "dataMax" : 100,
       },
-      series: seriesData.map((item) => {
+      series: seriesData.map(item => {
         return {
           name: item.name,
           type: "bar",
@@ -109,11 +109,11 @@ const BarChart: React.FC<BarChartProps> = (props) => {
             show: true,
             position: xType === "category" ? "top" : "right",
           },
-        };
+        }
       }),
-    } as BarECOption);
-  }, [barChart, seriesData, xAxisData]);
+    } as BarECOption)
+  }, [barChart, seriesData, xAxisData])
 
-  return <div style={{ height: 400, ...style }} ref={barRef}></div>;
-};
-export default BarChart;
+  return <div style={{ height: 400, ...style }} ref={barRef}></div>
+}
+export default BarChart

@@ -1,24 +1,24 @@
-<template>
-  <section class="about">
-    <div class="hero glass">
-      <h1 class="title">关于我</h1>
-      <p class="subtitle">前端 / 全栈 / 开源 / 记录学习与生活</p>
-    </div>
+<!--<template>-->
+<!--  <section class="about">-->
+<!--    <div class="hero glass">-->
+<!--      <h1 class="title">关于我</h1>-->
+<!--      <p class="subtitle">前端 / 全栈 / 开源 / 记录学习与生活</p>-->
+<!--    </div>-->
 
-    <div class="container">
-      <div class="about-content glass">
-        <p>
-          你好，我是 Mindscape，一名热爱构建优秀产品体验的开发者。这个博客用于沉淀实践、记录灵感，也欢迎你与我交流。
-        </p>
-        <ul class="info">
-          <li><strong>关注领域：</strong> 前端工程化、性能优化、服务端实践</li>
-          <li><strong>正在学习：</strong> 可视化、WebSocket、全栈一体化</li>
-          <li><strong>联系：</strong> 在聊天页留言或通过社交链接联系</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-</template>
+<!--    <div class="container">-->
+<!--      <div class="about-content glass">-->
+<!--        <p>-->
+<!--          你好，我是 Mindscape，一名热爱构建优秀产品体验的开发者。这个博客用于沉淀实践、记录灵感，也欢迎你与我交流。-->
+<!--        </p>-->
+<!--        <ul class="info">-->
+<!--          <li><strong>关注领域：</strong> 前端工程化、性能优化、服务端实践</li>-->
+<!--          <li><strong>正在学习：</strong> 可视化、WebSocket、全栈一体化</li>-->
+<!--          <li><strong>联系：</strong> 在聊天页留言或通过社交链接联系</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--</template>-->
 
 <script setup lang="ts"></script>
 

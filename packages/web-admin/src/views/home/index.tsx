@@ -1,41 +1,41 @@
-import React, {useEffect, useState} from "react";
-import {App, Button, Card} from "antd";
-import axios from "axios";
+import React, { useEffect, useState } from "react"
+import { App, Button, Card } from "antd"
+import axios from "axios"
 
-import styles from "./index.module.scss";
+import styles from "./index.module.scss"
 
 const Home = () => {
-  const {message} = App.useApp()
+  const { message } = App.useApp()
   const [commitData, setCommitData] = useState<PageResult<any[]>>({
     page: 1,
     size: 20,
     data: [],
     total: 0,
-  });
-  const [loading, setLoading] = useState(false);
+  })
+  const [loading, setLoading] = useState(false)
   const getCommitPage = (page = commitData.page, size = commitData.size) => {
-    const token = "65275e1082eb9a9712b3aae61749c2e9";
-    const sha = "dev";
-    const url = `https://gitee.com/api/v5/repos/clovsoft-code/zrt-front-zhzy/commits?access_token=${token}&sha=${sha}&page=${page}&per_page=${size}`;
-    setLoading(true);
+    const token = "65275e1082eb9a9712b3aae61749c2e9"
+    const sha = "dev"
+    const url = `https://gitee.com/api/v5/repos/clovsoft-code/zrt-front-zhzy/commits?access_token=${token}&sha=${sha}&page=${page}&per_page=${size}`
+    setLoading(true)
     axios
       .get(url)
-      .then((res) => {
+      .then(res => {
         setCommitData({
           ...commitData,
           data: res.data,
-        });
+        })
       })
-      .catch((err) => {
-        message.error(err);
+      .catch(err => {
+        message.error(err)
       })
       .finally(() => {
-        setLoading(false);
-      });
-  };
+        setLoading(false)
+      })
+  }
   useEffect(() => {
-    getCommitPage();
-  }, []);
+    getCommitPage()
+  }, [])
 
   return (
     <div className={styles.root}>
@@ -43,9 +43,8 @@ const Home = () => {
         <Card.Grid
           className="item"
           onClick={() => {
-            window.open("http://39.108.120.75/#/login", "_blank");
-          }}
-        >
+            window.open("http://39.108.120.75/#/login", "_blank")
+          }}>
           <Button type="link">学业水平测试系统</Button>
         </Card.Grid>
 
@@ -74,7 +73,7 @@ const Home = () => {
         /> */}
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

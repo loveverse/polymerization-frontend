@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, { Suspense } from "react"
 
 /**
  * @description 路由懒加载
@@ -7,7 +7,7 @@ import React, {Suspense} from "react";
  */
 // 暂时不加SpinLoading占位
 const lazyLoad = (children: React.ReactNode): React.ReactNode => {
-  return <Suspense>{children}</Suspense>;
-};
+  return <Suspense>{children}</Suspense>
+}
 
-export default lazyLoad;
+export default lazyLoad

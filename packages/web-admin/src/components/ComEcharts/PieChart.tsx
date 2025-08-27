@@ -1,19 +1,19 @@
-import { useECharts } from "@/hooks/useECharts";
-import React, { useEffect } from "react";
-import { PieECOption } from "@/utils/echarts";
+import { useECharts } from "@/hooks/useECharts"
+import React, { useEffect } from "react"
+import { PieECOption } from "@/utils/echarts"
 
 export interface PieChartData {
   // 柱状图系列的数据
-  pieSeriesData: any;
+  pieSeriesData: any
 }
 
 interface PieChartProps extends PieChartData {
   // 图表高度
-  height?: number;
+  height?: number
 }
 
 const PieChart: React.FC<PieChartProps> = ({ pieSeriesData, height = 400 }) => {
-  const { chartRef: pieRef, chartInstanceRef: pieChart } = useECharts();
+  const { chartRef: pieRef, chartInstanceRef: pieChart } = useECharts()
 
   useEffect(() => {
     pieChart.current?.setOption({
@@ -30,9 +30,9 @@ const PieChart: React.FC<PieChartProps> = ({ pieSeriesData, height = 400 }) => {
           data: pieSeriesData,
         },
       ],
-    } as PieECOption);
-  }, [pieChart, pieSeriesData]);
+    } as PieECOption)
+  }, [pieChart, pieSeriesData])
 
-  return <div style={{ height: `${height}px` }} ref={pieRef}></div>;
-};
-export default PieChart;
+  return <div style={{ height: `${height}px` }} ref={pieRef}></div>
+}
+export default PieChart

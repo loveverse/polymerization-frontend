@@ -1,64 +1,72 @@
 import { RouteRecordRaw } from "vue-router"
-
-const ComLayout = () => import("@/components/ComLayout/index.vue")
 import Home from "@/views/home/index.vue"
 
-export const asyncRoutes: RouteRecordRaw[] = [
+const ComLayout = () => import("@/components/ComLayout/index.vue")
+
+// 静态路由，不存在路由菜单默认显示的
+export const staticRoutes: RouteRecordRaw[] = [
   {
     path: "/home",
     name: "home",
     component: Home,
     meta: {
-      title: "首页 - Mindscape博客",
+      label: "首页",
       keepAlive: true,
-      code: "home",
-      nav: true,
     },
-  },
-  {
-    path: "/blog",
-    name: "blog",
-    component: ComLayout,
-    meta: { label: "博客", code: "blog", nav: true },
-    redirect: "/blog/chat",
-    children: [
-      {
-        path: "/blog/chat",
-        name: "chat",
-        component: () => import("@/views/blog/chatRoom/index.vue"),
-        meta: { label: "聊天室", code: "blog:chat", nav: true },
-      },
-      {
-        path: "/blog/cloudDisk",
-        name: "cloudDisk",
-        component: () => import("@/views/blog/cloudDisk/index.vue"),
-        meta: { label: "云盘", code: "blog:cloudDisk", nav: true },
-      },
-      {
-        path: "/blog/wallpaper",
-        name: "wallpaper",
-        component: () => import("@/views/blog/wallpaper/index.vue"),
-        meta: { label: "壁纸", code: "blog:wallpaper", nav: true },
-      },
-      {
-        path: "/blog/about",
-        name: "about",
-        component: () => import("@/views/blog/about/index.vue"),
-        meta: { label: "关于", code: "blog:about", nav: true },
-      },
-    ],
   },
 ]
 
-// 静态路由，不存在路由菜单默认显示的
-export const staticRoutes: RouteRecordRaw[] = [
+// 动态路由
+export const dynamicRoutes: RouteRecordRaw[] = [
   {
-    path: "/:pathMatch(.*)*",
-    redirect: "/home",
+    path: "/project",
+    name: "project",
+    component: ComLayout,
+    meta: { label: "项目" },
+    redirect: "/project/chat",
+    children: [
+      {
+        path: "/project/chat",
+        name: "chat",
+        component: () => import("@/views/project/chatRoom/index.vue"),
+        meta: { label: "聊天室" },
+      },
+      {
+        path: "/project/cloudDisk",
+        name: "cloudDisk",
+        component: () => import("@/views/project/cloudDisk/index.vue"),
+        meta: { label: "云盘" },
+      },
+      {
+        path: "/project/wallpaper",
+        name: "wallpaper",
+        component: () => import("@/views/project/wallpaper/index.vue"),
+        meta: { label: "壁纸" },
+      },
+    ],
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: () => import("@/views/about/index.vue"),
+    meta: { label: "关于" },
   },
 ]
-export const loginRoute: RouteRecordRaw = {
-  path: "/login",
-  name: "login",
-  component: () => import("@/views/login/index.vue"),
-}
+
+export const errorRoutes: RouteRecordRaw[] = [
+  {
+    path: "/403",
+    name: "403",
+    component: () => import("@/components/ErrorPages/403.vue"),
+  },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("@/components/ErrorPages/404.vue"),
+  },
+  {
+    path: "/500",
+    name: "500",
+    component: () => import("@/components/ErrorPages/500.vue"),
+  },
+]

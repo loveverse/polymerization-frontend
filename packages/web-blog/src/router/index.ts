@@ -1,39 +1,20 @@
-import { createRouter, createWebHistory } from "vue-router"
-import { asyncRoutes, loginRoute, staticRoutes } from "@/router/routes.ts"
-import { usePermissionStoreHook } from "@/store/permission"
+import { createRouter, createWebHashHistory } from "vue-router"
+import { dynamicRoutes, errorRoutes, staticRoutes } from "@/router/routes.ts"
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
   routes: [
-    loginRoute,
+    // 如果需要登录进入系统，在这里编写
     {
       path: "/",
       redirect: "/home",
       component: () => import("@/views/layout/index.vue"),
-      children: [...asyncRoutes],
+      children: [...staticRoutes, ...dynamicRoutes, ...errorRoutes],
     },
-    ...staticRoutes,
   ],
 })
 
-let initialized = false
 router.beforeEach(async (to, _from, next) => {
-  const permissionStore = usePermissionStoreHook()
-  if (!initialized) {
-    initialized = true
-    // 从本地或接口获取权限码，这里示例从本地缓存读取
-    const saved = localStorage.getItem("permission-codes")
-    const codes: string[] = saved ? JSON.parse(saved) : [
-      "home",
-      "blog",
-      "blog:chat",
-      "blog:cloudDisk",
-      "blog:wallpaper",
-      "blog:about",
-    ]
-    permissionStore.setPermissions(codes)
-    permissionStore.generateRoutesFromPermissions()
-  }
   next()
 })
 export default router

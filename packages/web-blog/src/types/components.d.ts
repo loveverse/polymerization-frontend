@@ -8,6 +8,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    403: typeof import('./../components/ErrorPages/403.vue')['default']
+    404: typeof import('./../components/ErrorPages/404.vue')['default']
+    500: typeof import('./../components/ErrorPages/500.vue')['default']
     BackToTop: typeof import('./../components/BackToTop/index.vue')['default']
     ComEcharts: typeof import('./../components/ComEcharts/index.vue')['default']
     ComLayout: typeof import('./../components/ComLayout/index.vue')['default']
@@ -41,6 +44,8 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElTimeline: typeof import('element-plus/es')['ElTimeline']
+    ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     RouterLink: typeof import('vue-router')['RouterLink']

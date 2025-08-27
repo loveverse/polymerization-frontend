@@ -1,72 +1,60 @@
 <template>
   <el-menu
-      :default-active="route.path"
-      class="el-menu-demo"
-      mode="horizontal"
-      :ellipsis="false"
-      :router="state.flag"
-  >
+    :default-active="route.path"
+    class="el-menu-demo"
+    mode="horizontal"
+    :ellipsis="false"
+    :router="state.flag">
     <template v-if="state.flag">
-      <template v-for="(item) in routerList">
-        <ComMenuItem :menu-item="item"></ComMenuItem>
+      <template v-for="item in routerList">
+        <MenuItem :menu-item="item"></MenuItem>
       </template>
     </template>
-    <el-menu-item
-        v-else
-        index="0"
-        @click="() => (state.showAside = true)"
-        class="unfold"
-    >
+    <el-menu-item v-else index="0" @click="() => (state.showAside = true)" class="unfold">
       <template #title>
         <el-icon>
-          <Expand/>
+          <Expand />
         </el-icon>
         <span>展开</span>
       </template>
     </el-menu-item>
-    <div class="flex-grow"/>
-
-    <div class="btn_login">
-
-    </div>
   </el-menu>
   <el-drawer
-      v-model="state.showAside"
-      direction="ltr"
-      :with-header="false"
-      :before-close="() => (state.showAside = false)"
-      :size="200"
-      class="aside-drawer"
+    v-model="state.showAside"
+    direction="ltr"
+    :with-header="false"
+    :before-close="() => (state.showAside = false)"
+    :size="200"
+    class="aside-drawer"
   >
     <el-menu
-        :default-active="route.path"
-        mode="vertical"
-        :ellipsis="false"
-        router
+      :default-active="route.path"
+      mode="vertical"
+      :ellipsis="false"
+      router
     >
       <template v-for="item in routerList">
-        <ComMenuItem :menu-item="item"></ComMenuItem>
+        <MenuItem :menu-item="item"></MenuItem>
       </template>
     </el-menu>
   </el-drawer>
 </template>
 
-<script lang="ts" setup>
-import {Expand} from "@element-plus/icons-vue";
-import {computed, reactive} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import ComMenuItem from "@/views/layout/components/ComMenuItem.vue";
+<script setup lang="ts">
+import { Expand } from "@element-plus/icons-vue"
+import { computed, reactive } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import MenuItem from "./MenuItem.vue"
 
 interface StateProps {
-  flag: boolean;
-  showAside: boolean;
+  flag: boolean
+  showAside: boolean
 }
 
 const state = reactive<StateProps>({
   flag: true, // 小屏适配
   showAside: false, // 显示抽屉
-
-});
+})
 const router = useRouter()
 const route = useRoute()
 
@@ -77,7 +65,7 @@ const routerList = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .el-menu-demo {
   transition: all 0.3s;
   border: none;

@@ -1,41 +1,22 @@
-import React, {
-  ChangeEvent, useEffect, useMemo, useState,
-} from "react";
-import {
-  Button,
-  Input,
-  Popconfirm,
-  Space,
-  Table,
-  App,
-} from "antd";
-import type {TableColumnsType} from "antd";
-import {
-  DeleteTwoTone,
-  EditTwoTone,
-  SearchOutlined,
-} from "@ant-design/icons";
-import {
-  reqDelDict, reqDelDictItem, reqDictItemList, reqDictList,
-} from "@/api/system";
-import type {
-  DictDataRes,
-  DictItemDataRes,
-} from "@/api/system/types";
-import {SpinLoading} from "@/components";
-import styles from "./index.module.scss";
-import AddOrEditDictModal from "@/views/system/dict/components/AddOrEditDictModal";
-import {useModalControls} from "@/hooks";
-import AddOrEditDictItemModal from "@/views/system/dict/components/AddOrEditDictItemModal";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { Button, Input, Popconfirm, Space, Table, App } from "antd"
+import type { TableColumnsType } from "antd"
+import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons"
+import { reqDelDict, reqDelDictItem, reqDictItemList, reqDictList } from "@/api/system"
+import type { DictDataRes, DictItemDataRes } from "@/api/system/types"
+import { SpinLoading } from "@/components"
+import styles from "./index.module.scss"
+import AddOrEditDictModal from "@/views/system/dict/components/AddOrEditDictModal"
+import { useModalControls } from "@/hooks"
+import AddOrEditDictItemModal from "@/views/system/dict/components/AddOrEditDictItemModal"
 
 interface Dictionaries {
-  dict: DictDataRes[];
-  dictItems: DictItemDataRes[];
+  dict: DictDataRes[]
+  dictItems: DictItemDataRes[]
 }
 
-
 const DictManage: React.FC = () => {
-  const {message, modal} = App.useApp()
+  const { message, modal } = App.useApp()
 
   const columns: TableColumnsType<DictItemDataRes> = [
     {
@@ -48,7 +29,7 @@ const DictManage: React.FC = () => {
       title: "字典值(value)",
       dataIndex: "dictItemValue",
     },
-    {title: "展示值(label)", dataIndex: "dictItemLabel"},
+    { title: "展示值(label)", dataIndex: "dictItemLabel" },
 
     {
       title: "排序",
@@ -64,7 +45,7 @@ const DictManage: React.FC = () => {
           <Button
             type="link"
             onClick={() => {
-              editDictItemActions.show(record);
+              editDictItemActions.show(record)
             }}>
             编辑
           </Button>
@@ -72,46 +53,46 @@ const DictManage: React.FC = () => {
             type="text"
             danger
             onClick={() => {
-              delDictItem(record);
+              delDictItem(record)
             }}>
             删除
           </Button>
         </>
       ),
     },
-  ];
+  ]
   const [dictionaries, setDictionaries] = useState<Dictionaries>({
     dict: [],
     dictItems: [],
-  });
-  const [loading, setLoading] = useState(false);
-  const [selectDictId, setSelectDictId] = useState("");
+  })
+  const [loading, setLoading] = useState(false)
+  const [selectDictId, setSelectDictId] = useState("")
   const getDictList = async () => {
-    setLoading(true);
-    const res = await reqDictList();
+    setLoading(true)
+    const res = await reqDictList()
     if (res.code === 200) {
-      setDictionaries({...dictionaries, dict: res.data})
+      setDictionaries({ ...dictionaries, dict: res.data })
       if (res.data.length && !selectDictId) {
         const dictId = res.data[0].id
         setSelectDictId(dictId)
         void getDictItemList(dictId)
       }
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
   const [addDictProps, addDictActions] = useModalControls()
   const [editDictProps, editDictActions] = useModalControls()
   const delDict = async (values: DictDataRes) => {
-    const res = await reqDelDict({id: values.id});
+    const res = await reqDelDict({ id: values.id })
     if (res.code === 200) {
-      void getDictList();
-      message.success("删除字典成功");
+      void getDictList()
+      message.success("删除字典成功")
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
-  };
+  }
 
   // 字典详情增删改查
   const [addDictItemProps, addDictItemActions] = useModalControls()
@@ -122,46 +103,45 @@ const DictManage: React.FC = () => {
       closable: true,
       content: `确定要删除【${values.dictItemLabel}】吗？`,
       onOk: async () => {
-        const res = await reqDelDictItem(values);
+        const res = await reqDelDictItem(values)
         if (res.code === 200) {
-          message.success("删除字典项成功");
-          void getDictItemList(selectDictId);
+          message.success("删除字典项成功")
+          void getDictItemList(selectDictId)
         } else {
-          message.error(res.msg);
+          message.error(res.msg)
         }
       },
-    });
-  };
+    })
+  }
 
   const [dictItemLoading, setDictItemLoading] = useState(false)
   const getDictItemList = async (dictId: string) => {
     setDictItemLoading(true)
-    const res = await reqDictItemList({dictId});
+    const res = await reqDictItemList({ dictId })
     if (res.code === 200) {
-      setDictionaries((prev) => ({
+      setDictionaries(prev => ({
         ...prev,
-        dictItems: res.data
+        dictItems: res.data,
       }))
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
     setDictItemLoading(false)
-  };
+  }
 
-
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("")
   const tempSetValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
+    setSearchValue(e.target.value)
+  }
   const dictList = useMemo(() => {
     return dictionaries.dict.filter(
-      (k) => k.dictValue.includes(searchValue) || k.dictLabel.includes(searchValue)
-    );
-  }, [searchValue, dictionaries]);
+      k => k.dictValue.includes(searchValue) || k.dictLabel.includes(searchValue),
+    )
+  }, [searchValue, dictionaries])
 
   useEffect(() => {
-    void getDictList();
-  }, []);
+    void getDictList()
+  }, [])
   return (
     <div className={styles.root}>
       <div className="dict-list-wrapper">
@@ -177,7 +157,7 @@ const DictManage: React.FC = () => {
         </div>
         <div>
           <Input
-            prefix={<SearchOutlined/>}
+            prefix={<SearchOutlined />}
             placeholder="请输入英文/中文名"
             value={searchValue}
             allowClear
@@ -194,7 +174,7 @@ const DictManage: React.FC = () => {
                     key={index}
                     className={selectDictId === item.id ? "selected" : ""}
                     onClick={() => {
-                      setSelectDictId(item.id);
+                      setSelectDictId(item.id)
                       void getDictItemList(item.id)
                     }}>
                     <div className="text text-ellipsis" title={item.dictValue}>
@@ -202,8 +182,8 @@ const DictManage: React.FC = () => {
                     </div>
                     <Space>
                       <EditTwoTone
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={e => {
+                          e.stopPropagation()
                           editDictActions.show(item)
                         }}
                       />
@@ -211,20 +191,20 @@ const DictManage: React.FC = () => {
                         title="提示"
                         placement="right"
                         description="确定要删除吗？"
-                        onCancel={(e) => {
-                          e?.stopPropagation();
+                        onCancel={e => {
+                          e?.stopPropagation()
                         }}
                         onConfirm={() => delDict(item)}>
                         <DeleteTwoTone
                           twoToneColor={["red", "transparent"]}
-                          onClick={(e) => {
-                            e.stopPropagation();
+                          onClick={e => {
+                            e.stopPropagation()
                           }}
                         />
                       </Popconfirm>
                     </Space>
                   </li>
-                );
+                )
               })}
             </ul>
           </SpinLoading>
@@ -234,9 +214,11 @@ const DictManage: React.FC = () => {
         <Button
           type="primary"
           className="add-dict-detail"
-          onClick={() => addDictItemActions.show({
-            dictId: selectDictId,
-          })}>
+          onClick={() =>
+            addDictItemActions.show({
+              dictId: selectDictId,
+            })
+          }>
           新增字典项
         </Button>
         <Table
@@ -244,29 +226,31 @@ const DictManage: React.FC = () => {
           dataSource={dictionaries.dictItems}
           loading={dictItemLoading}
           columns={columns}
-          rowKey={(record) => record.id}
+          rowKey={record => record.id}
         />
       </div>
       <AddOrEditDictModal
-        modalProps={{...addDictProps, title: "新增字典"}}
+        modalProps={{ ...addDictProps, title: "新增字典" }}
         modalActions={addDictActions}
-        refresh={getDictList}/>
+        refresh={getDictList}
+      />
       <AddOrEditDictModal
-        modalProps={{...editDictProps, title: "编辑字典"}}
+        modalProps={{ ...editDictProps, title: "编辑字典" }}
         modalActions={editDictActions}
-        refresh={getDictList}/>
+        refresh={getDictList}
+      />
       <AddOrEditDictItemModal
         modalActions={addDictItemActions}
-        modalProps={{...addDictItemProps, title: "新增字典项"}}
-        refresh={() => getDictItemList(selectDictId)
-        }/>
+        modalProps={{ ...addDictItemProps, title: "新增字典项" }}
+        refresh={() => getDictItemList(selectDictId)}
+      />
       <AddOrEditDictItemModal
         modalActions={editDictItemActions}
-        modalProps={{...editDictItemProps, title: "编辑字典项"}}
-        refresh={() => getDictItemList(selectDictId)}/>
+        modalProps={{ ...editDictItemProps, title: "编辑字典项" }}
+        refresh={() => getDictItemList(selectDictId)}
+      />
     </div>
-  );
-};
+  )
+}
 
-
-export default DictManage;
+export default DictManage

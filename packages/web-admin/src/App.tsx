@@ -1,12 +1,9 @@
-import "dayjs/locale/zh-cn";
-import BeforeRouterEnter from "@/router/beforeRouterEnter";
-import React from "react";
-
+import "dayjs/locale/zh-cn"
+import BeforeRouterEnter from "@/router/beforeRouterEnter"
+import React from "react"
 
 function App() {
-  return (
-    <BeforeRouterEnter/>
-  );
+  return <BeforeRouterEnter />
 }
 
-export default App;
+export default App

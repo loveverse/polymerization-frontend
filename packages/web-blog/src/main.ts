@@ -7,7 +7,7 @@ import Directives from "@/utils/directive.ts"
 import { check } from "@/utils/common.ts"
 
 import "element-plus/dist/index.css"
-import "./styles/index.scss"
+import "@/assets/styles/index.scss"
 import "animate.css"
 
 // 生产环境时防止debugger

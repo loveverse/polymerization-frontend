@@ -2,31 +2,38 @@
   :global {
     .ant-modal-content {
       padding: 0;
+
       .ant-modal-body {
         height: 500px;
+
         .ant-spin-nested-loading,
         .ant-spin-container {
           height: 100%;
         }
+
         iframe {
           width: 100%;
           height: 100%;
         }
       }
+
       .ant-modal-footer {
         padding: 15px 30px;
         border-top: 1px solid #ddd;
+
         .preview-footer {
           display: flex;
           align-items: center;
           justify-content: space-between;
+
           .file-info {
             img {
               width: 30px;
               height: 30px;
               vertical-align: middle;
             }
-            span{
+
+            span {
               vertical-align: middle;
             }
           }
@@ -35,6 +42,7 @@
     }
   }
 }
+
 .full-screen {
   :global {
     .ant-modal {
@@ -42,11 +50,14 @@
       max-width: 100vw;
       padding: 0;
       top: 0;
+
       & > div:nth-child(2) {
         height: 100%;
       }
+
       .ant-modal-content {
         height: 100%;
+
         .ant-modal-body {
           height: calc(100% - 121px);
         }

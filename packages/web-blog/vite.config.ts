@@ -70,7 +70,7 @@ export default defineConfig(({ mode, command }) => {
         scss: {
           //   "@use '@/assets/css/variables.scss' as *; @import '@/assets/css/base.scss';",
           // 全局引入后，不需要在其他文件引入
-          additionalData: `@use '@/styles/variables.scss' as *;`,
+          additionalData: `@use '@/assets/styles/mixins.scss' as *;`,
         },
       },
     },

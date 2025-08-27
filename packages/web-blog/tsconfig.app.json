@@ -3,10 +3,9 @@
     "@vue/tsconfig/tsconfig.dom.json"
   ],
   "include": [
-    "env.d.ts",
     "src/**/*",
     "src/**/*.vue",
-    "src/types/**/*.d.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": [
     "src/**/__tests__/*"

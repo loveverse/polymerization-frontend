@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from "react"
 import {
   App,
   Avatar,
@@ -14,88 +14,86 @@ import {
   Tag,
   Upload,
   UploadProps,
-} from "antd";
-import {useNavigate} from "react-router-dom";
-import {useAppContext} from "@/context";
-import {reqUpdateUserPassword, reqUploadFile} from "@/api/base";
-import {UpdateUserPasswordReq} from "@/api/base/types";
-import styles from "./index.module.scss";
-import {DrawerControlsProps} from "@/hooks/useDrawerControls";
-import {reqUpdateUser} from "@/api/system";
-import {UpdateUserReq, UserInfoRes} from "@/api/system/types";
-
+} from "antd"
+import { useNavigate } from "react-router-dom"
+import { useAppContext } from "@/context"
+import { reqUpdateUserPassword, reqUploadFile } from "@/api/base"
+import { UpdateUserPasswordReq } from "@/api/base/types"
+import styles from "./index.module.scss"
+import { DrawerControlsProps } from "@/hooks/useDrawerControls"
+import { reqUpdateUser } from "@/api/system"
+import { UpdateUserReq, UserInfoRes } from "@/api/system/types"
 
 const UserCenterDrawer = (props: DrawerControlsProps) => {
-  const {drawerProps} = props
-  const {message} = App.useApp()
-  const {dict, userInfo, actions} = useAppContext();
-  const navigate = useNavigate();
+  const { drawerProps } = props
+  const { message } = App.useApp()
+  const { dict, userInfo, actions } = useAppContext()
+  const navigate = useNavigate()
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
-      return e;
+      return e
     }
-    return e?.fileList;
-  };
+    return e?.fileList
+  }
   const uploadProps: UploadProps = {
     accept: ".png,.jpg",
     maxCount: 1,
     listType: "picture-circle",
     fileList: [],
     showUploadList: false,
-    beforeUpload: (file) => {
-      const fileSize = file.size / 1024 / 1024;
+    beforeUpload: file => {
+      const fileSize = file.size / 1024 / 1024
       if (fileSize > 30) {
-        message.warning("上传的头像大于30M，请重新上传！");
-        return false;
+        message.warning("上传的头像大于30M，请重新上传！")
+        return false
       }
-      return true;
+      return true
     },
     customRequest(options) {
-      const formData = new FormData();
-      formData.append("file", options.file);
+      const formData = new FormData()
+      formData.append("file", options.file)
       reqUploadFile(formData)
-        .then((res) => {
+        .then(res => {
           if (res.code === 200) {
-
-            options.onSuccess?.(res.data);
-            message.success("上传头像成功");
+            options.onSuccess?.(res.data)
+            message.success("上传头像成功")
           } else {
-            options.onError?.(new Error());
-            message.error("上传头像失败");
+            options.onError?.(new Error())
+            message.error("上传头像失败")
           }
         })
-        .catch((error) => {
-          console.error(error);
-          message.error("上传头像失败");
-        });
+        .catch(error => {
+          console.error(error)
+          message.error("上传头像失败")
+        })
     },
-  };
+  }
 
-  const [passwordForm] = Form.useForm();
+  const [passwordForm] = Form.useForm()
   const updateUserPassword = async (values: UpdateUserPasswordReq) => {
-    const res = await reqUpdateUserPassword(values);
+    const res = await reqUpdateUserPassword(values)
     if (res.code === 200) {
-      localStorage.removeItem("backend-token");
-      navigate("/login");
-      message.success("修改密码成功");
+      localStorage.removeItem("backend-token")
+      navigate("/login")
+      message.success("修改密码成功")
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
-  };
+  }
 
-  const [userForm] = Form.useForm<Omit<UpdateUserReq, "roleIds">>();
+  const [userForm] = Form.useForm<Omit<UpdateUserReq, "roleIds">>()
   const updateUserInfo = async (values: UpdateUserReq) => {
     values.roleIds = userInfo?.roleList.map(k => k.id)
-    const res = await reqUpdateUser(values);
+    const res = await reqUpdateUser(values)
     if (res.code === 200) {
-      message.success("修改用户信息成功");
-      const {roleIds, ...rest} = values
-      actions.setUserInfo({...userInfo as UserInfoRes, ...rest});
+      message.success("修改用户信息成功")
+      const { roleIds, ...rest } = values
+      actions.setUserInfo({ ...(userInfo as UserInfoRes), ...rest })
     } else {
-      message.error(res.msg);
+      message.error(res.msg)
     }
-  };
+  }
 
   const navbar: TabsProps["items"] = [
     {
@@ -106,27 +104,31 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
           form={userForm}
           autoComplete="off"
           variant="filled"
-          labelCol={{span: 5}}
+          labelCol={{ span: 5 }}
           labelAlign="left"
           className="base-form"
           // initialValues={{gender: "M"}}
           onFinish={updateUserInfo}
-          onFinishFailed={(err) => console.error(err)}>
+          onFinishFailed={err => console.error(err)}>
           <Form.Item hidden name="id">
             <div></div>
           </Form.Item>
           <Form.Item name="headImg" getValueFromEvent={normFile}>
             <Upload {...uploadProps}>
-              <Avatar src={userInfo?.avatar} alt="avatar" style={{width: "100%", height: "100%"}}/>
+              <Avatar
+                src={userInfo?.avatar}
+                alt="avatar"
+                style={{ width: "100%", height: "100%" }}
+              />
             </Upload>
           </Form.Item>
-          <Form.Item label="用户名" name="username" rules={[{required: true}]}>
-            <Input placeholder="请输入用户名" disabled/>
+          <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
+            <Input placeholder="请输入用户名" disabled />
           </Form.Item>
-          <Form.Item label="昵称" name="nickname" rules={[{required: true}]}>
-            <Input placeholder="请输入昵称"/>
+          <Form.Item label="昵称" name="nickname" rules={[{ required: true }]}>
+            <Input placeholder="请输入昵称" />
           </Form.Item>
-          <Form.Item label="性别" name="gender" rules={[{required: true}]}>
+          <Form.Item label="性别" name="gender" rules={[{ required: true }]}>
             <Radio.Group options={dict.getDictItemList("gender_type")}></Radio.Group>
           </Form.Item>
           <Form.Item label="角色" name="roleIds">
@@ -136,15 +138,15 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
                   <Tag key={index} color="processing">
                     {item.roleName}
                   </Tag>
-                );
+                )
               })}
             </Space>
           </Form.Item>
           <Form.Item label="手机号" name="phoneNumber">
-            <InputNumber placeholder="请输入手机号" controls={false} style={{width: "100%"}}/>
+            <InputNumber placeholder="请输入手机号" controls={false} style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item label="邮箱" name="email">
-            <Input placeholder="请输入邮箱"/>
+            <Input placeholder="请输入邮箱" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -162,35 +164,35 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
           form={passwordForm}
           autoComplete="off"
           variant="filled"
-          labelCol={{span: 5}}
+          labelCol={{ span: 5 }}
           labelAlign="left"
           className="safety-form"
           onFinish={updateUserPassword}>
           <Form.Item hidden name="id">
             <div></div>
           </Form.Item>
-          <Form.Item label="旧密码" name="oldPassword" rules={[{required: true}]}>
-            <Input.Password placeholder="请输入旧密码"/>
+          <Form.Item label="旧密码" name="oldPassword" rules={[{ required: true }]}>
+            <Input.Password placeholder="请输入旧密码" />
           </Form.Item>
-          <Form.Item label="新密码" name="newPassword" rules={[{required: true}]}>
-            <Input.Password placeholder="请输入新密码"/>
+          <Form.Item label="新密码" name="newPassword" rules={[{ required: true }]}>
+            <Input.Password placeholder="请输入新密码" />
           </Form.Item>
           <Form.Item
             label="再次输入"
             name="newPassword2"
             dependencies={["newPassword"]}
             rules={[
-              {required: true},
-              ({getFieldValue}) => ({
+              { required: true },
+              ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("newPassword") === value) {
-                    return Promise.resolve();
+                    return Promise.resolve()
                   }
-                  return Promise.reject(new Error("再次输入的密码与新密码不一致!"));
+                  return Promise.reject(new Error("再次输入的密码与新密码不一致!"))
                 },
               }),
             ]}>
-            <Input.Password placeholder="再次输入新密码"/>
+            <Input.Password placeholder="再次输入新密码" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -200,7 +202,7 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
         </Form>
       ),
     },
-  ];
+  ]
 
   useEffect(() => {
     if (drawerProps.open) {
@@ -215,12 +217,12 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
         phoneNumber: userInfo?.phoneNumber,
       })
     }
-  }, [drawerProps.open]);
+  }, [drawerProps.open])
   return (
     <Drawer {...drawerProps} width={600} className={styles["root"]}>
       <Tabs items={navbar} className="navbar-box"></Tabs>
     </Drawer>
-  );
-};
+  )
+}
 
-export default UserCenterDrawer;
+export default UserCenterDrawer

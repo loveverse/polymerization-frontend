@@ -1,5 +1,5 @@
-@use "./reset.scss";
-@use './variables.scss';
+@use "reset";
+@use 'variables';
 
 // 清除浮动
 .clearfix::after {
@@ -21,45 +21,8 @@
   transform: translateY(20px);
 }
 
-// 混合宏
-@mixin glass($background: var(--glass-bg), $border: var(--glass-border)) {
-  background: $background;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid $border;
-}
-
-@mixin glass-dark {
-  @include glass(var(--glass-dark-bg), var(--glass-dark-border));
-}
-
-@mixin text-shadow {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-@mixin float-animation($delay: 0s) {
-  animation: float 6s ease-in-out $delay infinite;
-
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-15px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-}
 
 // 全局样式
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: 'Inter', 'system-ui', sans-serif;
   color: var(--text);
@@ -121,36 +84,43 @@ html {
 }
 
 // 容器
-.container {
+.auto-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-// 工具类
-.glass {
-  @include glass;
-}
-
-.glass-dark {
-  @include glass-dark;
-}
-
-.text-shadow {
-  @include text-shadow;
-}
-
-.animate-float {
-  @include float-animation;
-}
-
-.animate-float-delay {
-  @include float-animation(2s);
-}
 
 // 响应式
-@media (max-width: 768px) {
-  .container {
-    padding: 0 0.5rem;
+/* 手机设备 (小于768px) */
+@media (max-width: 767px) {
+  .auto-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
+
+/* iPad 平板设备 (768px 到 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .auto-container {
+    max-width: 720px;
+    padding: 0 18px;
+  }
+}
+
+/* 1080p 设备 (1024px 到 1919px) */
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .auto-container {
+    max-width: 1140px;
+    padding: 0 20px;
+  }
+}
+
+/* 2k 及以上设备 (1920px 及以上) */
+@media (min-width: 1920px) {
+  .auto-container {
+    max-width: 1720px;
+    padding: 0 30px;
   }
 }

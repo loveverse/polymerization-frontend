@@ -1,7 +1,7 @@
 import { App } from "vue"
 
 // 自动导入当前目录下所有的index.vue组件
-const components = import.meta.glob("./*/index.vue", { eager: true })
+const components = import.meta.glob("./*/index.d.ts.vue", { eager: true })
 
 export default {
   install(app: App) {
