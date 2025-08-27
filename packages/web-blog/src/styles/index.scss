@@ -1,0 +1,156 @@
+@use "./reset.scss";
+@use './variables.scss';
+
+// 清除浮动
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+
+// 页面过渡动画
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+// 混合宏
+@mixin glass($background: var(--glass-bg), $border: var(--glass-border)) {
+  background: $background;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid $border;
+}
+
+@mixin glass-dark {
+  @include glass(var(--glass-dark-bg), var(--glass-dark-border));
+}
+
+@mixin text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin float-animation($delay: 0s) {
+  animation: float 6s ease-in-out $delay infinite;
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+}
+
+// 全局样式
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'system-ui', sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 20%),
+  radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 20%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  // overflow-x: hidden;
+}
+
+// 滚动条美化
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+// 平滑滚动
+html {
+  scroll-behavior: smooth;
+}
+
+// 背景装饰元素
+.bg-element {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.2;
+  z-index: -1;
+  pointer-events: none;
+
+  &.bg-primary {
+    background: var(--primary);
+    width: 600px;
+    height: 600px;
+    top: -300px;
+    left: -200px;
+  }
+
+  &.bg-secondary {
+    background: var(--secondary);
+    width: 500px;
+    height: 500px;
+    bottom: -250px;
+    right: -150px;
+  }
+}
+
+// 容器
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// 工具类
+.glass {
+  @include glass;
+}
+
+.glass-dark {
+  @include glass-dark;
+}
+
+.text-shadow {
+  @include text-shadow;
+}
+
+.animate-float {
+  @include float-animation;
+}
+
+.animate-float-delay {
+  @include float-animation(2s);
+}
+
+// 响应式
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+}
