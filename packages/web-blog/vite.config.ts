@@ -38,7 +38,7 @@ export default defineConfig(({ mode, command }) => {
         dts: "./src/types/auto-imports.d.ts",
         eslintrc: {
           enabled: true,
-          filepath: "./.eslintrc-auto-import.json",
+          filepath: "./.eslintrc.js-auto-import.json",
         },
       }),
       Components({

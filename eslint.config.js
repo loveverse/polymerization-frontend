@@ -9,6 +9,7 @@ import { builtinModules } from "node:module"
 const baseConfig = {
   ignores: [
     "**/node_modules/**",
+    "packages/web-admin/**/*", // 子模块有自己的 eslint
     "**/dist/**",
     "**/build/**",
     "**/coverage/**",
@@ -38,6 +39,7 @@ const baseConfig = {
 // TypeScript 配置
 const typescriptConfig = {
   files: ["**/*.{ts,tsx,vue}"],
+  ignores: ["packages/web-admin/**/*"],
   plugins: {
     "@typescript-eslint": typescriptEslint.plugin,
   },
@@ -65,6 +67,7 @@ const typescriptConfig = {
 // JavaScript 配置
 const javascriptConfig = {
   files: ["**/*.{js,jsx}"],
+  ignores: ["packages/web-admin/**/*"], // 排除子模块
   languageOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -79,6 +82,7 @@ const javascriptConfig = {
 const importConfig = {
   files: ["**/*.{js,jsx,ts,tsx,vue}"],
   plugins: { "import-x": importX },
+  ignores: ["packages/web-admin/**/*"],
   // 配置模块解析设置
   settings: {
     "import-x/resolver": {
@@ -117,6 +121,7 @@ const getVueConfig = async () => {
   return {
     files: ["packages/web-blog/**/*.{vue,ts,tsx,js,jsx}"],
     plugins: { vue: vuePlugin.default, "@typescript-eslint": typescriptEslint.plugin },
+    ignores: ["packages/web-admin/**/*"],
     languageOptions: {
       parser: vueParser.default,
       parserOptions: {
@@ -187,7 +192,7 @@ const config = [
   typescriptConfig,
   importConfig,
   await getVueConfig(),
-  await getReactConfig(),
+  // await getReactConfig(),
   nodeConfig,
   prettierConfig,
 ]

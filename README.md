@@ -64,3 +64,6 @@ set-ExecutionPolicy RemoteSigned
 ElMessage 这种 API 根本不会被 unplugin-auto-import 的 ElementPlusResolver 自动生成，这是插件本身的限制（它对大部分组件 OK，但对 message/notification 这种“函数 API”支持不完整）。
 
 # 子目录格式化问题，与webstorm不一致，在子模块放置prettier就好了
+
+
+## Webstorm默认打开文件不是打开 prettier 和 eslint，设置 New Projects Setup -> prettier 和 eslint 每次使用项目配置

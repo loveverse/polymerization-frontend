@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("path")
 
 module.exports = {
   renderer: {
@@ -6,10 +6,10 @@ module.exports = {
       preprocessorOptions: {
         scss: {
           api: "modern-compiler",
-          silenceDeprecations: ['legacy-js-api']
-        }
-      }
-    }
+          silenceDeprecations: ["legacy-js-api"],
+        },
+      },
+    },
   },
   devServer: {
     port: 30000,
@@ -26,10 +26,10 @@ module.exports = {
     alias: {
       "@": path.join(__dirname, "src"),
     },
-    configure: (webpackConfig, {env}) => {
-      console.log("环境变量：", process.env)
+    configure: (webpackConfig, { env }) => {
+      console.info("环境变量：", process.env)
 
-      webpackConfig.devtool = env === "development" ? "source-map" : false;
+      webpackConfig.devtool = env === "development" ? "source-map" : false
       // 设置静态资源公共路径
       webpackConfig.output = {
         path: path.resolve(__dirname, "dist"), // 打包后的路径名
@@ -40,7 +40,7 @@ module.exports = {
         // clean: {
         // keep: /public\//,
         // }, // 在生成文件之前清空 output 目录
-      };
+      }
       // 拆包
       if (env !== "development") {
         webpackConfig.optimization = {
@@ -56,7 +56,7 @@ module.exports = {
               },
             },
           },
-        };
+        }
       }
       // webpackConfig.module.rules[1].oneOf = [
       //   ...[
@@ -88,7 +88,7 @@ module.exports = {
       // ];
 
       // 找到匹配 .scss 的规则（通常在 oneOf 里）
-      return webpackConfig;
+      return webpackConfig
     },
   },
-};
+}

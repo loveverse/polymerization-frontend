@@ -21,6 +21,7 @@ const ModuleManage: React.FC = () => {
       render: (_value, _record, index) => index + 1,
     },
     { title: "模块名称", dataIndex: "moduleName" },
+    { title: "模块名称", dataIndex: "moduleName" },
 
     {
       title: "添加时间",

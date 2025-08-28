@@ -2,6 +2,7 @@
   "name": "web-admin",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@ant-design/icons": "^5.3.1",
     "@testing-library/dom": "^9.3.4",
@@ -12,7 +13,7 @@
     "@wangeditor/editor-for-react": "^1.0.6",
     "ahooks": "^3.8.1",
     "antd": "^5.19.0",
-    "axios": "catalog:",
+    "axios": "~1.8.1",
     "dayjs": "^1.11.13",
     "echarts": "^5.5.1",
     "js-base64": "^3.7.7",
@@ -37,12 +38,6 @@
     "test:old": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -64,14 +59,15 @@
     "@types/react-dom": "^18.2.19",
     "@types/react-transition-group": "^4.4.12",
     "@types/webpack-env": "^1.18.5",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "@typescript-eslint/parser": "6.21.0",
     "babel-loader": "^9.2.1",
     "dotenv-cli": "^7.4.2",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "catalog:",
-    "rimraf": "catalog:",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-react": "7.33.2",
+    "prettier": "3.2.5",
     "sass": "^1.89.1",
     "sass-loader": "^16.0.5",
     "svgo-loader": "^4.0.0"
