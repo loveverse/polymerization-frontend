@@ -1,48 +1,47 @@
-import dayjs from "dayjs";
-import { Base64 } from "js-base64";
-import { previewUrl } from "@/config";
+import dayjs from "dayjs"
+import { Base64 } from "js-base64"
+import { previewUrl } from "@/config"
 
 export function formatterTime(timestamp: Date) {
-  return dayjs(timestamp).format("YYYY-MM-DD HH:mm:ss");
+  return dayjs(timestamp).format("YYYY-MM-DD HH:mm:ss")
 }
 // 检测是不是链接
 export function urlify(text: string) {
-  const urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-  return urlRegex.test(text);
+  const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  return urlRegex.test(text)
 }
 // 预览服务
 export function createPreviewUrl(url: string) {
   // url = decodeURI(url);
-  return `${previewUrl}?url=${encodeURIComponent(Base64.encode(url))}`;
+  return `${previewUrl}?url=${encodeURIComponent(Base64.encode(url))}`
 }
 
 // 防止页面被debugger
 export function check() {
   function doCheck(a: any) {
     if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
-      (function () {})["constructor"]("debugger")();
+      ;(function () {})["constructor"]("debugger")()
     } else {
-      (function () {})["constructor"]("debugger")();
+      ;(function () {})["constructor"]("debugger")()
     }
-    doCheck(++a);
+    doCheck(++a)
   }
   try {
-    doCheck(0);
+    doCheck(0)
   } catch (err) {}
 }
 
 export function filterUniqueObj(arr: any[]) {
-  const uniqueValues = new Set();
-  const result = [];
+  const uniqueValues = new Set()
+  const result = []
   for (const obj of arr) {
-    const value = obj.content;
+    const value = obj.content
     if (!uniqueValues.has(value)) {
-      uniqueValues.add(value);
-      result.push(obj);
+      uniqueValues.add(value)
+      result.push(obj)
     }
   }
-  return result;
+  return result
 }
 
 // export function dispatchEventStroage(){

@@ -1,8 +1,6 @@
 import typescriptEslint from "typescript-eslint"
 import eslint from "@eslint/js"
 import prettierConfig from "eslint-config-prettier"
-import importX from "eslint-plugin-import-x"
-import { builtinModules } from "node:module"
 
 // https://github.com/vuejs/core/blob/main/eslint.config.js#L20
 // 基础共享配置
@@ -19,6 +17,7 @@ const baseConfig = {
     "**/.turbo/**",
     "**/pnpm-lock.yaml",
     "**/.env*",
+    "study/**/*",
   ],
   languageOptions: {
     ecmaVersion: "latest",
@@ -39,7 +38,7 @@ const baseConfig = {
 // TypeScript 配置
 const typescriptConfig = {
   files: ["**/*.{ts,tsx,vue}"],
-  ignores: ["packages/web-admin/**/*"],
+  ignores: ["packages/web-admin/**/*", "study/**/*"],
   plugins: {
     "@typescript-eslint": typescriptEslint.plugin,
   },
@@ -75,41 +74,6 @@ const javascriptConfig = {
   rules: {
     ...eslint.configs.recommended.rules,
     "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
-  },
-}
-
-// import-x 配置
-const importConfig = {
-  files: ["**/*.{js,jsx,ts,tsx,vue}"],
-  plugins: { "import-x": importX },
-  ignores: ["packages/web-admin/**/*"],
-  // 配置模块解析设置
-  settings: {
-    "import-x/resolver": {
-      typescript: {
-        project: "tsconfig.json",
-        alwaysTryTypes: true,
-      },
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"],
-      },
-    },
-    "import-x/extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"],
-    "import-x/external-module-folders": ["node_modules", "node_modules/@types"],
-  },
-  rules: {
-    // ...importX.configs.recommended.rules,
-    ...importX.configs.typescript.rules,
-    "import-x/no-nodejs-modules": ["error", { allow: builtinModules.map(m => `node:${m}`) }],
-    // // 确保导入路径正确
-    // "import-x/no-unresolved": ["error", { commonjs: true, amd: true }],
-    // "import-x/extensions": ["error", "ignorePackages", {
-    //   js: "never",
-    //   jsx: "never",
-    //   ts: "never",
-    //   tsx: "never",
-    //   vue: "never",
-    // }],
   },
 }
 
@@ -181,7 +145,6 @@ const nodeConfig = {
     },
   },
   rules: {
-    "import-x/no-nodejs-modules": "off",
     "no-console": "off",
   },
 }
@@ -190,7 +153,6 @@ const config = [
   baseConfig,
   javascriptConfig,
   typescriptConfig,
-  importConfig,
   await getVueConfig(),
   // await getReactConfig(),
   nodeConfig,

@@ -4,9 +4,9 @@
       <div class="footer-bottom">
         <el-tooltip class="copyright" effect="dark" content="鄂ICP备2021020610号" placement="top">
           <span
-          >&copy;2021<a href="https://beian.miit.gov.cn" target="_blank"
-          >鄂ICP备2021020610号</a
-          ></span
+            >&copy;2021<a href="https://beian.miit.gov.cn" target="_blank"
+              >鄂ICP备2021020610号</a
+            ></span
           >
         </el-tooltip>
         <div>

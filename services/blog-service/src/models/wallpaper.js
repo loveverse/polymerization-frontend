@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
     },
     type: {
       type: DataTypes.STRING(255),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "图片类型",
-      field: "type"
+      field: "type",
     },
     url: {
       type: DataTypes.STRING(5000),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "图片路径",
-      field: "url"
+      field: "url",
     },
     putaway: {
       type: DataTypes.INTEGER(2),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "是否上架显示",
-      field: "putaway"
+      field: "putaway",
     },
     urlSmall: {
       type: DataTypes.STRING(5000),
@@ -46,7 +44,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "小图片",
-      field: "url_small"
+      field: "url_small",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -55,7 +53,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "createdAt"
+      field: "createdAt",
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -64,14 +62,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "updatedAt"
-    }
-  };
+      field: "updatedAt",
+    },
+  }
   const options = {
     tableName: "wallpaper",
     comment: "",
-    indexes: []
-  };
-  const WallpaperModel = sequelize.define("wallpaperModel", attributes, options);
-  return WallpaperModel;
-};
+    indexes: [],
+  }
+  const WallpaperModel = sequelize.define("wallpaperModel", attributes, options)
+  return WallpaperModel
+}

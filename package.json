@@ -9,6 +9,7 @@
     "clean:node_modules": "rimraf --glob packages/*/node_modules && rimraf node_modules",
     "clean:all": "node scripts/clean.js",
     "build:all": "pnpm -r build",
+    "prettier": "prettier --config ./.prettierrc.js --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "packageManager": "pnpm@10.4.1",
@@ -16,14 +17,14 @@
     "node": ">=18.12.0"
   },
   "devDependencies": {
+    "eslint": "catalog:",
     "@eslint/js": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "eslint": "catalog:",
     "eslint-config-prettier": "catalog:",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import-x": "^4.13.1",
     "eslint-plugin-prettier": "catalog:",
+    "eslint-plugin-vue": "catalog:",
+    "vue-eslint-parser": "catalog:",
     "prettier": "catalog:",
     "rimraf": "catalog:",
     "typescript": "catalog:",

@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react"
-import {App, Avatar, Button, Card, List} from "antd"
+import React, { useEffect, useState } from "react"
+import { App, Avatar, Button, Card, List } from "antd"
 import axios from "axios"
 import dayjs from "dayjs"
 
 import styles from "./index.module.scss"
 
 const Home = () => {
-  const {message} = App.useApp()
+  const { message } = App.useApp()
   const [commitData, setCommitData] = useState<PageResult<any[]>>({
     page: 1,
     size: 20,
@@ -59,7 +59,7 @@ const Home = () => {
           renderItem={(item: any) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src={item.committer.avatar_url}/>}
+                avatar={<Avatar src={item.committer.avatar_url} />}
                 title={
                   <a href={item.html_url} target="_blank" rel="noreferrer">
                     {item.commit.message}

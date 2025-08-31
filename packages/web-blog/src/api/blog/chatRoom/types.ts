@@ -1,13 +1,13 @@
 export interface UpdExcerptReq {
-  id: number;
-  content: string;
+  id: number
+  content: string
 }
 export interface DelExcerptReq {
-  id: number;
+  id: number
 }
 export interface AddExcerptReq {
-  content: string;
-  author: string;
-  flag: number;
-  date: Date;
+  content: string
+  author: string
+  flag: number
+  date: Date
 }

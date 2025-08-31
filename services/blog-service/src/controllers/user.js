@@ -1,59 +1,59 @@
-const response = require("../utils/resData");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { APP_JWT_SECRET } = require("../config/index");
-const seq = require("../mysql/sequelize");
-const UserModel = require("../models/user");
-const Muser = UserModel(seq);
+const response = require("../utils/resData")
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const { APP_JWT_SECRET } = require("../config/index")
+const seq = require("../mysql/sequelize")
+const UserModel = require("../models/user")
+const Muser = UserModel(seq)
 // 类定义
 class User {
   constructor() {}
   // 注册用户
   async register(ctx, next) {
     try {
-      const { userName: user_name, password: pass_word } = ctx.request.body;
+      const { userName: user_name, password: pass_word } = ctx.request.body
       if (!user_name || !pass_word) {
-        ctx.body = response.ERROR("userNotNull");
-        return;
+        ctx.body = response.ERROR("userNotNull")
+        return
       }
       // 判断用户是否存在
       const isExist = await Muser.findOne({
         where: {
           user_name: user_name,
         },
-      });
+      })
       if (isExist) {
         const res = await Muser.findOne({
           where: {
             user_name: user_name,
           },
-        });
+        })
         // 密码是否正确
         if (bcrypt.compareSync(pass_word, res.dataValues.password)) {
           // 登录成功
-          const { password, ...data } = res.dataValues;
+          const { password, ...data } = res.dataValues
           ctx.body = response.SUCCESS("userLogin", {
             token: jwt.sign(data, APP_JWT_SECRET, { expiresIn: "30d" }),
             userInfo: res.dataValues,
-          });
+          })
         } else {
-          ctx.body = response.ERROR("userAlreadyExist");
+          ctx.body = response.ERROR("userAlreadyExist")
         }
       } else {
         // 加密
-        const salt = bcrypt.genSaltSync(10);
+        const salt = bcrypt.genSaltSync(10)
         // hash保存的是 密文
-        const hash = bcrypt.hashSync(pass_word, salt);
-        const userInfo = await Muser.create({ user_name, password: hash });
-        const { password, ...data } = userInfo.dataValues;
+        const hash = bcrypt.hashSync(pass_word, salt)
+        const userInfo = await Muser.create({ user_name, password: hash })
+        const { password, ...data } = userInfo.dataValues
         ctx.body = response.SUCCESS("userRegister", {
           token: jwt.sign(data, APP_JWT_SECRET, { expiresIn: "30d" }),
           userInfo,
-        });
+        })
       }
     } catch (error) {
-      console.error(error);
-      ctx.body = response.SERVER_ERROR();
+      console.error(error)
+      ctx.body = response.SERVER_ERROR()
     }
   }
   // // 分页查询
@@ -91,4 +91,4 @@ class User {
   // }
 }
 
-module.exports = new User();
+module.exports = new User()

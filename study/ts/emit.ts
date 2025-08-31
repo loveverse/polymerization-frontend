@@ -1,16 +1,16 @@
 interface IEmitter {
   events: Map<string, Array<Function>>
-  once: (event: string, callback: Function) => void;
-  emit: (event: string, ...args: any[]) => void;
+  once: (event: string, callback: Function) => void
+  emit: (event: string, ...args: any[]) => void
   on: (event: string, callback: Function) => void
   off: (event: string, callback: Function) => void
 }
 
 class Emitter implements IEmitter {
-  events: Map<string, Array<Function>>;
+  events: Map<string, Array<Function>>
 
   constructor() {
-    this.events = new Map();
+    this.events = new Map()
   }
 
   emit(event: string, ...args: any): void {
@@ -18,12 +18,10 @@ class Emitter implements IEmitter {
       const list = this.events.get(event)
       if (list) {
         list.forEach(callback => {
-          callback && callback(args);
+          callback && callback(args)
         })
       }
-
     }
-
   }
 
   off(event: string, callback: Function): void {
@@ -55,8 +53,6 @@ class Emitter implements IEmitter {
     }
     this.on(event, cb)
   }
-
-
 }
 
 const emitter = new Emitter()
@@ -64,22 +60,18 @@ emitter.on("storage", (data: any) => {
   console.log(data, "111")
 })
 
-emitter.emit("storage",)
-
+emitter.emit("storage")
 
 interface Obj {
-  a: number;
-  b: number;
+  a: number
+  b: number
 }
-
 
 type PartialObj<T> = {
   [key in keyof T]?: T[key]
 }
 
-
 type Obj2 = PartialObj<Obj>
 const obj: Obj2 = {
   a: 1,
-
 }

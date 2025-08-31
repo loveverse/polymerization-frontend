@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
     },
     title: {
       type: DataTypes.CHAR(255),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "标题",
-      field: "title"
+      field: "title",
     },
     link: {
       type: DataTypes.CHAR(255),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "链接",
-      field: "link"
+      field: "link",
     },
     status: {
       type: DataTypes.INTEGER(1),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "编辑状态, 0:不在编辑;1: 在编辑中",
-      field: "status"
+      field: "status",
     },
     fileId: {
       type: DataTypes.CHAR(255),
@@ -46,7 +44,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "文件id",
-      field: "file_id"
+      field: "file_id",
     },
     fileName: {
       type: DataTypes.CHAR(255),
@@ -55,7 +53,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "文件名",
-      field: "file_name"
+      field: "file_name",
     },
     fileUrl: {
       type: DataTypes.CHAR(255),
@@ -64,7 +62,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "文件路径",
-      field: "file_url"
+      field: "file_url",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -73,7 +71,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "createdAt"
+      field: "createdAt",
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -82,7 +80,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "updatedAt"
+      field: "updatedAt",
     },
     fileList: {
       type: DataTypes.TEXT,
@@ -91,14 +89,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "file_list"
-    }
-  };
+      field: "file_list",
+    },
+  }
   const options = {
     tableName: "issue",
     comment: "",
-    indexes: []
-  };
-  const IssueModel = sequelize.define("issueModel", attributes, options);
-  return IssueModel;
-};
+    indexes: [],
+  }
+  const IssueModel = sequelize.define("issueModel", attributes, options)
+  return IssueModel
+}

@@ -36,7 +36,7 @@
 //   },
 // };
 
-const Automate = require("sequelize-automate");
+const Automate = require("sequelize-automate")
 const dbOptions = {
   database: "verse",
   username: "verse",
@@ -55,14 +55,14 @@ const dbOptions = {
     },
     timestamps: true, // 自动创建createAt和updateAt
   },
-};
+}
 const options = {
   type: "js",
   dir: "./src/models",
   camelCase: true,
-};
-const automate = new Automate(dbOptions, options);
-(async function main() {
-  const code = await automate.run();
-  console.log(code);
-})();
+}
+const automate = new Automate(dbOptions, options)
+;(async function main() {
+  const code = await automate.run()
+  console.log(code)
+})()

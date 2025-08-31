@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      window.MathJax = {
+        startup: {
+          ready: () => {
+            MathJax.startup.defaultReady()
+
+            window.mathJaxReady = true
+
+            if (window.pendingMathJaxContent) {
+              setContent(window.pendingMathJaxContent)
+              window.pendingMathJaxContent = null
+            }
+          },
+        },
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+        },
+        svg: {
+          fontCache: "global",
+        },
+      }
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      html {
+        height: auto;
+        min-height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100%;
+        box-sizing: border-box;
+      }
+
+      #content {
+        min-height: calc(100vh - 40px);
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        box-sizing: border-box;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+
+      code {
+        background-color: #f0f0f0;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 3px;
+        overflow-x: auto;
+      }
+
+      blockquote {
+        border-left: 4px solid #ddd;
+        padding-left: 15px;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <p>
+        在调用“setContent()”并以 base64 编码的形式传入 Markdown 代码后，相关内容将会在此处显示。
+      </p>
+    </div>
+
+    <script>
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        highlight: function (code, lang) {
+          return code
+        },
+      })
+
+      function decodeBase64(base64) {
+        const text = atob(base64)
+        const length = text.length
+        const bytes = new Uint8Array(length)
+        for (let i = 0; i < length; i++) {
+          bytes[i] = text.charCodeAt(i)
+        }
+        return new TextDecoder().decode(bytes)
+      }
+
+      function setContent(base64) {
+        try {
+          const decodedContent = decodeBase64(base64)
+
+          const htmlContent = marked.parse(decodedContent)
+
+          document.getElementById("content").innerHTML = htmlContent
+
+          if (window.MathJax && window.mathJaxReady) {
+            MathJax.typeset()
+          } else {
+            window.pendingMathJaxContent = base64
+          }
+        } catch (e) {
+          console.error("错误:", e)
+          document.getElementById("content").innerHTML =
+            `<p style="color:red">错误: ${e.message}</p>`
+        }
+      }
+
+      window.setContent = setContent
+      // 示例用法:
+      setContent(
+        "IyMjIOmimOebruino+aekOS4juino+etlAoK6aKY55uu6KaB5rGC5oiR5Lus6K6h566X5LiA5Liq5LiN6KeE5YiZ5a6e5b+D54mp5L2T5Zyo5LiN5ZCM5oOF5Ya15LiL55qE54mp55CG6YeP77ya5rWu5Yqb44CB5L2T56ev44CB5a+G5bqm5Lul5Y+K55uQ5rC055qE5a+G5bqm44CC5Lul5LiL5piv6K+m57uG55qE6Kej6aKY5q2l6aqk77yaCgotLS0KCiMjIyMgKirlt7Lnn6XmnaHku7YqKgoxLiDniankvZPnmoTotKjph48gJCBtID0gNTUgXCwgXHRleHR7Z30gPSAwLjA1NSBcLCBcdGV4dHtrZ30gJAoyLiDmjpLlvIDnuq/msLTml7blj5fliLDnmoTph43lipvvvIjljbPmjpLlvIDmsLTnmoTph43ph4/vvInkuLogJCBGX3tcdGV4dHvmjpLmsLR9fSA9IDAuNSBcLCBcdGV4dHtOfSAkCjMuIOWKoOWFpemjn+ebkOWQju+8jOeJqeS9k+S8muaCrOa1ruOAggo0LiDmsLTlkozmtrLkvZPkuK3nmoTliqDpgJ/luqbnlLHkuo7lnLDnkIPlvJXlipvlnYfkuLrmoIflh4blgLwgJCBnID0gMTAgXCwgXHRleHR7bS9zfV4yICQKCi0tLQoKIyMjICoq6Zeu6aKY5YiG6KejKioKCuaIkeS7rOmcgOimgeino+WGs+S7peS4i+Wbm+S4quWtkOmXrumimO+8mgoxLiDorqHnrpfniankvZPlnKjnuq/msLTkuK3miYDlj5fnmoTmta7lipvvvJsKMi4g56Gu5a6a54mp5L2T55qE5L2T56ev77ybCjMuIOagueaNrui0qOmHj+WSjOS9k+enr+axguWHuueJqeS9k+eahOWvhuW6pu+8mwo0LiDliKTmlq3lvZPniankvZPmgqzmta7kuo7nm5DmsLTkuK3ml7bvvIznm5DmsLTnmoTlr4bluqbjgIIKCi0tLQoKIyMjIyAqKigxKSDmta7lipvlpKflsI8qKiAgCuagueaNrumYv+Wfuuexs+W+t+WOn+eQhu+8jOa1uOayoeaIlumDqOWIhua1uOayoeWcqOa1geS9k+S4reeahOeJqeS9k+aJgOWPl+eahOa1ruWKm+etieS6juWug+aOkuWHuua1geS9k+mHjeWKm+eahOWkp+Wwj+OAguWboOatpO+8jOWcqOatpOaDheWGteS4i++8jAokJApGX1x0ZXh0e+a1rn0gPSBHX1x0ZXh0e+aOkuawtH0KJCQgCuWFtuS4rSBcKEdcKSDooajnpLrph43lipvvvIzliJnmnIk6CiQkCkZfewogICBmbG9hdCB9PW1nPVxyaG8gX3tcbWF0aHJtIHt3IH19IFZfZywKICQkIOWFtuS4rSAkXHJob193JCDmmK/msLTnmoTlr4bluqYgKCTPgV934omIOTg3IGtnL21eezN9JCnvvIzogIzku47nu5nnmoTmlbDmja7lj6/nn6U6CgokClxyaG9fdlx0aW1lcyB2PWfDl3YvKFxmcmFje317fSkkCgrmiYDku6XvvIwKCiRcYm94ZWR7fQokLiAKCi0tLQoKCuacgOe7iOetlOahiOaYrzokCW94ZWR7fQ==",
+      )
+      // setContent("ClxiZWdpbntibWF0cml4fQoxJjImM1xcXAo0JjUmNlxcXAo3JjgmOQpcZW5ke2JtYXRyaXh9");
+    </script>
+  </body>
+</html>

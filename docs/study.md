@@ -32,29 +32,34 @@ Sass 语法比较简洁，可读性更强，但是由于使用缩进来表示层
 粘贴上传是通过前端 JavaScript 代码监听剪贴板事件，在用户复制图片后将图片内容转换为 `Blob` 对象，然后使用 AJAX 或 Fetch API 发送 HTTP 请求将图片上传给后台。而接口上传则是通过用户在前端选择文件后，使用表单或 `FormData` 对象构造 HTTP POST 请求将文件上传给后台。
 
 # MySql
+
 ## 约束
+
 由于外键约束会降低数据库的性能，一般不设置外键约束
 删除外键约束：`DROP FOREIGN KEY fk_class_id`
+
 ## 索引
+
 - 优点：使用索引，可以让数据库不必扫描整个表，而是直接定位到符合条件的记录，大大加快了查询速度；索引的效率取决于索引列的值是否散列，即该列的值如果越互不相同，那么索引效率越高。
 - 缺点：在插入、更新和删除记录时，需要同时修改索引，因此，索引越多，插入、更新和删除记录的速度就越慢。
 
 ## commonjs和es6模块的区别
+
 1.语法不同
+
 - commonjs使用的是module.exports
-- es6使用import关键字
-2.加载方式
+- es6使用import关键字2.加载方式
 - commonjs是同步加载，会阻塞后续代码运行
-- es6是异步加载
-3.静态和动态
+- es6是异步加载3.静态和动态
 - commonjs运行时进行加载和解析，支持动态语法
-- es6是静态编译，不支持动态
-4.导入导出
+- es6是静态编译，不支持动态4.导入导出
 - commonjs导入和导出是值的拷贝
 - es6导入是绑定，导出是值的引用
 
 ## github推送超时使用v2ray代理
+
 在用户的`.ssh/config`中配置
+
 ```
 # 必须是 github.com
 Host github.com
@@ -67,5 +72,6 @@ Host github.com
 ```
 
 ## docker命令
+
 - docker run -d -p 8012:8012 keking/kkfileview，后台运行镜像服务
 - docker update --restart=always 231b40283e1d，设置镜像服务开机自启

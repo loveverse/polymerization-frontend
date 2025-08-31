@@ -23,7 +23,7 @@ export const clientList = [
     url: "https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket",
     name: "webscoket",
   },
-];
+]
 
 export const serverList = [
   {
@@ -51,4 +51,4 @@ export const serverList = [
     url: "https://www.npmjs.com/package/jsonwebtoken",
     name: "jsonwebtoken",
   },
-];
+]

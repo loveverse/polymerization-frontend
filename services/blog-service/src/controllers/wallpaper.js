@@ -1,7 +1,7 @@
-const response = require("../utils/resData");
-const seq = require("../mysql/sequelize");
-const WallpaperModel = require("../models/wallpaper");
-const Mwallpaper = WallpaperModel(seq);
+const response = require("../utils/resData")
+const seq = require("../mysql/sequelize")
+const WallpaperModel = require("../models/wallpaper")
+const Mwallpaper = WallpaperModel(seq)
 
 // 壁纸的接口----------------------------------------------------------------
 
@@ -18,7 +18,7 @@ class Wallpaper {
   // 分页查询
   async findPageWallpaper(ctx, next) {
     try {
-      const { limit, page } = ctx.request.query;
+      const { limit, page } = ctx.request.query
       // console.log(limit, page);
       /*
       第一页：0，10（0，10）
@@ -30,12 +30,12 @@ class Wallpaper {
       // limit后面都是数字类型，转换一下
       // let total = await Mhotword.findAll();
 
-      const total = await Mwallpaper.findAndCountAll();
+      const total = await Mwallpaper.findAndCountAll()
       let list = await Mwallpaper.findAll({
         order: [["id"]],
         limit: parseInt(limit),
         offset: parseInt(limit) * (page - 1),
-      });
+      })
       // 解决不换行：replace全局替换和v-html
       // list.forEach(e => {
       //   e.content = e.content.replace(/\n/g, "<br/>")
@@ -52,13 +52,13 @@ class Wallpaper {
       */
       // const time = new Date(Date.now() + 30000).toUTCString();
       // ctx.set("Expires", time);
-      ctx.set("Cache-Control", "max-age=3600");
-      ctx.body = response.SUCCESS("common", { total: total.count, list });
+      ctx.set("Cache-Control", "max-age=3600")
+      ctx.body = response.SUCCESS("common", { total: total.count, list })
     } catch (error) {
-      console.error(error);
-      ctx.body = response.SERVER_ERROR();
+      console.error(error)
+      ctx.body = response.SERVER_ERROR()
     }
   }
 }
 
-module.exports = new Wallpaper();
+module.exports = new Wallpaper()

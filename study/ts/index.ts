@@ -1,35 +1,33 @@
-import http from "http";
+import http from "http"
 
 const RestController = (value: number) => {
-  const fn: ClassDecorator = (target) => {
+  const fn: ClassDecorator = target => {
     target.prototype.age = value
     target.prototype.fn = () => {
-      console.log("age", target.prototype.age);
+      console.log("age", target.prototype.age)
     }
   }
   return fn
-
 }
 const Get = (url: string) => {
   return (target: Object, key: string | symbol, descriptor: PropertyDescriptor) => {
     if (!descriptor) {
-      throw new Error("Method decorator requires a descriptor.");
+      throw new Error("Method decorator requires a descriptor.")
     }
 
-    const originalMethod = descriptor.value;
+    const originalMethod = descriptor.value
 
     descriptor.value = function (...args: any[]) {
-      console.log(`Calling ${String(key)} with URL: ${url}`);
+      console.log(`Calling ${String(key)} with URL: ${url}`)
       http.get(url, (res: any) => {
-        originalMethod.apply(this, [res, ...args]); // 确保绑定 this
-      });
-    };
-  };
+        originalMethod.apply(this, [res, ...args]) // 确保绑定 this
+      })
+    }
+  }
 }
 
 @RestController(20)
 class Controller {
-
   // private name: string;
 
   // constructor(name: string) {

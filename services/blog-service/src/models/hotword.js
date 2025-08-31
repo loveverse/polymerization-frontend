@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
     },
     name: {
       type: DataTypes.STRING(255),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "歌曲名",
-      field: "name"
+      field: "name",
     },
     url: {
       type: DataTypes.STRING(255),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "歌曲url",
-      field: "url"
+      field: "url",
     },
     picurl: {
       type: DataTypes.STRING(255),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "歌曲图片url",
-      field: "picurl"
+      field: "picurl",
     },
     artistsname: {
       type: DataTypes.STRING(255),
@@ -46,7 +44,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "歌手",
-      field: "artistsname"
+      field: "artistsname",
     },
     avatarurl: {
       type: DataTypes.STRING(255),
@@ -55,7 +53,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "头像url",
-      field: "avatarurl"
+      field: "avatarurl",
     },
     nickname: {
       type: DataTypes.STRING(255),
@@ -64,7 +62,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "发表人",
-      field: "nickname"
+      field: "nickname",
     },
     content: {
       type: DataTypes.STRING(5000),
@@ -73,7 +71,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "内容",
-      field: "content"
+      field: "content",
     },
     identification: {
       type: DataTypes.INTEGER(4),
@@ -82,7 +80,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "标识",
-      field: "identification"
+      field: "identification",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -91,7 +89,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "createdAt"
+      field: "createdAt",
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -100,14 +98,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "updatedAt"
-    }
-  };
+      field: "updatedAt",
+    },
+  }
   const options = {
     tableName: "hotword",
     comment: "",
-    indexes: []
-  };
-  const HotwordModel = sequelize.define("hotwordModel", attributes, options);
-  return HotwordModel;
-};
+    indexes: [],
+  }
+  const HotwordModel = sequelize.define("hotwordModel", attributes, options)
+  return HotwordModel
+}

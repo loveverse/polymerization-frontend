@@ -41,8 +41,7 @@ export default {
 
   // websocket.ts
   connectClose: "The connection is closed and cannot respond in time",
-  browserNonsupport:
-    "Your browser does not support WebSocket and cannot get data",
+  browserNonsupport: "Your browser does not support WebSocket and cannot get data",
   connectSuccess: "Successful connection",
   connectClose1: "Connection closed",
   connectFail: "Connection failed, continue to reconnect",
@@ -54,8 +53,7 @@ export default {
   backEnd: "Back end",
   deployment: "deployment",
   technicalPoint: "Technical point",
-  fileLib1:
-    "File library: Use kkFileView preview service and docker + nginx to build.",
+  fileLib1: "File library: Use kkFileView preview service and docker + nginx to build.",
   chatRoom1:
     "Chat room: using websocket, heartbeat detection, disconnection, etc.; Using jsonwebtoken, issuing tokens, setting operation permissions, etc. Use ETag (negotiated cache)",
   studyIssue1:
@@ -104,8 +102,7 @@ export default {
     releaseSuccess: "Content release success!",
     updateSuccess: "Content modified successfully!",
     delSuccess1: "Content deleted successfully!",
-    disconnetWarn:
-      "The connection is disconnected, the message is no longer instant push!",
+    disconnetWarn: "The connection is disconnected, the message is no longer instant push!",
     logOutSuccess: "Exit successfully",
   },
   messageBox: {
@@ -155,4 +152,4 @@ export default {
   // 404
   notExit: "Uh-oh ~ The page you visited does not exist",
   backHome: "Return to home page",
-};
+}

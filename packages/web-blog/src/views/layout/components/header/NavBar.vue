@@ -25,14 +25,8 @@
     :with-header="false"
     :before-close="() => (state.showAside = false)"
     :size="200"
-    class="aside-drawer"
-  >
-    <el-menu
-      :default-active="route.path"
-      mode="vertical"
-      :ellipsis="false"
-      router
-    >
+    class="aside-drawer">
+    <el-menu :default-active="route.path" mode="vertical" :ellipsis="false" router>
       <template v-for="item in routerList">
         <MenuItem :menu-item="item"></MenuItem>
       </template>

@@ -171,7 +171,7 @@ onUnmounted(() => {
       display: none;
       gap: 1rem;
     }
-    .nav-actions{
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -213,10 +213,6 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
 }
-
-
-
-
 
 .mobile-menu-toggle {
   display: inline-grid;

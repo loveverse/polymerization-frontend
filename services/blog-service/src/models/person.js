@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
     },
     content: {
       type: DataTypes.STRING(5000),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "内容",
-      field: "content"
+      field: "content",
     },
     author: {
       type: DataTypes.STRING(255),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "作者",
-      field: "author"
+      field: "author",
     },
     flag: {
       type: DataTypes.INTEGER(4),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "编辑状态, 1:不在编辑;0: 在编辑中",
-      field: "flag"
+      field: "flag",
     },
     date: {
       type: DataTypes.STRING(255),
@@ -46,7 +44,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "发布时间",
-      field: "date"
+      field: "date",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -55,7 +53,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "createdAt"
+      field: "createdAt",
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -64,14 +62,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "updatedAt"
-    }
-  };
+      field: "updatedAt",
+    },
+  }
   const options = {
     tableName: "person",
     comment: "",
-    indexes: []
-  };
-  const PersonModel = sequelize.define("personModel", attributes, options);
-  return PersonModel;
-};
+    indexes: [],
+  }
+  const PersonModel = sequelize.define("personModel", attributes, options)
+  return PersonModel
+}

@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "id"
+      field: "id",
     },
     ip: {
       type: DataTypes.STRING(50),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "ip地址",
-      field: "ip"
+      field: "ip",
     },
     address: {
       type: DataTypes.STRING(100),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "城市地址",
-      field: "address"
+      field: "address",
     },
     operator: {
       type: DataTypes.STRING(50),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "运营商",
-      field: "operator"
+      field: "operator",
     },
     device: {
       type: DataTypes.STRING(255),
@@ -46,7 +44,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "设备",
-      field: "device"
+      field: "device",
     },
     controller: {
       type: DataTypes.STRING(50),
@@ -55,7 +53,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: "接口",
-      field: "controller"
+      field: "controller",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -64,7 +62,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "createdAt"
+      field: "createdAt",
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -73,14 +71,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "updatedAt"
-    }
-  };
+      field: "updatedAt",
+    },
+  }
   const options = {
     tableName: "ips",
     comment: "",
-    indexes: []
-  };
-  const IpsModel = sequelize.define("ipsModel", attributes, options);
-  return IpsModel;
-};
+    indexes: [],
+  }
+  const IpsModel = sequelize.define("ipsModel", attributes, options)
+  return IpsModel
+}

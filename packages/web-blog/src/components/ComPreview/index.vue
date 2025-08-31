@@ -6,31 +6,26 @@
     v-model="openPreviewDialog"
     :fullscreen="state.isFullScreen"
     :class="state.isFullScreen && 'dialog_full'"
-    @close="exit"
-  >
+    @close="exit">
     <div
       v-if="fileInfo.url"
       class="perview_content"
       :element-loading-text="$t('decodeIng')"
-      v-loading="loading"
-    >
+      v-loading="loading">
       <iframe
         ref="refIframe"
         width="100%"
         height="100%"
         :src="createPreviewUrl(fileInfo.url)"
-        frameborder="0"
-      >
+        frameborder="0">
       </iframe>
     </div>
     <template #footer>
       <div class="footer_btn">
         <div>
-          <span
-            class="full_screen"
-            @click="state.isFullScreen = !state.isFullScreen"
-            >{{ $t("fullScreen") }}</span
-          >
+          <span class="full_screen" @click="state.isFullScreen = !state.isFullScreen">{{
+            $t("fullScreen")
+          }}</span>
           <a class="down_color">{{ $t("download") }}</a>
         </div>
       </div>
@@ -39,7 +34,7 @@
 </template>
 
 <script setup lang="ts" name="ComPreview">
-import { createPreviewUrl } from "@/utils/common";
+import { createPreviewUrl } from "@/utils/common"
 const props = defineProps({
   fileInfo: {
     type: Object,
@@ -49,47 +44,47 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-});
-const emits = defineEmits(["update:visible", "handlePerviewClose"]);
+})
+const emits = defineEmits(["update:visible", "handlePerviewClose"])
 const openPreviewDialog = computed({
   get() {
-    return props.visible;
+    return props.visible
   },
   set(val) {
-    emits("update:visible", val);
+    emits("update:visible", val)
   },
-});
-const loading = ref<boolean>(false);
-const refIframe = ref<any>(null);
+})
+const loading = ref<boolean>(false)
+const refIframe = ref<any>(null)
 const state = reactive({
   isFullScreen: false,
-});
+})
 
 const exit = () => {
-  refIframe.value = null;
-  state.isFullScreen = false;
-  emits("handlePerviewClose");
-};
+  refIframe.value = null
+  state.isFullScreen = false
+  emits("handlePerviewClose")
+}
 const iframeLoad = () => {
-  loading.value = true;
+  loading.value = true
   if (refIframe.value.attachEvent) {
-    refIframe.value.attachEvent("onload", () => (loading.value = false));
+    refIframe.value.attachEvent("onload", () => (loading.value = false))
   } else {
     refIframe.value.onload = () => {
-      loading.value = false;
-    };
-  }
-};
-watch(
-  () => props.visible,
-  (newVal) => {
-    if (newVal) {
-      nextTick(() => {
-        iframeLoad();
-      });
+      loading.value = false
     }
   }
-);
+}
+watch(
+  () => props.visible,
+  newVal => {
+    if (newVal) {
+      nextTick(() => {
+        iframeLoad()
+      })
+    }
+  },
+)
 </script>
 
 <style lang="scss">

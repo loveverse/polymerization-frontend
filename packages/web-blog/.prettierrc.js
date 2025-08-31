@@ -18,4 +18,5 @@ export default {
   bracketSpacing: true,
   // Vue 组件中 script 和 style 是否跟随外部缩进（true 表示跟随）
   vueIndentScriptAndStyle: false,
+  // endOfLine: "crlf",
 }

@@ -56,8 +56,7 @@ export default {
   fileLib1: "文件库：使用kkFileView预览服务，docker + nginx搭建。",
   chatRoom1:
     "聊天室：使用websocket，心跳检测，断线重连等；使用jsonwebtoken，颁发token，设置操作权限等；使用ETag（协商缓存）。",
-  studyIssue1:
-    "学习问题：上传组件，使用koa-body实现上传，开发和生产环境路径的配置。",
+  studyIssue1: "学习问题：上传组件，使用koa-body实现上传，开发和生产环境路径的配置。",
   wallpaper1:
     "壁纸：使用element-plus的骨架屏，图片懒加载，nginx下载，反向代理，文件访问权限，证书配置等。",
   timeNode: "时间节点",
@@ -85,8 +84,7 @@ export default {
   delete: "删除",
   uploadNotice: "上传须知",
   noticeList: {
-    content1:
-      "登录用户可以创建属于自己的单独空间，非本账号无法查看，删除文件。",
+    content1: "登录用户可以创建属于自己的单独空间，非本账号无法查看，删除文件。",
     content2: "上传文件最大为512MB(不推荐大文件)；粘贴上传文件请勿超过1MB！",
     content3: "上传大文件时，等待时间略长！",
   },
@@ -137,7 +135,7 @@ export default {
     userName: "用户名不能为空",
     password: "密码不能为空",
   },
-  
+
   // person
   editIssue: "编辑问题",
   comeFrom1: "--来自“",
@@ -151,4 +149,4 @@ export default {
   // 404
   notExit: "啊哦~ 你所访问的页面不存在",
   backHome: "返回首页",
-};
+}

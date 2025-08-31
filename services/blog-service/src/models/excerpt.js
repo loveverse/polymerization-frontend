@@ -1,6 +1,4 @@
-const {
-  DataTypes
-} = require('sequelize');
+const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const attributes = {
     id: {
@@ -10,7 +8,7 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
     },
     content: {
       type: DataTypes.STRING(5000),
@@ -19,7 +17,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "content"
+      field: "content",
     },
     author: {
       type: DataTypes.STRING(255),
@@ -28,7 +26,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "author"
+      field: "author",
     },
     flag: {
       type: DataTypes.INTEGER(1),
@@ -37,7 +35,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "flag"
+      field: "flag",
     },
     date: {
       type: DataTypes.STRING(5000),
@@ -46,14 +44,14 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "date"
-    }
-  };
+      field: "date",
+    },
+  }
   const options = {
     tableName: "excerpt",
     comment: "",
-    indexes: []
-  };
-  const ExcerptModel = sequelize.define("excerptModel", attributes, options);
-  return ExcerptModel;
-};
+    indexes: [],
+  }
+  const ExcerptModel = sequelize.define("excerptModel", attributes, options)
+  return ExcerptModel
+}

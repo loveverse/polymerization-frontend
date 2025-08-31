@@ -17,10 +17,12 @@ module.exports = {
     "prettier", // 禁用 ESLint 中与 Prettier 冲突的规则
   ],
   ignorePatterns: ["craco.config.js", "babel.config.js"],
-  overrides: [{
-    files: ["*.ts", "*.tsx"], // 明确指定TypeScript文件
-    parser: "@typescript-eslint/parser",
-  },],
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"], // 明确指定TypeScript文件
+      parser: "@typescript-eslint/parser",
+    },
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
@@ -37,9 +39,16 @@ module.exports = {
     "react/jsx-curly-brace-presence": [
       "error",
       {
-        "props": "never",  // 强制字符串 props 不使用 {}
-        "children": "never"  // 强制字符串 children 不使用 {}
-      }
-    ]
+        props: "never", // 强制字符串 props 不使用 {}
+        children: "never", // 强制字符串 children 不使用 {}
+      },
+    ],
+    // 禁用Prettier的换行符检查
+    "prettier/prettier": [
+      "error",
+      // {
+      //   endOfLine: "auto", // 自动适应系统的换行符风格
+      // },
+    ],
   },
-};
+}

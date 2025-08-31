@@ -1,12 +1,11 @@
-import { defineStore } from "pinia";
-import store from "./index";
-import type { RouteRecordRaw } from "vue-router";
+import { defineStore } from "pinia"
+import store from "./index"
+import type { RouteRecordRaw } from "vue-router"
 
 export interface PermissionState {
-  permissionCodes: Set<string>;
-  asyncRoutes: RouteRecordRaw[];
+  permissionCodes: Set<string>
+  asyncRoutes: RouteRecordRaw[]
 }
-
 
 export const usePermissionStore = defineStore("permission", {
   state: (): PermissionState => ({
@@ -15,7 +14,7 @@ export const usePermissionStore = defineStore("permission", {
   }),
   actions: {
     setPermissions(codes: string[]) {
-      this.permissionCodes = new Set(codes);
+      this.permissionCodes = new Set(codes)
     },
     filterRoutesByUserRoutes(localRoutes: RouteRecordRaw[], userRoutes: RouteRecordRaw[]) {
       // const filterMenu = () => {
@@ -24,10 +23,8 @@ export const usePermissionStore = defineStore("permission", {
       // return filterMenu(localRoutes, userRoutes)
     },
   },
-});
+})
 
 export function usePermissionStoreHook() {
-  return usePermissionStore(store);
+  return usePermissionStore(store)
 }
-
-

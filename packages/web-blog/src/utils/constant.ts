@@ -9,7 +9,7 @@ export const SERVER_STATUS: Record<number, string> = {
   502: "网关错误！",
   503: "服务不可用！",
   504: "网关超时！",
-};
+}
 export const FILE_TYPE = [
   "file",
   "folder",
@@ -49,25 +49,25 @@ export const FILE_TYPE = [
   "xls",
   "xml",
   "zip",
-];
+]
 
 type DictItem = {
-  value: string | number;
-  label: string;
-};
+  value: string | number
+  label: string
+}
 type Label = {
   [key: string]: {
-    [key: string | number]: string;
-  };
-};
+    [key: string | number]: string
+  }
+}
 type Dict = {
-  [key: string]: DictItem[];
-};
+  [key: string]: DictItem[]
+}
 
 type Dicts = {
-  label: Label;
-  dict: Dict;
-};
+  label: Label
+  dict: Dict
+}
 
 const label: Label = {
   survivalStatus: {
@@ -79,20 +79,20 @@ const label: Label = {
     0: "真人",
     1: "骗子",
   },
-};
-const dict: Dict = {};
-Object.keys(label).forEach((item) => {
+}
+const dict: Dict = {}
+Object.keys(label).forEach(item => {
   dict[item] = Object.entries(label[item]).reduce((pre: DictItem[], cur) => {
-    const [value, label] = cur;
-    console.log(cur);
+    const [value, label] = cur
+    console.log(cur)
 
-    pre = pre.concat({ value, label });
-    return pre;
-  }, []);
-});
+    pre = pre.concat({ value, label })
+    return pre
+  }, [])
+})
 
 export const dicts: Dicts = {
   dict,
   label,
-};
-console.log(dicts);
+}
+console.log(dicts)

@@ -57,6 +57,4 @@ onMounted(() => {
     flex: 1;
   }
 }
-
-
 </style>

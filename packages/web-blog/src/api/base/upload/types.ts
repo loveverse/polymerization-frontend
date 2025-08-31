@@ -1,6 +1,6 @@
-import {UploadFile} from "element-plus";
+import { UploadFile } from "element-plus"
 
 export interface UploadFileRes extends UploadFile {
-  id: string;
-  url: string;
+  id: string
+  url: string
 }

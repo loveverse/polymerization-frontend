@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <div class="login-left">
-        <img src="@/assets/imgs/ikon.png" alt="login"/>
+        <img src="@/assets/imgs/ikon.png" alt="login" />
       </div>
       <div class="login-form">
         <div class="login-logo">
@@ -13,15 +13,13 @@
           ref="loginFormRef"
           :model="loginForm"
           :rules="loginRules"
-          @keyup.enter="handleLogin"
-        >
+          @keyup.enter="handleLogin">
           <el-form-item prop="username">
             <el-input
               v-model="loginForm.username"
               placeholder="请输入账号"
               :prefix-icon="User"
-              maxlength="255"
-            />
+              maxlength="255" />
           </el-form-item>
           <el-form-item prop="password">
             <el-input
@@ -30,23 +28,19 @@
               placeholder="请输入密码"
               :prefix-icon="Lock"
               maxlength="255"
-              show-password
-            />
+              show-password />
           </el-form-item>
           <el-form-item prop="captcha">
             <el-space>
-              <el-input v-model="loginForm.captchaCode" placeholder="请输入验证码"
-                        :prefix-icon="Position"/>
-              <img class="hand" :src="captchaImg" @click="generateCaptchaImg" alt="验证码"/>
+              <el-input
+                v-model="loginForm.captchaCode"
+                placeholder="请输入验证码"
+                :prefix-icon="Position" />
+              <img class="hand" :src="captchaImg" @click="generateCaptchaImg" alt="验证码" />
             </el-space>
           </el-form-item>
           <el-form-item>
-            <el-button
-              :loading="loading"
-              type="primary"
-              @click="handleLogin"
-              style="width: 100%"
-            >
+            <el-button :loading="loading" type="primary" @click="handleLogin" style="width: 100%">
               登录
             </el-button>
           </el-form-item>
@@ -57,16 +51,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive, onMounted} from 'vue'
-import {useRouter} from 'vue-router'
-import {Base64} from 'js-base64'
-import {ElMessage, FormInstance} from 'element-plus'
+import { ref, reactive, onMounted } from "vue"
+import { useRouter } from "vue-router"
+import { Base64 } from "js-base64"
+import { ElMessage, FormInstance } from "element-plus"
 
-import {reqLogin, reqUserInfo} from '@/api/login/index.ts'
-import {username, password, domain} from '@/config'
-import {User, Lock, Position} from "@element-plus/icons-vue";
-import {v4 as uuidV4} from "uuid"
-
+import { reqLogin, reqUserInfo } from "@/api/login/index.ts"
+import { username, password, domain } from "@/config"
+import { User, Lock, Position } from "@element-plus/icons-vue"
+import { v4 as uuidV4 } from "uuid"
 
 const router = useRouter()
 
@@ -74,24 +67,23 @@ const loginForm = reactive({
   username: username,
   password: password,
   captchaCode: "",
-  captchaKey: ""
+  captchaKey: "",
 })
 
 const loginRules = reactive({
-  username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-  password: [{required: true, message: '请输入密码', trigger: 'blur'}],
+  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
   // captchaCode: [{required: true, message: '请输入验证码', trigger: 'blur'}]
 })
 
 const captchaImg = ref("")
-
 
 const loading = ref(false)
 const loginFormRef = ref<FormInstance>()
 
 // 登录处理
 const handleLogin = () => {
-  loginFormRef.value?.validate(async (valid) => {
+  loginFormRef.value?.validate(async valid => {
     if (!valid) return
 
     loading.value = true
@@ -103,7 +95,7 @@ const handleLogin = () => {
     })
 
     if (res.code === 200) {
-      const {token} = res.data
+      const { token } = res.data
       localStorage.setItem("token", token)
       ElMessage.success("登录成功")
     } else {
@@ -152,9 +144,9 @@ onMounted(() => {
       padding: 0 100px;
       box-sizing: border-box;
       background: linear-gradient(
-          180deg,
-          rgba(14, 100, 244, 0.02) 0%,
-          rgba(14, 100, 244, 0.08) 100%
+        180deg,
+        rgba(14, 100, 244, 0.02) 0%,
+        rgba(14, 100, 244, 0.08) 100%
       );
 
       img {
@@ -231,7 +223,5 @@ onMounted(() => {
       }
     }
   }
-
 }
-
 </style>

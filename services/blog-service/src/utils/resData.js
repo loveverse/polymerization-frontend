@@ -16,36 +16,36 @@ const err = {
   powerLacking: "抱歉，权限不足",
   unknownError: "未知错误，请联系管理员",
   upload: "上传失败",
-};
+}
 const success = {
   userLogin: "登录成功",
   userRegister: "注册成功",
   upload: "上传成功",
   common: "成功",
   delete: "删除成功",
-  edit: "编辑成功"
-};
+  edit: "编辑成功",
+}
 const ERROR = (str, data = null) => {
   return {
     code: 400,
     data,
     msg: err[str],
-  };
-};
+  }
+}
 const SUCCESS = (str, data = null) => {
   return {
     code: 200,
     data,
     msg: success[str],
-  };
-};
+  }
+}
 const SERVER_ERROR = () => {
   return {
     code: 500,
     data: null,
     msg: "服务器繁忙，请联系管理员！",
-  };
-};
+  }
+}
 // const SUCESS_RES = new statusCode(200, "success");
 // const ERROR_RES = new statusCode(500, "服务器繁忙，请联系管理员！");
 // const ERROR_UPLOAD = new statusCode(400, "上传文件不能为空");
@@ -65,4 +65,4 @@ module.exports = {
   ERROR,
   SUCCESS,
   SERVER_ERROR,
-};
+}

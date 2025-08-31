@@ -1,10 +1,5 @@
-const Redis = require("redis");
-const {
-  APP_REDIS_HOST,
-  APP_REDIS_PORT,
-  APP_REDIS_PASSWORD,
-  APP_REDIS_DB,
-} = require("../config");
+const Redis = require("redis")
+const { APP_REDIS_HOST, APP_REDIS_PORT, APP_REDIS_PASSWORD, APP_REDIS_DB } = require("../config")
 
 // const client = Redis.createClient({
 //   url: "redis://" + APP_REDIS_HOST + ":" + APP_REDIS_PORT,
@@ -28,6 +23,6 @@ const {
 // module.exports = client
 module.exports = {
   get() {
-    return null;
+    return null
   },
-};
+}

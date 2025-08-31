@@ -40,8 +40,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-
-
 .back-to-top {
   position: fixed;
   bottom: 2rem;
