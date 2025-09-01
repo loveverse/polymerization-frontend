@@ -72,9 +72,9 @@ class RequestHttp {
     return err
   }
 
-  async get<T = any>(
+  async get<T = Recordable>(
     url: string,
-    params: any = {},
+    params: Recordable = {},
     config?: AxiosRequestConfig | ContentType,
   ): Promise<T extends Blob ? Blob : ApiResponse<Exclude<T, Blob>>> {
     try {
@@ -89,9 +89,9 @@ class RequestHttp {
     }
   }
 
-  async post<T = any>(
+  async post<T = Recordable>(
     url: string,
-    params: any = {},
+    params: Recordable = {},
     config?: AxiosRequestConfig | ContentType,
   ): Promise<ApiResponse<T>> {
     try {
@@ -103,9 +103,9 @@ class RequestHttp {
     }
   }
 
-  async put<T = any>(
+  async put<T = Recordable>(
     url: string,
-    params: any = {},
+    params: Recordable = {},
     config?: AxiosRequestConfig | ContentType,
   ): Promise<ApiResponse<T>> {
     try {
@@ -117,9 +117,9 @@ class RequestHttp {
     }
   }
 
-  async delete<T = any>(
+  async delete<T = Recordable>(
     url: string,
-    params: any = {},
+    params: Recordable = {},
     config?: AxiosRequestConfig | ContentType,
   ): Promise<ApiResponse<T>> {
     try {

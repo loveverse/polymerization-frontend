@@ -13,7 +13,7 @@ export const deepCopy = <T>(obj: any): T => {
   let newObj: any
   try {
     newObj = obj.push ? [] : {}
-  } catch (error) {
+  } catch (err) {
     newObj = {}
   }
   for (const attr in obj) {

@@ -1,18 +1,15 @@
 const path = require("path")
-
+const sass = require("sass")
 module.exports = {
-  renderer: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: "modern-compiler",
-          silenceDeprecations: ["legacy-js-api"],
-        },
-      },
-    },
-  },
   devServer: {
     port: 30000,
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        implementation: sass,
+      },
+    },
   },
   style: {
     sass: {

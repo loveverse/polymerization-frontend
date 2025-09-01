@@ -18,6 +18,6 @@ export default {
   bracketSpacing: true,
   // Vue 组件中 script 和 style 是否跟随外部缩进（true 表示跟随）
   vueIndentScriptAndStyle: false,
-  // git 提交时会自动转换 crlf 和 lf
-  // endOfLine: "crlf",
+  // git 提交时会自动转换 crlf 和 lf，prettier2.x以上默认 lf
+  // endOfLine: "lf",
 }

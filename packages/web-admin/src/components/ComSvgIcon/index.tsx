@@ -1,6 +1,6 @@
 // import React, {useEffect, useState} from "react";
 // import Icon from "@ant-design/icons";
-// import "./index.d.ts.scss";
+// import "./index.ts.scss";
 //
 // /**
 //  * 使用前先安装

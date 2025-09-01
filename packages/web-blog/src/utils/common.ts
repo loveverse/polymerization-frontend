@@ -5,11 +5,13 @@ import { previewUrl } from "@/config"
 export function formatterTime(timestamp: Date) {
   return dayjs(timestamp).format("YYYY-MM-DD HH:mm:ss")
 }
+
 // 检测是不是链接
 export function urlify(text: string) {
   const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
   return urlRegex.test(text)
 }
+
 // 预览服务
 export function createPreviewUrl(url: string) {
   // url = decodeURI(url);
@@ -26,6 +28,7 @@ export function check() {
     }
     doCheck(++a)
   }
+
   try {
     doCheck(0)
   } catch (err) {}

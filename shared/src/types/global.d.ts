@@ -3,7 +3,7 @@ declare global {
   type Writable<T> = {
     -readonly [P in keyof T]: T[P]
   }
-
+  // @ts-ignore: 通用类型
   type Recordable<T = any> = Record<string, T>
   type ReadonlyRecordable<T = any> = {
     readonly [key: string]: T

@@ -6,7 +6,7 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import VueSetupExtend from "vite-plugin-vue-setup-extend"
-// @ts-ignore 忽略类型检查错误
+// @ts-ignore: 忽略类型检查错误
 import eslint from "vite-plugin-eslint"
 
 console.info("[ 打包] >", process.env)

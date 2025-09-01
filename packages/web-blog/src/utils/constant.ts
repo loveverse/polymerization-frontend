@@ -84,8 +84,6 @@ const dict: Dict = {}
 Object.keys(label).forEach(item => {
   dict[item] = Object.entries(label[item]).reduce((pre: DictItem[], cur) => {
     const [value, label] = cur
-    console.log(cur)
-
     pre = pre.concat({ value, label })
     return pre
   }, [])
@@ -95,4 +93,4 @@ export const dicts: Dicts = {
   dict,
   label,
 }
-console.log(dicts)
+console.info(dicts)

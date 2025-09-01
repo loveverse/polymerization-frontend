@@ -1,5 +1,5 @@
 // https://www.prettier.cn/docs/configuration.html
-export default {
+module.exports = {
   // 语句末尾是否添加分号（false 表示不添加）
   semi: false,
   // 字符串是否使用单引号包裹（false 表示使用双引号）
@@ -18,6 +18,8 @@ export default {
   bracketSpacing: true,
   // Vue 组件中 script 和 style 是否跟随外部缩进（true 表示跟随）
   vueIndentScriptAndStyle: false,
+  // 所有地方都保留尾逗号（包括函数参数）
+  trailingComma: "all",
   // git 提交时会自动转换 crlf 和 lf
   // endOfLine: "crlf",
 }

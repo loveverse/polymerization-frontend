@@ -88,7 +88,7 @@ const UserCenterDrawer = (props: DrawerControlsProps) => {
     const res = await reqUpdateUser(values)
     if (res.code === 200) {
       message.success("修改用户信息成功")
-      const { roleIds, ...rest } = values
+      const { roleIds: _, ...rest } = values
       actions.setUserInfo({ ...(userInfo as UserInfoRes), ...rest })
     } else {
       message.error(res.msg)

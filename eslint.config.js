@@ -6,18 +6,12 @@ import prettierConfig from "eslint-config-prettier"
 // 基础共享配置
 const baseConfig = {
   ignores: [
-    "**/node_modules/**",
     "packages/web-admin/**/*", // 子模块有自己的 eslint
+    "study/**/*",
+    "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
-    "**/coverage/**",
-    "**/.nuxt/**",
-    "**/.output/**",
-    "**/.next/**",
-    "**/.turbo/**",
     "**/pnpm-lock.yaml",
-    "**/.env*",
-    "study/**/*",
   ],
   languageOptions: {
     ecmaVersion: "latest",
@@ -30,15 +24,25 @@ const baseConfig = {
   },
   rules: {
     "no-console": ["warn", { allow: ["warn", "error", "info"] }],
-    "no-debugger": "warn",
-    "no-unused-vars": "off", // 交由 TS 处理
+    "no-debugger": "warn", // debugger 警告
+  },
+}
+
+// JavaScript 配置
+const javascriptConfig = {
+  files: ["**/*.{js,jsx}"],
+  ignores: ["packages/web-admin/**/*"], // 排除子模块
+  rules: {
+    ...eslint.configs.recommended.rules,
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
   },
 }
 
 // TypeScript 配置
 const typescriptConfig = {
   files: ["**/*.{ts,tsx,vue}"],
-  ignores: ["packages/web-admin/**/*", "study/**/*"],
+  // 这个是通用的,不能忽略
+  ignores: [/*"packages/web-admin/!**!/!*", */ "study/**/*"],
   plugins: {
     "@typescript-eslint": typescriptEslint.plugin,
   },
@@ -53,27 +57,24 @@ const typescriptConfig = {
   rules: {
     ...typescriptEslint.configs.recommended[0].rules,
     ...typescriptEslint.configs.stylistic[0].rules,
+    "@typescript-eslint/no-explicit-any": ["warn"],
+    "@typescript-eslint/explicit-function-return-type": "off", // 函数返回强制定义类型
     "@typescript-eslint/ban-ts-comment": ["warn", { "ts-ignore": "allow-with-description" }],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
     ],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-explicit-any": ["warn"],
   },
 }
 
-// JavaScript 配置
-const javascriptConfig = {
-  files: ["**/*.{js,jsx}"],
-  ignores: ["packages/web-admin/**/*"], // 排除子模块
+// Node 配置
+const nodeConfig = {
+  files: ["packages/*node*/**/*.{ts,js}"],
   languageOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-  },
-  rules: {
-    ...eslint.configs.recommended.rules,
-    "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+    globals: {
+      __dirname: "readonly",
+      __filename: "readonly",
+    },
   },
 }
 
@@ -97,8 +98,6 @@ const getVueConfig = async () => {
           jsx: "espree",
         },
         extraFileExtensions: [".vue"],
-        ecmaVersion: "latest",
-        sourceType: "module",
         projectService: true,
       },
     },
@@ -109,8 +108,6 @@ const getVueConfig = async () => {
       "vue/script-indent": ["error", 2, { baseIndent: 0, switchCase: 1 }],
       "vue/html-indent": ["error", 2],
       "vue/multi-word-component-names": ["warn", { ignores: ["index"] }],
-      "@typescript-eslint/no-explicit-any": ["warn"],
-      // "import-x/no-unresolved": "error",
     },
   }
 }
@@ -135,27 +132,13 @@ const getReactConfig = async () => {
   }
 }
 
-// Node 配置
-const nodeConfig = {
-  files: ["packages/*node*/**/*.{ts,js}"],
-  languageOptions: {
-    globals: {
-      __dirname: "readonly",
-      __filename: "readonly",
-    },
-  },
-  rules: {
-    "no-console": "off",
-  },
-}
-
 const config = [
   baseConfig,
   javascriptConfig,
   typescriptConfig,
+  nodeConfig,
   await getVueConfig(),
   // await getReactConfig(),
-  nodeConfig,
   prettierConfig,
 ]
 

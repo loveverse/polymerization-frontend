@@ -9,8 +9,12 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "baseUrl": "."
+    "noEmit": true
+    //    "rootDir": ".",
+    //    "paths": {
+    //      "@/packages/web-blog/*": ["packages/*/src"],
+    //    }
   },
   "exclude": ["node_modules", "dist", "study/**/*"]
+  //  "include": ["packages/*/src", "shared/**/*"],
 }

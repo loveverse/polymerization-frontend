@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", ".eslintrc.js"],
+  "include": ["src"],
   "types": ["node", "webpack-env"]
 }

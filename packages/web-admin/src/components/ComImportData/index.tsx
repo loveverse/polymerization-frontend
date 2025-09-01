@@ -9,7 +9,7 @@ import { UploadFileRes } from "@/api/base/upload/types"
 import { downloadFile } from "@/utils/common"
 
 const ComImportData = (props: ModalControlsProps) => {
-  const { modalProps, modalActions } = props
+  const { modalProps } = props
   const { message } = App.useApp()
 
   const [fileList, setFileList] = useState<UploadFileRes[]>([])

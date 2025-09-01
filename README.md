@@ -81,3 +81,16 @@ ElMessage 这种 API 根本不会被 unplugin-auto-import 的 ElementPlusResolve
 ## 格式化项目
 
 npx prettier --write .
+
+## prettier 2.x 与 3.x 存在变化
+
+旧版本（<2.0）可能默认使用 auto 策略（跟随系统换行符）
+新版本（≥2.0）在未明确配置时，可能更严格地校验换行符，导致 Windows 系统的 CRLF（\r\n）被视为错误
+
+## Prettier规范
+
+- https://prettier.io/docs/options#end-of-line
+- First available in v1.15.0, default value changed from auto to lf in v2.0.0
+
+## Vs Code 创建文件默认 crlf
+设置 -> files.eol -> \n
