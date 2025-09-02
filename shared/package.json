@@ -1,9 +1,0 @@
-{
-  "name": "shared",
-  "version": "1.0.0",
-  "typings": "./src/types/global.d.ts",
-  "main": "./src/types/index.ts",
-  "scripts": {
-    "build": "tsc src"
-  }
-}

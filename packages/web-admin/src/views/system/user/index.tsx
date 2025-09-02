@@ -9,6 +9,7 @@ import styles from "./index.module.scss"
 import { useAppContext } from "@/context"
 import { useModalControls } from "@/hooks"
 import { ComImportData } from "@/components"
+import { PageResult } from "@poly/shared"
 
 const UserManage: React.FC = () => {
   const { message, modal } = App.useApp()

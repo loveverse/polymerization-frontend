@@ -1,3 +1,4 @@
+import { Recordable } from "@poly/shared"
 import { UploadFile } from "antd"
 
 export interface ResponseFile {

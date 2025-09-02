@@ -69,18 +69,21 @@ const DictManage: React.FC = () => {
   const [selectDictId, setSelectDictId] = useState("")
   const getDictList = async () => {
     setLoading(true)
-    const res = await reqDictList()
-    if (res.code === 200) {
-      setDictionaries({ ...dictionaries, dict: res.data })
-      if (res.data.length && !selectDictId) {
-        const dictId = res.data[0].id
-        setSelectDictId(dictId)
-        void getDictItemList(dictId)
+    try {
+      const res = await reqDictList()
+      if (res.code === 200) {
+        setDictionaries({ ...dictionaries, dict: res.data })
+        if (res.data.length && !selectDictId) {
+          const dictId = res.data[0].id
+          setSelectDictId(dictId)
+          await getDictItemList(dictId)
+        }
+      } else {
+        message.error(res.msg)
       }
-    } else {
-      message.error(res.msg)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
   const [addDictProps, addDictActions] = useModalControls()
   const [editDictProps, editDictActions] = useModalControls()

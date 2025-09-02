@@ -1,3 +1,5 @@
+import { CommonId, PageParam, Recordable } from "@poly/shared"
+
 /* 角色管理 */
 
 export interface RolePageReq extends PageParam {}

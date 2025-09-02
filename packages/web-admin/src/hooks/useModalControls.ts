@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react"
 import type { ModalProps } from "antd"
+import { Recordable } from "@poly/shared"
 
 export interface ExposeMethods<T> {
   // 可以只更新部分字段

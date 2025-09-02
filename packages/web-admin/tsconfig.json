@@ -18,7 +18,10 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+
   },
-  "include": ["src"],
+  "include": [
+    "src",
+  ],
   "types": ["node", "webpack-env"]
 }

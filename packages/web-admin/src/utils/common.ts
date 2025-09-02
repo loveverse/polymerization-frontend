@@ -3,13 +3,14 @@ import { reqDownloadFile } from "@/api/base"
 import { FILE_TYPE_LIST } from "./constant"
 import { preViewUrl } from "@/config"
 import React from "react"
+import { Recordable } from "@poly/shared"
 
 /**
  * @description 对象数组深克隆
  * @param {Object} obj 源对象
  * @return object
  */
-export const deepCopy = <T>(obj: any): T => {
+export const deepCopy = <T>(obj: Recordable): T => {
   let newObj: any
   try {
     newObj = obj.push ? [] : {}

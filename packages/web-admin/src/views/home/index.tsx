@@ -1,53 +1,69 @@
 import React, { useEffect, useState } from "react"
 import { App, Avatar, Button, Card, List } from "antd"
-import axios from "axios"
 import dayjs from "dayjs"
 
 import styles from "./index.module.scss"
+import { PageResult, Recordable } from "@poly/shared"
+import { ModuleDataRes } from "@/api/module/types"
+import { reqModuleList } from "@/api/module"
+import { CURRENT_MODULE_KEY } from "@/utils/constant"
+import { reqCommitPage } from "@/api/third-party"
 
 const Home = () => {
   const { message } = App.useApp()
-  const [commitData, setCommitData] = useState<PageResult<any[]>>({
+  const [commitData, setCommitData] = useState<PageResult<Recordable>>({
     page: 1,
     size: 20,
     data: [],
     total: 0,
   })
   const [loading, setLoading] = useState(false)
-  const getCommitPage = (page = commitData.page, size = commitData.size) => {
+  const getCommitPage = async (page = commitData.page, size = commitData.size) => {
+    setLoading(true)
     const token = "65275e1082eb9a9712b3aae61749c2e9"
     const sha = "main"
-    const url = `https://gitee.com/api/v5/repos/loveverse/polymerization-frontend/commits?access_token=${token}&sha=${sha}&page=${page}&per_page=${size}`
-    setLoading(true)
-    axios
-      .get(url)
-      .then(res => {
-        setCommitData({
-          ...commitData,
-          data: res.data,
-        })
-      })
-      .catch(err => {
-        message.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    const res = await reqCommitPage({
+      access_token: token,
+      sha,
+      page,
+      per_page: size,
+    })
+    if (res.code === 200) {
+      setCommitData({ ...commitData, data: res.data.data })
+    } else {
+      message.error(res.msg)
+    }
+    setLoading(false)
   }
+
+  const [moduleList, setModuleList] = useState<ModuleDataRes[]>([])
+  const getModuleList = async () => {
+    const res = await reqModuleList()
+    if (res.code === 200) {
+      setModuleList(res.data.filter(k => k.moduleValue !== CURRENT_MODULE_KEY))
+    } else {
+      message.error(res.msg)
+    }
+  }
+
   useEffect(() => {
-    getCommitPage()
+    void getModuleList()
+    void getCommitPage()
   }, [])
 
   return (
     <div className={styles.root}>
       <Card title="快捷入口" className="system-list">
-        <Card.Grid
-          className="item"
-          onClick={() => {
-            window.open("http://39.108.120.75/#/login", "_blank")
-          }}>
-          <Button type="link">学业水平测试系统</Button>
-        </Card.Grid>
+        {moduleList.map(item => (
+          <Card.Grid
+            key={item.id}
+            className="item"
+            onClick={() => {
+              window.open("http://39.108.120.75/#/login", "_blank")
+            }}>
+            <Button type="link">{item.moduleName}</Button>
+          </Card.Grid>
+        ))}
 
         {/* <Card.Grid className="system-list"></Card.Grid> */}
       </Card>
@@ -56,7 +72,7 @@ const Home = () => {
           itemLayout="horizontal"
           dataSource={commitData.data}
           loading={loading}
-          renderItem={(item: any) => (
+          renderItem={item => (
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar src={item.committer.avatar_url} />}

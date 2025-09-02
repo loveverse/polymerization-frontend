@@ -1,5 +1,6 @@
 import http from "@/utils/http"
 import { AuthorityInfoRes, LoginInfoReq, LoginInfoRes } from "./types"
+import { CommonId } from "@poly/shared"
 
 export const reqLogin = (params: LoginInfoReq) =>
   http.post<LoginInfoRes>("/auth-api/v1/auth/login", params)

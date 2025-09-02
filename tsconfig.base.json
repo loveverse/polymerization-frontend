@@ -10,11 +10,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true
-    //    "rootDir": ".",
-    //    "paths": {
-    //      "@/packages/web-blog/*": ["packages/*/src"],
-    //    }
   },
-  "exclude": ["node_modules", "dist", "study/**/*"]
-  //  "include": ["packages/*/src", "shared/**/*"],
+  "exclude": ["node_modules", "study/**/*"]
 }

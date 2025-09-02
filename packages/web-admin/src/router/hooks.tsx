@@ -53,8 +53,8 @@ export function filterRoutesByUserRoutes(
             localRoute.children?.length && matchedUserRoute.children?.length
               ? filterMenu(localRoute.children, matchedUserRoute.children)
               : localRoute.children?.length
-                ? localRoute.children
-                : []
+              ? localRoute.children
+              : []
 
           return {
             ...localRoute,

@@ -1,6 +1,7 @@
 import { useECharts } from "@/hooks/useECharts"
 import React, { useEffect } from "react"
 import { BarECOption } from "@/utils/echarts"
+import { Recordable } from "@poly/shared"
 
 interface BarChartProps {
   // 柱状图系列的数据

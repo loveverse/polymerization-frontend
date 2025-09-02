@@ -24,6 +24,7 @@ import {
   UserDataRes,
   UserInfoRes,
 } from "./types"
+import { CommonId, PageParam, PageResult } from "@poly/shared"
 
 /* 角色管理 */
 export const reqAddRole = (params: AddRoleReq) =>

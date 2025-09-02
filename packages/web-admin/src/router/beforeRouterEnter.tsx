@@ -64,25 +64,28 @@ function BeforeRouterEnter() {
   }
   const getUserInfo = async () => {
     setLoading(true)
-    const res = await reqUserInfo({ id: storeUserInfo.id })
-    if (res.code !== 200) {
+    try {
+      const res = await reqUserInfo({ id: storeUserInfo.id })
+      if (res.code !== 200) {
+        setLoading(false)
+        message.error(res.msg)
+        return
+      }
+      setUserInfo(res.data)
+      // 继续获取权限和菜单信息
+      const res1 = await reqAuthorityInfo({ id: storeUserInfo.id })
+      // // true：本地路由，false: 线上路由
+      if (process.env.NODE_ENV !== "development") {
+        setAsyncRoutes(layoutRoutes)
+      } else {
+        const userAsyncRoutes = filterRoutesByUserRoutes(layoutRoutes, res1.data.menus)
+        setAsyncRoutes(userAsyncRoutes)
+        setPermissions(res1.data.permissions)
+      }
+      isLoaded.current = true
+    } finally {
       setLoading(false)
-      message.error(res.msg)
-      return
     }
-    setUserInfo(res.data)
-    // 继续获取权限和菜单信息
-    const res1 = await reqAuthorityInfo({ id: storeUserInfo.id })
-    // // true：本地路由，false: 线上路由
-    if (process.env.NODE_ENV !== "development") {
-      setAsyncRoutes(layoutRoutes)
-    } else {
-      const userAsyncRoutes = filterRoutesByUserRoutes(layoutRoutes, res1.data.menus)
-      setAsyncRoutes(userAsyncRoutes)
-      setPermissions(res1.data.permissions)
-    }
-    isLoaded.current = true
-    setLoading(false)
   }
   // 重置缓存上下文信息
   const resetAppContext = () => {

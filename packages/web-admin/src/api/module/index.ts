@@ -1,5 +1,6 @@
 import http from "@/utils/http"
 import { AddModuleReq, ModuleDataRes, UpdateModuleReq } from "./types"
+import { CommonId } from "@poly/shared"
 /* 模块管理 */
 export const reqAddModule = (params: AddModuleReq) =>
   http.post("/auth-api/v1/system/module/create", params)

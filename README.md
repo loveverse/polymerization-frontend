@@ -94,3 +94,10 @@ npx prettier --write .
 
 ## Vs Code 创建文件默认 crlf
 设置 -> files.eol -> \n
+
+## package.json
+在TypeScript中，“typings”和“types”都用于管理类型声明文件，但“typings”是早期的命名规范，而“types”是官方推荐的方式。
+
+
+## 安装workspace包
+pnpm i @poly/shared@workspace:* -D

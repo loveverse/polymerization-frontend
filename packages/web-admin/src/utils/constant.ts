@@ -26,9 +26,6 @@ export const SERVER_STATUS: Record<number, string> = {
   504: "网关超时！",
 }
 
-// 默认模块value
-export const MODULE_NAME = "m_ht"
-
 export const FILE_TYPE_LIST = [
   { value: "kj", logoImg: commonLogo, list: [] },
   { value: "kj", logoImg: imageLogo, list: ["jpg", "jpeg", "png", "gif", "svg"] },
@@ -52,3 +49,5 @@ export const RANGE_PRESETS: TimeRangePickerProps["presets"] = [
 
 // 白名单路由
 export const WHITE_ROUTES = ["/login"]
+// 默认模块value
+export const CURRENT_MODULE_KEY = "m_ht"

@@ -9,7 +9,7 @@ const baseConfig = {
     "packages/web-admin/**/*", // 子模块有自己的 eslint
     "study/**/*",
     "**/node_modules/**",
-    "**/dist/**",
+    "**/dist/**/*",
     "**/build/**",
     "**/pnpm-lock.yaml",
   ],
@@ -31,7 +31,7 @@ const baseConfig = {
 // JavaScript 配置
 const javascriptConfig = {
   files: ["**/*.{js,jsx}"],
-  ignores: ["packages/web-admin/**/*"], // 排除子模块
+  ignores: ["packages/web-admin/**/*", "**/dist/**/*"], // 排除子模块
   rules: {
     ...eslint.configs.recommended.rules,
     "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
@@ -42,7 +42,7 @@ const javascriptConfig = {
 const typescriptConfig = {
   files: ["**/*.{ts,tsx,vue}"],
   // 这个是通用的,不能忽略
-  ignores: [/*"packages/web-admin/!**!/!*", */ "study/**/*"],
+  ignores: [/*"packages/web-admin/!**!/!*", */ "study/**/*", "**/dist/**/*"],
   plugins: {
     "@typescript-eslint": typescriptEslint.plugin,
   },

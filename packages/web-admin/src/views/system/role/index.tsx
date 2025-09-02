@@ -10,6 +10,7 @@ import styles from "./index.module.scss"
 import { useModalControls } from "@/hooks"
 import SetRoleMenuDrawer from "@/views/system/role/components/SetRoleMenuDrawer"
 import { useDrawerControls } from "@/hooks/useDrawerControls"
+import { PageResult } from "@poly/shared"
 
 // 系统管理员不能操作
 const isAdmin = "ROLE_ADMIN"

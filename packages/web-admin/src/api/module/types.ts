@@ -1,3 +1,5 @@
+import { CommonId } from "@poly/shared"
+
 /* 模块管理 */
 export interface ModuleDataRes {
   id: string

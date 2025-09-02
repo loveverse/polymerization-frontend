@@ -1,7 +1,6 @@
 # pnpm 会将这些目录中的包视为同一工作区的一部分，可以共享依赖
 packages:
   - packages/*
-  - shared
   - services/*
   - "!** /node_modules" # 排除所有目录下的 node_modules 文件夹
 catalog:

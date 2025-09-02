@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react"
 import { DrawerProps } from "antd"
+import { Recordable } from "@poly/shared"
 
 interface DrawerControls extends DrawerProps {
   confirmLoading?: boolean

@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
+    "@poly/shared": "workspace:^",
     "@svgr/webpack": "^8.1.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^20.11.24",
@@ -69,7 +70,6 @@
     "prettier": "2.8.8",
     "sass": "^1.89.1",
     "sass-loader": "^16.0.5",
-    "svgo-loader": "^4.0.0",
-    "shared": "workspace:*"
+    "svgo-loader": "^4.0.0"
   }
 }
